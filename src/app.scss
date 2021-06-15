@@ -1,0 +1,9 @@
+@import "./libs/bootstrap.css";
+@import "./libs/control.scss";
+
+.page-loading {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

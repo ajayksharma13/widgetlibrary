@@ -1,0 +1,3 @@
+echo Installing FSN Frontend Packages...
+
+npm install

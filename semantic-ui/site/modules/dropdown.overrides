@@ -1,0 +1,12 @@
+/*******************************
+        User Overrides
+*******************************/
+
+.ui.dropdown {
+    border: 1px solid @primaryColor !important;
+}
+
+
+.ui.form .fields.error .field .ui.dropdown, .ui.form .fields.error .field .ui.dropdown .item, .ui.form .field.error .ui.dropdown, .ui.form .field.error .ui.dropdown .text, .ui.form .field.error .ui.dropdown .item {
+    background: transparent;
+}

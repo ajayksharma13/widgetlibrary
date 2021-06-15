@@ -1,0 +1,121 @@
+/*******************************
+         Site Overrides
+*******************************/
+
+
+.primary {
+    color: @primaryColor;
+}
+
+.secondary {
+    color: @secondaryColor;
+}
+
+.primary-i {
+    color: @primaryColor !important;
+}
+
+.secondary-i {
+    color: @secondaryColor !important;
+}
+
+.white {
+    color: @white;
+}
+
+.grey {
+    color: @grey;
+}
+
+.bg-primary {
+    background-color: @primaryColor !important;
+}
+
+.bg-secondary {
+    background-color: @secondaryColor !important;
+}
+
+.bg-white {
+    background-color: @white !important;
+}
+
+.ui.header.primary {
+    color: @primaryColor !important;
+}
+
+.ui.header.white {
+    color: @white !important;
+}
+
+.ui.box {
+    border: 1px solid @primaryColor;   
+    border-bottom-width: 4px;   
+    min-height: 150px;
+    background: @white;
+    padding: 0;    
+    border-radius: 0.8rem;
+    margin: 2em;   
+    transition: all ease-in 0.2;
+    font-size: 1em;
+
+    &:hover {          
+    }
+
+    .header{
+        font-weight: 700;
+        padding: 0.85em;      
+        color: @primaryColor;
+        background: @secondaryColor;
+        border-top-right-radius: 0.8rem;
+        border-top-left-radius: 0.8rem;
+
+        .icon {           
+           margin: 0.4em;
+        }
+    }    
+
+    .content {
+        padding: 0.85em;    
+        color: @grey82;        
+
+        &.primary {
+            padding: 0.85em;    
+            color: @primaryColor;            
+        }    
+    }
+}
+
+.custom-box {
+  padding: 2rem; 
+  background-color: @grey80;
+
+ &.primary {
+      color: @white;
+      background-color: @primaryColor;
+  }
+
+  &.secondary {
+      color: @black;
+      background-color: @secondaryColor;
+  }  
+
+  .ui.header {
+    .sub.header {
+      margin-top: 0.2em;
+      margin-bottom: 1.5em;
+      font-size: 0.53em;
+    }
+  }
+}
+
+.ui.pagination.secondary{
+    background-color: transparent !important;
+}
+
+
+.ui.secondary.pointing.menu .active.item{
+    color : @primaryColor !important;
+    border-color: transparent !important;
+    border-bottom-width: 2px !important;
+    border-bottom-color: @primaryColor !important;
+}

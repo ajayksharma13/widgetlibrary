@@ -1,0 +1,17 @@
+.flipcard-card {
+    .ui.grid {
+        .row {
+            padding: 0.8em 0;
+            border-bottom: 1px solid #eaeaea;
+
+            &:first-child {
+                background: #60f2ec
+            }
+        }
+
+    }
+
+    .param-value {
+        font-size: 3.5em;
+    }
+}

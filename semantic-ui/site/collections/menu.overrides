@@ -1,0 +1,21 @@
+/*******************************
+         Site Overrides
+*******************************/
+
+.ui.menu.primary {
+    background-color: @primaryColor
+}
+
+.ui.menu.secondary {
+    background-color: @secondaryColor
+}
+
+.ui.menu.primary .item > .ui.button.tiny {
+    font-size: .85714286rem;
+}
+
+.ui.menu.primary {    
+    .item, .header{
+        color: @white;
+    }
+}

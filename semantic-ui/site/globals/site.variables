@@ -1,0 +1,27 @@
+/*******************************
+     User Global Variables
+*******************************/
+@headerFont        : 'SegoeMedium','Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+@pageFont          : 'SegoeRegular', 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+@fontSmoothing     : antialiased;
+
+
+/* Color */
+
+/*  #2AB6BB; #E4F9F5  #16D29C */ 
+@primaryColor       : #9f3a38; 
+@secondaryColor     : #CFF5EA;
+@black              : #1B1C1D;
+@grey               : #CCCCCC;
+@grey80             : #f8f8f8;
+@grey82             : #828282;
+
+@white              : #FFFFFF;
+@error              : #9f3a38;
+
+@pageBackground     : #ffffff;
+
+/* size parameter */
+@emSize             : 14px;
+@fontSize           : 12.5px;
+
