@@ -31,39 +31,39 @@ const routes: Array<RouteProps & any> = [
       )
     ),
   },
-  {
-    id: "login",
-    pageName: "Login",
-    layout: BlankLayout,
-    path: "/login",
-    component: React.lazy(() =>
-      import(
-        /* webpackPrefetch:true,webpackChunkName:'wpc.login' */ "./components/login"
-      )
-    ),
-  },
-  {
-    id: "Register",
-    pageName: "Register",
-    layout: BlankLayout,
-    path: "/register",
-    component: React.lazy(() =>
-      import(
-        /* webpackPrefetch:true,webpackChunkName:'wpc.register' */ "./components/register"
-      )
-    ),
-  },
-  {
-    id: "Dashboard",
-    pageName: "Dashboard",
-    layout: DashboardLayout,
-    path: "/dashboard",
-    component: React.lazy(() =>
-      import(
-        /* webpackPrefetch:true,webpackChunkName:'wpc.dashboard' */ "./components/dashboard"
-      )
-    ),
-  },
+  // // {
+  // //   id: "login",
+  // //   pageName: "Login",
+  // //   layout: BlankLayout,
+  // //   path: "/login",
+  // //   component: React.lazy(() =>
+  // //     import(
+  // //       /* webpackPrefetch:true,webpackChunkName:'wpc.login' */ "./components/login"
+  // //     )
+  // //   ),
+  // // },
+  // {
+  //   id: "Register",
+  //   pageName: "Register",
+  //   layout: BlankLayout,
+  //   path: "/register",
+  //   component: React.lazy(() =>
+  //     import(
+  //       /* webpackPrefetch:true,webpackChunkName:'wpc.register' */ "./components/register"
+  //     )
+  //   ),
+  // },
+  // {
+  //   id: "Dashboard",
+  //   pageName: "Dashboard",
+  //   layout: DashboardLayout,
+  //   path: "/dashboard",
+  //   component: React.lazy(() =>
+  //     import(
+  //       /* webpackPrefetch:true,webpackChunkName:'wpc.dashboard' */ "./components/dashboard"
+  //     )
+  //   ),
+  // },
   {
     id: "Pagenotfound",
     pageName: "Page Not Found",

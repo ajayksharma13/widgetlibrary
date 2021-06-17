@@ -10,8 +10,8 @@ import {
   List,
   Segment,
 } from "semantic-ui-react";
-
-import { Flipcard } from "../widget/flipcard";
+import Flipcard from "../widget/flipcard";
+import "./style.scss";
 
 /**
  * Start Up component
@@ -133,12 +133,20 @@ class StartUp extends BaseComponent<TProps, TState> {
   };
 
   render() {
+    const width = "500px";
+    const height = "300px";
+
     return (
       <Grid columns="2">
         <Grid.Column>
+          <Header>
+            Width: {width} , Height: {height}
+          </Header>
           <Segment
+            className="p-0"
             style={{
-              width: "500px",
+              width,
+              height,
               margin: "20px",
             }}
           >
