@@ -1,0 +1,13 @@
+@import "./color.scss";
+
+@mixin color() {
+  .primary {
+    background-color: $primaryColor !important;
+    color: $whiteColor !important;
+  }
+
+  .secondary {
+    background-color: $secondaryColor !important;
+    color: $blackColor !important;
+  }
+}
