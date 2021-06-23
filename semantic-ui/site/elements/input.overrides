@@ -12,7 +12,7 @@
         border-top-right-radius: inherit !important; 
         border-bottom-right-radius: inherit !important; 
         border-right-color: @primaryColor !important; 
-        border-radius: 0.6em !important; 
+        border-radius: 0em !important;        
     }
 
     .error .ui.input.action > input {

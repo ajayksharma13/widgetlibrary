@@ -9,8 +9,8 @@
 /* Color */
 
 /*  #2AB6BB; #E4F9F5  #16D29C */ 
-@primaryColor       : #9f3a38; 
-@secondaryColor     : #CFF5EA;
+@primaryColor       : #3A6178; 
+@secondaryColor     : #199c96;
 @black              : #1B1C1D;
 @grey               : #CCCCCC;
 @grey80             : #f8f8f8;

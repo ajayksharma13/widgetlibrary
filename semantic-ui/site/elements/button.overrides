@@ -1,14 +1,10 @@
 /*******************************
          Site Overrides
 *******************************/
-.ui.primary.button {
-    border:0.15em solid transparent;    
-    border-radius: 0.5rem;
-    box-shadow: 0 5px 5px #aaaaaac4 !important;
+.ui.primary.button {   
+    border-radius: 0.4rem;    
 }
 
-.ui.button {
-    border:0.15em solid transparent;    
-    border-radius: 0.5rem;
-    box-shadow: 0 5px 5px #aaaaaac4;
+.ui.button {    
+    border-radius: 0.4rem;    
 }

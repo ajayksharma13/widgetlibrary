@@ -1,0 +1,75 @@
+@import '../../../libs/variables.scss';
+@import '../../../libs/color.scss';
+
+.panel {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .remove {
+        position: absolute;
+        /* width: 50px; */
+        /* height: 50px; */
+        right: -3px;
+        top: -4px;
+        background: #000;
+        color: #fff;
+        font-size: 1em;
+        padding: 0.2em 0.1em 0.1em 0.3em;
+        border-radius: 1em;
+        z-index: 1;
+        cursor: pointer;
+        text-align: center;
+        display: none;
+
+        i {
+            color: $whiteColor !important;
+        }
+    }
+
+    &:hover {
+        .remove {
+            display: block;
+        }
+    }
+
+    &__header {
+        order: 1;
+        flex-basis: 40px;
+        display: flex;
+        align-items: center;
+
+        >div {
+            padding: 0 1em;
+            font-size: 1.35em;
+            color: $fontGreyColor;
+
+            &:first-child {
+                flex: 1
+            }
+        }
+
+        .property {
+
+            &__icon {
+                cursor: pointer;
+            }
+        }
+
+
+    }
+
+    &__content {
+        flex: 1;
+        order: 2;
+    }
+
+    &__footer {
+        order: 3;
+        flex-basis: 40px;
+    }
+}
+
+.property__bar {
+    width: 300px;
+}

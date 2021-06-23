@@ -7,11 +7,13 @@ import {
   Grid,
   Header,
   Image,
+  Input,
   List,
   Segment,
 } from "semantic-ui-react";
-import Flipcard from "../widget/flipcard";
+import Flipcard, { FlipcardModel, FlipcardProperty } from "../widget/flipcard";
 import "./style.scss";
+import WidgetPanel from "../widget/panel";
 
 /**
  * Start Up component
@@ -25,7 +27,10 @@ class StartUp extends BaseComponent<TProps, TState> {
   /**
    * default state
    */
-  state: Readonly<TState> = {};
+  state: Readonly<TState> = {
+    width: "500",
+    height: "300",
+  };
 
   componentDidMount() {
     this.onInit();
@@ -133,27 +138,43 @@ class StartUp extends BaseComponent<TProps, TState> {
   };
 
   render() {
-    const width = "500px";
-    const height = "300px";
+    const { width = "500", height = "300" } = this.state;
+
+    const flipcardModel = FlipcardModel.instance();
 
     return (
       <Grid columns="2">
         <Grid.Column>
-          <Header>
-            Width: {width} , Height: {height}
-          </Header>
+          <Segment basic>
+            <Header>Widget Template</Header>
+            <Input
+              label="Width"
+              value={width}
+              onChange={(e) => this.setState({ width: e.target.value })}
+            ></Input>
+            <Input
+              label="Height"
+              value={height}
+              onChange={(e) => this.setState({ height: e.target.value })}
+            ></Input>
+          </Segment>
           <Segment
             className="p-0"
             style={{
-              width,
-              height,
+              width: `${width}px`,
+              height: `${height}px`,
               margin: "20px",
             }}
           >
-            <Flipcard
-              {...this.flipCardRender}
-              data={this.flipcardData}
-            ></Flipcard>
+            <WidgetPanel Property={FlipcardProperty} model={flipcardModel}>
+              {() => (
+                <Flipcard
+                  {...this.flipCardRender}
+                  //data={this.flipcardData}
+                  model={flipcardModel}
+                ></Flipcard>
+              )}
+            </WidgetPanel>
           </Segment>
         </Grid.Column>
         <Grid.Column>
@@ -187,7 +208,10 @@ class StartUp extends BaseComponent<TProps, TState> {
 /**
  * State
  */
-type TState = {};
+type TState = {
+  width: string;
+  height: string;
+};
 
 /**
  * State

@@ -20,7 +20,7 @@
 }
 .ui.form .selection.dropdown > .menu {
   border-top-width: 1px !important;
-  border-radius: @defaultBorderRadius !important;
+ border-radius: 0em !important;
 }
 
 .ui.form .ui.icon.input > .icon {
