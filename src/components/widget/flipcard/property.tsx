@@ -1,7 +1,6 @@
 import { Formik, FormikProps } from "formik";
 import * as React from "react";
 import { Form, Grid, Header, Input, Segment, Table } from "semantic-ui-react";
-import { TClientRoute } from "../../../types";
 import { BaseComponent } from "../../base";
 import model from "./model";
 import FlipcardModel from "./model";
@@ -10,7 +9,7 @@ import "./style.scss";
 /**
  * Flipcard Property
  */
-class FlipcardProperty extends BaseComponent<TClientRoute<TProps>, TState> {
+class FlipcardProperty extends BaseComponent<TProps, TState> {
   /*
    * default state
    */

@@ -4,13 +4,7 @@ import ModelBase from "../model.base";
  * Flipcard model cum logic class
  */
 class FlipcardModel extends ModelBase {
-  private _footerTitle: string = "";
-  public get footerTitle(): string {
-    return this._footerTitle;
-  }
-  public set footerTitle(v: string) {
-    this._footerTitle = v;
-  }
+  footerTitle: string = "";
 
   /**
    * create instance of flipcard
@@ -22,7 +16,7 @@ class FlipcardModel extends ModelBase {
   }
 
   public changeFooterTitle(title: string): void {
-    this._footerTitle = title;
+    this.footerTitle = title;
   }
 }
 
