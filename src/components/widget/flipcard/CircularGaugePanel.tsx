@@ -23,13 +23,6 @@ export class CircularGaugeBase extends BaseComponent<TProps> {
   private gauge: CircularGaugeComponent;
   private id: string = Math.floor(Math.random() * 100).toString();
 
-  state: TState = {
-    signalColor: "green",
-    maxValue: 100000000,
-    minValue: 100000000,
-    avgValue: 100000000,
-  };
-
   annotationTemplate() {
     if (this.props.toggle) {
       return (
@@ -135,40 +128,15 @@ export class CircularGaugeBase extends BaseComponent<TProps> {
             </AxisDirective>
           </AxesDirective>
         </CircularGaugeComponent>
-        {/* </Segment> */}
       </div>
     );
   }
-
-  toggleSignalColor = (gaugeVal: number) => {
-    if (
-      gaugeVal >= this.props.gaugeRenderData.rangeLowStart &&
-      gaugeVal < this.props.gaugeRenderData.rangeLowEnd
-    ) {
-      this.setState({ signalColor: "green" });
-    } else if (
-      gaugeVal >= this.props.gaugeRenderData.rangeMedStart &&
-      gaugeVal < this.props.gaugeRenderData.rangeMedEnd
-    ) {
-      this.setState({ signalColor: "yellow" });
-    } else if (
-      gaugeVal >= this.props.gaugeRenderData.rangeHighStart &&
-      gaugeVal < this.props.gaugeRenderData.rangeHighEnd
-    ) {
-      this.setState({ signalColor: "red" });
-    }
-  };
 
   gauge5Interval1 = setInterval((): void => {
     if (this.gauge) {
       let newVal: number;
       if (!this.props.toggle) {
         newVal = 0;
-        this.setState({
-          maxValue: 100000000,
-          minValue: 100000000,
-          avgValue: 100000000,
-        });
       } else {
         if (this.gauge.axes[0].pointers[0].value == 0) {
           newVal = this.props.gaugeData.cur;
@@ -179,14 +147,8 @@ export class CircularGaugeBase extends BaseComponent<TProps> {
           if (newVal <= 0) {
             newVal = 5;
           }
-          this.setState({
-            maxValue: this.props.gaugeData.max,
-            minValue: this.props.gaugeData.min,
-            avgValue: this.props.gaugeData.avg,
-          });
         }
       }
-      this.toggleSignalColor(newVal);
       if (document.getElementById(this.id)) {
         this.gauge.axes[0].pointers[0].animation.enable = true;
         this.gauge.setPointerValue(0, 0, newVal);
@@ -202,12 +164,7 @@ export class CircularGaugeBase extends BaseComponent<TProps> {
   }, 1000);
 }
 
-type TState = {
-  signalColor: string;
-  maxValue: number;
-  minValue: number;
-  avgValue: number;
-};
+type TState = {};
 
 type TProps = {
   gaugeRenderData: any;
