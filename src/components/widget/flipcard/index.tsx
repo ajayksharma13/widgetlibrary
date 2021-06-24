@@ -1,14 +1,15 @@
 import * as React from "react";
-import { Grid, Header, Table } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
 import { BaseComponent } from "../../base";
-import FlipcardModel from "./model";
-import FlipcardProperty from "./property";
+import { CircularGaugeBase } from "./CircularGaugePanel";
+import GaugeModel from "./model";
+import GaugeProperty from "./property";
 import "./style.scss";
 
 /**
  * Flipcard
  */
-class FlipcardComponent extends BaseComponent<TProps> {
+class GaugeComponent extends BaseComponent<TProps> {
   /**
    * default state
    */
@@ -17,149 +18,106 @@ class FlipcardComponent extends BaseComponent<TProps> {
   };
 
   static defaultProps: TProps = {
-    // header: {
-    //   title: "NA",
-    // },
-    // footer: {
-    //   title: "NA",
-    // },
-    // refreshTime: 0,
-    // data: {},
-    // params: [],
-    // footerDataProps: {
-    //   left: {
-    //     title: "NA",
-    //   },
-    //   middle: {
-    //     title: "NA",
-    //   },
-    //   right: {
-    //     title: "NA",
-    //   },
-    // },
-
-    model: new FlipcardModel(),
+    data: {},
+    renderData: {},
+    model: new GaugeModel(),
+    toggle: false,
+    width: "",
+    height: "",
   };
-
-  /**
-   * interbal parameter reference
-   */
-  // intervalParameter: any;
 
   /**
    * mount component
    */
-  componentDidMount() {
-    // const { refreshTime, params } = this.props;
-    // // parameter length should be greater than 1
-    // if (params.length > 1) {
-    //   this.intervalParameter = setInterval(() => {
-    //     this.setState((prevState: TState) => ({
-    //       currentParamIndex:
-    //         prevState.currentParamIndex == params.length - 1
-    //           ? 0
-    //           : ++prevState.currentParamIndex,
-    //     }));
-    //   }, refreshTime * 1000);
-    // }
-  }
+  componentDidMount() {}
 
   /**
    * unmount
    * clear data
    */
-  componentWillUnmount() {
-    //if (this.intervalParameter) this.intervalParameter.clearInterval();
-  }
+  componentWillUnmount() {}
 
   render() {
-    // const { header, footer, footerDataProps, params, data } = this.props;
-    // const { currentParamIndex } = this.state;
-    // const { id, name = "NA", unit = "" } =
-    //   params?.[this.state.currentParamIndex] ?? {};
-    // const { cur = "NA", max = "NA", min = "NA", avg = "NA" } = data?.[id] ?? {};
-    const { model } = this.props;
+    const { model, toggle, height, width } = this.props;
+    const gaugeRenderData = this.props.renderData.params;
+    const gaugeData = this.props.data;
+    const footerData = this.props.renderData.footerDataProps;
 
     return (
       <div className="flipcard-card widget">
-        {/* <div className="widget__box">
-          <div className="widget__header">
-            <div>{header.title}</div>
-            <div className="sub-header">
-              <span>
-                {name} <small>{unit}</small>
-              </span>
-            </div>
-          </div>
-          <div className="widget__content">
-            <div>{cur}</div>
-          </div>
-          <div className="widget__footer">
-            <div className="footer-title">{footer.title}</div>
-            <div className="footer-section">
-              <table>
-                <tr>
-                  <th>{footerDataProps.left.title}</th>
-                  <th>{footerDataProps.middle.title}</th>
-                  <th>{footerDataProps.right.title}</th>
-                </tr>
-                <tr>
-                  <td>{avg}</td>
-                  <td>{max}</td>
-                  <td>{min}</td>
-                </tr>
-              </table>
-            </div>
-          </div>
-        </div> */}
-        <div className="widget__box">
-          <div className="widget__header">
-            <div>NA</div>
-            <div className="sub-header">
-              <span>
-                name <small>unit</small>
-              </span>
-            </div>
-          </div>
-          <div className="widget__content">
-            <div>value</div>
-          </div>
-          <div className="widget__footer">
-            <div className="footer-title">{model.footerTitle}</div>
-            <div className="footer-section">
-              <table>
-                <tr>
-                  <th>AVG</th>
-                  <th>MAX</th>
-                  <th>MIN</th>
-                </tr>
-                <tr>
-                  <td>avg</td>
-                  <td>max</td>
-                  <td>min</td>
-                </tr>
-              </table>
-            </div>
-          </div>
-        </div>
+        <Grid>
+          <Grid.Row columns={gaugeRenderData.length}>
+            {gaugeRenderData.map((param: any) => {
+              return (
+                <Grid.Column>
+                  <div className="widget__box">
+                    <div className="widget__header">
+                      <div>{param.unitName}</div>
+                      <div className="sub-header">
+                        <span>{param.unit}</span>
+                      </div>
+                    </div>
+                    <div className="widget__content">
+                      <div>
+                        <CircularGaugeBase
+                          gaugeRenderData={param}
+                          gaugeFooterData={footerData}
+                          gaugeData={gaugeData[param.id]}
+                          toggle={toggle}
+                          model={model}
+                          height={height}
+                          width={width}
+                        />
+                      </div>
+                    </div>
+                    <div className="widget__footer">
+                      <div className="footer-title">
+                        <b>{model.footerTitle}</b>
+                      </div>
+                      <div className="footer-section">
+                        <table>
+                          <tr>
+                            <th>{footerData.left.title}</th>
+                            <th>{footerData.middle.title}</th>
+                            <th>{footerData.right.title}</th>
+                          </tr>
+                          <tr>
+                            <td>
+                              {toggle ? gaugeData[param.id].min : "N/A"}{" "}
+                              {param.unit}
+                            </td>
+                            <td>
+                              {toggle ? gaugeData[param.id].avg : "N/A"}{" "}
+                              {param.unit}
+                            </td>
+                            <td>
+                              {toggle ? gaugeData[param.id].max : "N/A"}{" "}
+                              {param.unit}
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </Grid.Column>
+              );
+            })}
+          </Grid.Row>
+        </Grid>
       </div>
     );
   }
 }
 
 type TProps = {
-  // data: any;
-  // header: any;
-  // refreshTime: number;
-  // footer: any;
-  // params: Array<any>;
-  // footerDataProps: any;
-
-  model: FlipcardModel;
+  data: any;
+  renderData: any;
+  model: GaugeModel;
+  toggle: boolean;
+  height: string;
+  width: string;
 };
 
-type TState = {
-  // currentParamIndex: number;
-};
+type TState = {};
 
-export { FlipcardComponent as default, FlipcardModel, FlipcardProperty };
+export { GaugeComponent as default, GaugeModel, GaugeProperty };
