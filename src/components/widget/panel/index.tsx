@@ -20,8 +20,10 @@ class WidgetPanel extends BaseComponent<TProps> {
    * default props
    */
   static defaultProps: Omit<TProps, "Property" | "model" | "children"> = {
-    id: "",
+    id: Math.floor(Math.random() * 100).toString(),
     title: "Widget Header",
+    renderData: {},
+    gaugeCount: 1,
   };
 
   private onOpenProperty = () => {
@@ -73,6 +75,8 @@ class WidgetPanel extends BaseComponent<TProps> {
                     <PropertyComponent
                       model={model}
                       onUpdatePanel={this.forceUpdate.bind(this)}
+                      renderData={this.props.renderData}
+                      gaugeCount={this.props.gaugeCount}
                     />
                   </div>
                 }
@@ -99,6 +103,8 @@ type TProps = {
   onRemove?: Function;
   Property: React.ComponentClass<any>;
   children(data?: any): React.ReactNode;
+  renderData: any;
+  gaugeCount: number;
 };
 
 type TState = {
