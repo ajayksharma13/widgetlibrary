@@ -64,23 +64,34 @@ class GaugeComponent extends BaseComponent<TProps> {
 
   drawStats = (data: any, renderData: any, footerData: any) => {
     const stats = this.props.model.statOptions;
-    return (
-      <table>
-        <tr>
-          {stats.map((stat, i) => {
-            return <th>{footerData[stat].title}</th>;
-          })}
-        </tr>
-        <tr>
-          {stats.map((stat, i) => {
-            return (
-              <td>
-                {this.state.toggle ? data[stat] + " " + renderData.unit : "N/A"}
-              </td>
-            );
-          })}
-        </tr>
-      </table>
+    return stats.length > 0 ? (
+      <div className="widget__footer">
+        <div className="footer-title">
+          <b>{this.props.model.footerTitle}</b>
+        </div>
+        <div className="footer-section">
+          <table>
+            <tr>
+              {stats.map((stat, i) => {
+                return <th>{footerData[stat].title}</th>;
+              })}
+            </tr>
+            <tr>
+              {stats.map((stat, i) => {
+                return (
+                  <td>
+                    {this.state.toggle
+                      ? data[stat] + " " + renderData.unit
+                      : "N/A"}
+                  </td>
+                );
+              })}
+            </tr>
+          </table>
+        </div>
+      </div>
+    ) : (
+      <div />
     );
   };
 
@@ -102,12 +113,29 @@ class GaugeComponent extends BaseComponent<TProps> {
               return (
                 <Grid.Column>
                   <div className="widget__box">
-                    <div className="widget__header">
-                      <div>{renderData ? renderData.unitName : "N/A"}</div>
-                      <div className="sub-header">
-                        <span>{renderData ? renderData.unit : "N/A"}</span>
+                    {renderData ? (
+                      <div className="widget__header">
+                        <div>{renderData ? renderData.unitName : "N/A"}</div>
+                        <div className="sub-header">
+                          <span>{renderData ? renderData.unit : "N/A"}</span>
+                        </div>
                       </div>
-                    </div>
+                    ) : (
+                      <div className="widget__header">
+                        <div
+                          style={{
+                            backgroundColor: "#ffffff",
+                            borderColor: "#ffffff",
+                          }}
+                        />
+                        <div
+                          style={{
+                            backgroundColor: "#ffffff",
+                            borderColor: "#ffffff",
+                          }}
+                        />
+                      </div>
+                    )}
                     <div className="widget__content">
                       <div>
                         <CircularGaugeBase
@@ -122,14 +150,7 @@ class GaugeComponent extends BaseComponent<TProps> {
                       </div>
                     </div>
                     {data ? (
-                      <div className="widget__footer">
-                        <div className="footer-title">
-                          <b>{model.footerTitle}</b>
-                        </div>
-                        <div className="footer-section">
-                          {this.drawStats(data, renderData, footerData)}
-                        </div>
-                      </div>
+                      this.drawStats(data, renderData, footerData)
                     ) : (
                       <div />
                     )}

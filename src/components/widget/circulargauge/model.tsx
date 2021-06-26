@@ -7,7 +7,7 @@ class GaugeModel extends ModelBase {
   footerTitle: string = "Summary";
   paramCount: number = 1;
   selectedParams: any;
-  statOptions: string[] = ["min", "max", "avg"];
+  statOptions: string[] = [];
 
   /**
    * create instance of flipcard
@@ -35,7 +35,9 @@ class GaugeModel extends ModelBase {
 
   public assignStatOptions(data: string[]): void {
     this.statOptions = data;
-    this.statOptions.splice(0, 1);
+    if (this.statOptions.length > 3) {
+      this.statOptions.splice(0, 1);
+    }
     console.log(this.statOptions);
   }
 }

@@ -21,11 +21,29 @@ import "./style.scss";
 
 export class CircularGaugeBase extends BaseComponent<TProps> {
   private gauge: CircularGaugeComponent;
-  private id: string = Math.floor(Math.random() * 100).toString();
+  private id: string = Math.floor(Math.random() * 10000).toString();
+
+  setHeightState = () => {
+    if (this.props.model.selectedParams[this.props.index]) {
+      return (parseInt(this.props.height) - 230).toString();
+    } else {
+      // return (parseInt(this.props.height) - 31).toString();
+      return (parseInt(this.props.height) - 230).toString();
+    }
+  };
+
+  setWidthState = () => {
+    if (this.props.model.selectedParams[this.props.index]) {
+      return (parseInt(this.props.width) - 10).toString();
+    } else {
+      // return (parseInt(this.props.width) - 50).toString();
+      return (parseInt(this.props.width) - 10).toString();
+    }
+  };
 
   state: TState = {
-    height: this.props.height,
-    width: this.props.width,
+    height: this.setHeightState(),
+    width: this.setWidthState(),
     toggle: false,
   };
 
@@ -40,120 +58,143 @@ export class CircularGaugeBase extends BaseComponent<TProps> {
       return '<div style="width:90px;text-align:center;font-size:20px;font-family:Roboto"> N/A </div>';
   }
 
-  calcHeight = (): string => {
-    return (parseInt(this.state.height) - 230).toString() + "px";
-  };
-
-  calcWidth = (): string => {
-    return (parseInt(this.state.width) - 10).toString() + "px";
-  };
-
   handleToggle3 = () => {
     this.setState({ toggle: !this.state.toggle });
   };
 
   setHeight3 = () => {
-    this.setState({ height: this.props.height });
+    if (this.props.model.selectedParams[this.props.index]) {
+      this.setState({ height: (parseInt(this.props.height) - 230).toString() });
+    } else {
+      // this.setState({ height: (parseInt(this.props.height) - 31).toString() });
+      this.setState({ height: (parseInt(this.props.height) - 230).toString() });
+    }
+    if (this.state.toggle) {
+      this.setState({ toggle: false });
+    }
+    this.gauge.refresh();
   };
 
   setWidth3 = () => {
-    this.setState({ width: this.props.width });
+    if (this.props.model.selectedParams[this.props.index]) {
+      this.setState({ width: (parseInt(this.props.width) - 10).toString() });
+    } else {
+      // this.setState({ width: (parseInt(this.props.width) - 50).toString() });
+      this.setState({ width: (parseInt(this.props.width) - 10).toString() });
+    }
+    if (this.state.toggle) {
+      this.setState({ toggle: false });
+    }
+    this.gauge.refresh();
   };
 
   render() {
-    const renderData = this.props.gaugeRenderData[
+    let renderData = this.props.gaugeRenderData[
       this.props.model.selectedParams[this.props.index] - 1
     ];
-    const paramSelected = renderData ? true : false;
+    if (!renderData) {
+      renderData = {
+        id: "0",
+        rangeStart: 0,
+        rangeEnd: 100,
+        rangeVeryLowStart: 0,
+        rangeVeryLowEnd: 20,
+        rangeLowStart: 20,
+        rangeLowEnd: 50,
+        rangeHighStart: 50,
+        rangeHighEnd: 80,
+        rangeVeryHighStart: 80,
+        rangeVeryHighEnd: 100,
+      };
+    }
     console.log(this.state.width, this.state.height);
     return (
       <div className="gauge-main">
-        {paramSelected ? (
-          <CircularGaugeComponent
-            centerY="65%"
-            style={{ height: this.calcHeight(), width: this.calcWidth() }}
-            ref={(gauge) => (this.gauge = gauge)}
-            id={this.id}
-          >
-            <Inject services={[Annotations]} />
-            <AxesDirective>
-              <AxisDirective
-                minimum={renderData.rangeStart}
-                maximum={renderData.rangeEnd}
-                radius="120%"
-                startAngle={270}
-                endAngle={90}
-                lineStyle={{ width: 0 }}
-                labelStyle={{
-                  font: {
-                    size: "13px",
-                    fontFamily: "Roboto",
-                  },
-                  position: "Outside",
-                  autoAngle: true,
-                  useRangeColor: false,
-                }}
-                majorTicks={{ height: 0 }}
-                minorTicks={{ height: 0 }}
-              >
-                <PointersDirective>
-                  <PointerDirective
-                    animation={{ enable: true, duration: 900 }}
-                    value={0}
-                    radius="80%"
-                    color="#757575"
-                    pointerWidth={7}
-                    cap={{
-                      radius: 8,
-                      color: "#757575",
-                      border: { width: 0 },
-                    }}
-                    needleTail={{
-                      color: "#757575",
-                      length: "15%",
-                    }}
-                  />
-                </PointersDirective>
-                <AnnotationsDirective>
-                  <AnnotationDirective
-                    content={this.annotationTemplate(renderData.unit)}
-                    angle={180}
-                    zIndex="1"
-                    radius="30%"
-                  />
-                </AnnotationsDirective>
-                <RangesDirective>
-                  <RangeDirective
-                    start={renderData.rangeVeryLowStart}
-                    end={renderData.rangeVeryLowEnd}
-                    radius="100%"
-                    color="#82b944"
-                  />
-                  <RangeDirective
-                    start={renderData.rangeLowStart}
-                    end={renderData.rangeLowEnd}
-                    radius="100%"
-                    color="#ddec12"
-                  />
-                  <RangeDirective
-                    start={renderData.rangeHighStart}
-                    end={renderData.rangeHighEnd}
-                    radius="100%"
-                    color="#ff6000"
-                  />
-                  <RangeDirective
-                    start={renderData.rangeVeryHighStart}
-                    end={renderData.rangeVeryHighEnd}
-                    radius="100%"
-                    color="red"
-                  />
-                </RangesDirective>
-              </AxisDirective>
-            </AxesDirective>
-          </CircularGaugeComponent>
-        ) : (
-          <div />
-        )}
+        <CircularGaugeComponent
+          centerY="65%"
+          style={{
+            height: this.setHeightState() + "px",
+            width: this.setWidthState() + "px",
+          }}
+          ref={(gauge) => (this.gauge = gauge)}
+          id={this.id}
+        >
+          <Inject services={[Annotations]} />
+          <AxesDirective>
+            <AxisDirective
+              minimum={renderData.rangeStart}
+              maximum={renderData.rangeEnd}
+              radius="120%"
+              startAngle={270}
+              endAngle={90}
+              lineStyle={{ width: 0 }}
+              labelStyle={{
+                font: {
+                  size: "13px",
+                  fontFamily: "Roboto",
+                },
+                position: "Outside",
+                autoAngle: true,
+                useRangeColor: false,
+              }}
+              majorTicks={{ height: 0 }}
+              minorTicks={{ height: 0 }}
+            >
+              <PointersDirective>
+                <PointerDirective
+                  animation={{ enable: true, duration: 900 }}
+                  value={0}
+                  radius="80%"
+                  color="#757575"
+                  pointerWidth={7}
+                  cap={{
+                    radius: 8,
+                    color: "#757575",
+                    border: { width: 0 },
+                  }}
+                  needleTail={{
+                    color: "#757575",
+                    length: "15%",
+                  }}
+                />
+              </PointersDirective>
+              <AnnotationsDirective>
+                <AnnotationDirective
+                  content={this.annotationTemplate(renderData.unit)}
+                  angle={180}
+                  zIndex="1"
+                  radius="30%"
+                />
+              </AnnotationsDirective>
+              <RangesDirective>
+                <RangeDirective
+                  start={renderData.rangeVeryLowStart}
+                  end={renderData.rangeVeryLowEnd}
+                  radius="100%"
+                  color="#82b944"
+                />
+                <RangeDirective
+                  start={renderData.rangeLowStart}
+                  end={renderData.rangeLowEnd}
+                  radius="100%"
+                  color="#ddec12"
+                />
+                <RangeDirective
+                  start={renderData.rangeHighStart}
+                  end={renderData.rangeHighEnd}
+                  radius="100%"
+                  color="#ff6000"
+                />
+                <RangeDirective
+                  start={renderData.rangeVeryHighStart}
+                  end={renderData.rangeVeryHighEnd}
+                  radius="100%"
+                  color="red"
+                />
+              </RangesDirective>
+            </AxisDirective>
+          </AxesDirective>
+        </CircularGaugeComponent>
       </div>
     );
   }

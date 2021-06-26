@@ -23,10 +23,10 @@ class StartUp extends BaseComponent<TProps, TState> {
    * default state
    */
   state: TState = {
-    width: "300",
+    width: "400",
     height: "500",
-    width2: "1500",
-    height2: "600",
+    width2: "1000",
+    height2: "500",
   };
 
   componentDidMount() {
@@ -217,7 +217,7 @@ class StartUp extends BaseComponent<TProps, TState> {
     const gaugeModel2 = GaugeModel.instance(3);
     const multiWidgetHeight = this.getHeight(2);
     const multiWidgetWidth = Math.floor(
-      parseInt(this.getWidth(2)) / 3
+      (parseInt(this.getWidth(2)) - 60) / 3
     ).toString();
     const headerTitle = this.gaugeRender.headerTitle;
     return (
