@@ -2,6 +2,7 @@ import setDayWithOptions from "date-fns/esm/fp/setDayWithOptions/index.js";
 import { Formik, FormikProps } from "formik";
 import { arrayOf } from "prop-types";
 import * as React from "react";
+
 import {
   Form,
   Grid,
@@ -10,6 +11,7 @@ import {
   Segment,
   Table,
   Dropdown,
+  Radio,
 } from "semantic-ui-react";
 import { BaseComponent } from "../../base";
 import model from "./model";
@@ -42,6 +44,7 @@ class GaugeProperty extends BaseComponent<TProps, TState> {
       { value: "avg", text: "Average" },
       { value: "tot", text: "Total" },
     ],
+    gaugeChoice: this.props.gaugeCount === 1 ? "uno" : "tres",
   };
 
   static defaultProps: TProps = {
@@ -61,6 +64,11 @@ class GaugeProperty extends BaseComponent<TProps, TState> {
     this.props.onUpdatePanel();
   };
 
+  setGaugeChoice = async (e: any) => {
+    await this.setState({ gaugeChoice: e.value });
+    this.props.setGaugeChoice(this.state.gaugeChoice === "uno" ? 1 : 3);
+  };
+
   render() {
     const { model, onUpdatePanel } = this.props;
     let arr = Array.apply(null, Array(this.props.gaugeCount)).map(
@@ -75,6 +83,27 @@ class GaugeProperty extends BaseComponent<TProps, TState> {
         </div>
         <div className="property__content">
           <Form>
+            <p>
+              <b>Gauge Type</b>
+            </p>
+            <Form.Field>
+              <Radio
+                label="Single Gauge"
+                name="radioGroup"
+                value="uno"
+                checked={this.state.gaugeChoice === "uno"}
+                onChange={(e, value) => this.setGaugeChoice(value)}
+              />
+            </Form.Field>
+            <Form.Field>
+              <Radio
+                label="Triple Gauge"
+                name="radioGroup"
+                value="tres"
+                checked={this.state.gaugeChoice === "tres"}
+                onChange={(e, value) => this.setGaugeChoice(value)}
+              />
+            </Form.Field>
             <p>
               <b>Footer Header</b>
             </p>
@@ -129,11 +158,13 @@ type TProps = {
   onUpdatePanel: Function;
   renderData: any;
   gaugeCount: number;
+  setGaugeChoice?: Function;
 };
 
 type TState = {
   options: any[];
   statOptions: any[];
+  gaugeChoice: string;
 };
 
 export { GaugeProperty as default };

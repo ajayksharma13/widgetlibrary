@@ -13,7 +13,6 @@ import WidgetPanel from "../widget/panel";
  */
 class StartUp extends BaseComponent<TProps, TState> {
   childToggle: any = React.createRef();
-  childToggle_multi: any = React.createRef();
   /**
    * default props
    */
@@ -25,8 +24,7 @@ class StartUp extends BaseComponent<TProps, TState> {
   state: TState = {
     width: "400",
     height: "500",
-    width2: "1000",
-    height2: "500",
+    gaugeChoice: 1,
   };
 
   componentDidMount() {
@@ -160,36 +158,32 @@ class StartUp extends BaseComponent<TProps, TState> {
     },
   };
 
-  getHeight = (num: number) => {
+  getHeight = (num: number): string => {
     if (num === 1) {
       if (parseInt(this.state.height) < 420) {
         return "420";
       } else return this.state.height;
     } else {
-      if (parseInt(this.state.height2) < 420) {
+      if (parseInt(this.state.height) < 420) {
         return "420";
-      } else return this.state.height2;
+      } else return this.state.height;
     }
   };
 
-  getWidth = (num: number) => {
+  getWidth = (num: number): string => {
     if (num === 1) {
       if (parseInt(this.state.width) < 280) {
         return "280";
       } else return this.state.width;
     } else {
-      if (parseInt(this.state.width2) < 840) {
+      if (parseInt(this.state.width) < 840) {
         return "840";
-      } else return this.state.width2;
+      } else return this.state.width;
     }
   };
 
   handleToggle = () => {
     this.childToggle.current.handleToggle2();
-  };
-
-  handleToggle2 = () => {
-    this.childToggle_multi.current.handleToggle2();
   };
 
   setHeight = async (event: any) => {
@@ -202,29 +196,36 @@ class StartUp extends BaseComponent<TProps, TState> {
     this.childToggle.current.setWidth2();
   };
 
-  setHeight_multi = async (event: any) => {
-    await this.setState({ height2: event.target.value });
-    this.childToggle_multi.current.setHeight2();
-  };
-
-  setWidth_multi = async (event: any) => {
-    await this.setState({ width2: event.target.value });
-    this.childToggle_multi.current.setWidth2();
+  getGaugeChoice = (choice: number) => {
+    if (choice === 3) {
+      this.setState({
+        gaugeChoice: choice,
+        width: (parseInt(this.state.width) * 3).toString(),
+      });
+    } else {
+      this.setState({
+        gaugeChoice: choice,
+        width: (parseInt(this.state.width) / 3).toString(),
+      });
+    }
   };
 
   render() {
-    const gaugeModel = GaugeModel.instance(1);
-    const gaugeModel2 = GaugeModel.instance(3);
-    const multiWidgetHeight = this.getHeight(2);
-    const multiWidgetWidth = Math.floor(
-      (parseInt(this.getWidth(2)) - 60) / 3
-    ).toString();
+    const gaugeModel = GaugeModel.instance(this.state.gaugeChoice);
+    const multiWidgetHeight = this.getHeight(this.state.gaugeChoice);
+    const multiWidgetWidth =
+      this.state.gaugeChoice === 3
+        ? Math.floor(
+            (parseInt(this.getWidth(this.state.gaugeChoice)) - 60) / 3
+          ).toString()
+        : this.getWidth(this.state.gaugeChoice);
     const headerTitle = this.gaugeRender.headerTitle;
+
     return (
       <Grid columns="1">
         <Grid.Column>
           <Segment basic>
-            <Header>Gauge Widget Template</Header>
+            <Header>Multi Gauge Widget Template</Header>
             <Input
               label="Width"
               value={this.state.width}
@@ -246,8 +247,8 @@ class StartUp extends BaseComponent<TProps, TState> {
           <Segment
             className="p-0"
             style={{
-              width: `${this.getWidth(1)}px`,
-              height: `${this.getHeight(1)}px`,
+              width: `${this.getWidth(this.state.gaugeChoice)}px`,
+              height: `${this.getHeight(this.state.gaugeChoice)}px`,
               margin: "20px",
             }}
           >
@@ -256,7 +257,8 @@ class StartUp extends BaseComponent<TProps, TState> {
               Property={GaugeProperty}
               model={gaugeModel}
               renderData={this.gaugeRender}
-              gaugeCount={1}
+              gaugeCount={this.state.gaugeChoice}
+              setGaugeChoice={this.getGaugeChoice}
             >
               {() => (
                 <GaugeComponent
@@ -264,57 +266,9 @@ class StartUp extends BaseComponent<TProps, TState> {
                   data={this.gaugeData}
                   renderData={this.gaugeRender}
                   ref={this.childToggle}
-                  height={this.getHeight(1)}
-                  width={this.getWidth(1)}
-                  gaugeCount={1}
-                ></GaugeComponent>
-              )}
-            </WidgetPanel>
-          </Segment>
-          <Segment basic>
-            <Header>Multi Gauge Widget Template</Header>
-            <Input
-              label="Width"
-              value={this.state.width2}
-              onChange={(e) => this.setWidth_multi(e)}
-            ></Input>
-            <Input
-              label="Height"
-              value={this.state.height2}
-              onChange={(e) => this.setHeight_multi(e)}
-            ></Input>
-          </Segment>
-          <button
-            className="ui inverted primary button"
-            style={{ margin: 10, alignSelf: "flex-start" }}
-            onClick={this.handleToggle2}
-          >
-            Start / Stop
-          </button>
-          <Segment
-            className="p-0"
-            style={{
-              width: `${this.getWidth(2)}px`,
-              height: `${this.getHeight(2)}px`,
-              margin: "20px",
-            }}
-          >
-            <WidgetPanel
-              title={headerTitle}
-              Property={GaugeProperty}
-              model={gaugeModel2}
-              renderData={this.gaugeRender}
-              gaugeCount={3}
-            >
-              {() => (
-                <GaugeComponent
-                  model={gaugeModel2}
-                  data={this.gaugeData}
-                  renderData={this.gaugeRender}
-                  ref={this.childToggle_multi}
                   height={multiWidgetHeight}
                   width={multiWidgetWidth}
-                  gaugeCount={3}
+                  gaugeCount={this.state.gaugeChoice}
                 ></GaugeComponent>
               )}
             </WidgetPanel>
@@ -354,10 +308,7 @@ class StartUp extends BaseComponent<TProps, TState> {
 type TState = {
   width: string;
   height: string;
-  width2: string;
-  height2: string;
-  // toggle: boolean;
-  // toggle2: boolean;
+  gaugeChoice: number;
 };
 
 /**

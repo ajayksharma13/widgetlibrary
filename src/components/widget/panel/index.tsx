@@ -77,6 +77,7 @@ class WidgetPanel extends BaseComponent<TProps> {
                       onUpdatePanel={this.forceUpdate.bind(this)}
                       renderData={this.props.renderData}
                       gaugeCount={this.props.gaugeCount}
+                      setGaugeChoice={this.props.setGaugeChoice}
                     />
                   </div>
                 }
@@ -105,6 +106,7 @@ type TProps = {
   children(data?: any): React.ReactNode;
   renderData: any;
   gaugeCount: number;
+  setGaugeChoice?: Function;
 };
 
 type TState = {

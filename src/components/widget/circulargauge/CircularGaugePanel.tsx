@@ -21,7 +21,7 @@ import "./style.scss";
 
 export class CircularGaugeBase extends BaseComponent<TProps> {
   private gauge: CircularGaugeComponent;
-  private id: string = Math.floor(Math.random() * 10000).toString();
+  private id: string = this.props.index.toString();
 
   setHeightState = () => {
     if (this.props.model.selectedParams[this.props.index]) {

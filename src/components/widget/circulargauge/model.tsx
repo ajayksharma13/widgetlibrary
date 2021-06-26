@@ -8,6 +8,7 @@ class GaugeModel extends ModelBase {
   paramCount: number = 1;
   selectedParams: any;
   statOptions: string[] = [];
+  // gaugeChoice: number = 1;
 
   /**
    * create instance of flipcard
@@ -40,6 +41,10 @@ class GaugeModel extends ModelBase {
     }
     console.log(this.statOptions);
   }
+
+  // public assignGaugeChoice(choice: string): void {
+  //   this.gaugeChoice = choice === "uno" ? 1 : 3;
+  // }
 }
 
 export { GaugeModel as default };

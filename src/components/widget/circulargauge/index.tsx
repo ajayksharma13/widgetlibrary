@@ -11,7 +11,7 @@ import "./style.scss";
  * Flipcard
  */
 class GaugeComponent extends BaseComponent<TProps> {
-  childToggle2: any[] = Array(this.props.gaugeCount)
+  childToggle2: any[] = Array(3)
     .fill({})
     .map((_, i) => React.createRef());
   /**
@@ -25,7 +25,7 @@ class GaugeComponent extends BaseComponent<TProps> {
   static defaultProps: TProps = {
     data: {},
     renderData: {},
-    gaugeCount: 1,
+    gaugeCount: 3,
     model: new GaugeModel(),
     width: "",
     height: "",
@@ -45,20 +45,26 @@ class GaugeComponent extends BaseComponent<TProps> {
 
   handleToggle2 = () => {
     for (let i = 0; i < this.props.gaugeCount; i++) {
-      this.childToggle2[i].current.handleToggle3();
+      if (this.childToggle2[i].current) {
+        this.childToggle2[i].current.handleToggle3();
+      }
     }
     this.setState({ toggle: !this.state.toggle });
   };
 
   setHeight2 = () => {
     for (let i = 0; i < this.props.gaugeCount; i++) {
-      this.childToggle2[i].current.setHeight3();
+      if (this.childToggle2[i].current) {
+        this.childToggle2[i].current.setHeight3();
+      }
     }
   };
 
   setWidth2 = () => {
     for (let i = 0; i < this.props.gaugeCount; i++) {
-      this.childToggle2[i].current.setWidth3();
+      if (this.childToggle2[i].current) {
+        this.childToggle2[i].current.setWidth3();
+      }
     }
   };
 
@@ -96,6 +102,7 @@ class GaugeComponent extends BaseComponent<TProps> {
   };
 
   render() {
+    console.log(this.childToggle2);
     const { model, height, width, gaugeCount } = this.props;
     const gaugeRenderData = this.props.renderData.params;
     const gaugeData = this.props.data;
