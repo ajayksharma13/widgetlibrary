@@ -1,93 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1"
+    />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="pragma" content="no-cache" />
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-  <meta http-equiv="cache-control" content="no-cache">
-  <meta http-equiv="expires" content="0">
-  <meta http-equiv="pragma" content="no-cache">
+    <title>Widget Template</title>
+    <base href="/" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
+      integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ=="
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/react-semantic-toasts@0.6.5/styles/react-semantic-alert.css"
+      integrity="sha256-CzgmKcJGR+J5k1ouNB/8K0dlVlurcY/RZMREpvadnqg="
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/react-datepicker/3.3.0/react-datepicker.min.css"
+      integrity="sha512-/1cmVrpu11YQSnAAVZTAIFsrIhdbwPdK1gVs9TJ1uuFF81cDuf1GGPCkNoDPQZLqgLyR4QNr6Fut5/gkHyMtcQ=="
+      crossorigin="anonymous"
+    />
+    <link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/assets/images/favicon.ico" />
 
-  <title>Widget Template</title>
-  <base href="/" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
-    integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ=="
-    crossorigin="anonymous" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/react-semantic-toasts@0.6.5/styles/react-semantic-alert.css"
-    integrity="sha256-CzgmKcJGR+J5k1ouNB/8K0dlVlurcY/RZMREpvadnqg=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/react-datepicker/3.3.0/react-datepicker.min.css"
-    integrity="sha512-/1cmVrpu11YQSnAAVZTAIFsrIhdbwPdK1gVs9TJ1uuFF81cDuf1GGPCkNoDPQZLqgLyR4QNr6Fut5/gkHyMtcQ=="
-    crossorigin="anonymous" />
-  <link rel="shortcut icon" href="/assets/images/favicon.ico">
+    <style>
+      @font-face {
+        font-family: SegoeSemiLight;
+        src: url(/assets/font/segoe/segoeui-semilight.ttf);
+      }
 
-  <style>
-    @font-face {
-      font-family: SegoeSemiLight;
-      src: url(/assets/font/segoe/segoeui-semilight.ttf);
-    }
+      @font-face {
+        font-family: SegoeLight;
+        src: url(/assets/font/segoe/segoeui-light.ttf);
+      }
 
-    @font-face {
-      font-family: SegoeLight;
-      src: url(/assets/font/segoe/segoeui-light.ttf);
-    }
+      @font-face {
+        font-family: SegoeRegular;
+        src: url(/assets/font/segoe/segoeui-regular.ttf);
+      }
 
-    @font-face {
-      font-family: SegoeRegular;
-      src: url(/assets/font/segoe/segoeui-regular.ttf);
-    }
+      @font-face {
+        font-family: SegoeMedium;
+        src: url(/assets/font/segoe/segoeui-black.ttf);
+      }
 
+      @font-face {
+        font-family: SegoeBold;
+        src: url(/assets/font/segoe/segoeui-bold.ttf);
+      }
 
-    @font-face {
-      font-family: SegoeMedium;
-      src: url(/assets/font/segoe/segoeui-black.ttf);
-    }
+      body {
+        font-family: "SegoeRegular", "Lato", "Helvetica Neue", Arial, Helvetica,
+          sans-serif !important;
+      }
 
-    @font-face {
-      font-family: SegoeBold;
-      src: url(/assets/font/segoe/segoeui-bold.ttf);
-    }
+      body #app {
+        font-family: "SegoeRegular", "Lato", "Helvetica Neue", Arial, Helvetica,
+          sans-serif !important;
+      }
 
+      .font__segoesemilight {
+        font-family: "SegoeSemiLight", "Lato", "Helvetica Neue", Arial,
+          Helvetica, sans-serif !important;
+      }
 
-    body {
-      font-family: "SegoeRegular", 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif !important;
-    }
+      .font__segoelight {
+        font-family: "SegoeLight", "Lato", "Helvetica Neue", Arial, Helvetica,
+          sans-serif !important;
+      }
 
-    body #app {
-      font-family: "SegoeRegular", 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif !important;
-    }
+      .font__segoeregular {
+        font-family: "SegoeRegular", "Lato", "Helvetica Neue", Arial, Helvetica,
+          sans-serif !important;
+      }
 
-    .font__segoesemilight {
-      font-family: "SegoeSemiLight", 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif !important;
-    }
+      .font__segoemedium {
+        font-family: "SegoeMedium", "Lato", "Helvetica Neue", Arial, Helvetica,
+          sans-serif !important;
+      }
 
-    .font__segoelight {
-      font-family: "SegoeLight", 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif !important;
-    }
+      .font__segoebold {
+        font-family: "SegoeBold", "Lato", "Helvetica Neue", Arial, Helvetica,
+          sans-serif !important;
+      }
+    </style>
+  </head>
 
-    .font__segoeregular {
-      font-family: "SegoeRegular", 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif !important;
-    }
-
-    .font__segoemedium {
-      font-family: "SegoeMedium", 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif !important;
-    }
-
-    .font__segoebold {
-      font-family: "SegoeBold", 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif !important;
-    }
-  </style>
-
-</head>
-
-<body>
-  <div id="app" />
-  <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui-react/2.0.1/semantic-ui-react.min.js"
-    integrity="sha512-W9dQQ559Z5+FSXRdjP+IpKOXh7/nL29P7AiVilqTMmpEmgo93HD3PSdvB3fNKCpl1b4VSItxJEavbcDmGE8UQQ=="
-    crossorigin="anonymous"></script>
-
-
-</body>
-
+  <body>
+    <div id="app" />
+    <script
+      crossorigin
+      src="https://unpkg.com/react@16/umd/react.production.min.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui-react/2.0.1/semantic-ui-react.min.js"
+      integrity="sha512-W9dQQ559Z5+FSXRdjP+IpKOXh7/nL29P7AiVilqTMmpEmgo93HD3PSdvB3fNKCpl1b4VSItxJEavbcDmGE8UQQ=="
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
