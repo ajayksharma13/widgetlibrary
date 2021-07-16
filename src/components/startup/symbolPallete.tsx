@@ -8,11 +8,7 @@ import {
 } from "@syncfusion/ej2-react-diagrams";
 import { BaseComponent } from "../base/index";
 
-import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
-import {
-  NumericTextBoxComponent,
-  UploaderComponent,
-} from "@syncfusion/ej2-react-inputs";
+import { UploaderComponent } from "@syncfusion/ej2-react-inputs";
 
 const sleep = (milliseconds: number) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -158,6 +154,7 @@ let connectorSymbols: ConnectorModel[] = [
   },
   {
     id: "link3",
+    // id: "Link1",
     type: "Orthogonal",
     sourcePoint: { x: 0, y: 0 },
     targetPoint: { x: 40, y: 40 },
@@ -281,6 +278,10 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
       newShapes.push({
         id: Math.floor(Math.random() * 10000).toString(),
         style: { fill: "none" },
+        annotations: [
+          { content: "" },
+          { constraints: AnnotationConstraints.Interaction },
+        ],
         shape: {
           type: "Native",
           content: reader.result ? reader.result.toString() : "",
@@ -314,8 +315,8 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
   render() {
     console.log(this.state.svgShapes);
     return (
-      <div className="col-lg-3">
-        <div style={{ width: "100%", height: "80%" }} id="palette-space">
+      <div className="col-lg-4">
+        <div style={{ height: "80vh" }} id="palette-space">
           <div className="content-wrapper">
             <SymbolPaletteComponent
               id="symbolpalette"
@@ -384,7 +385,7 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
       symbol.width = 50;
       symbol.height = 40;
     }
-    symbol.style = { strokeWidth: 2, strokeColor: "#757575" };
+    symbol.style = { strokeWidth: 1, strokeColor: "#757575" };
     return symbol;
   }
 

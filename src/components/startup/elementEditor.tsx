@@ -19,7 +19,7 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
 
   onStrokeColorChange = (e: any) => {
     // console.log(e);
-    this.props.strokeChage(e.currentValue.hex);
+    this.props.strokeChange(e.currentValue.hex);
     this.setState({ strokeColor: e.currentValue.hex });
   };
 
@@ -32,24 +32,30 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
   render() {
     return (
       <div className="row">
-        <div className="row-header">Fill-Color</div>
-        <div style={{ paddingTop: "8px" }}>
+        <div className="row-header">
+          <h6 style={{ textAlign: "center" }}>Fill-Color</h6>
+        </div>
+        <div style={{ paddingTop: "5px", alignSelf: "center" }}>
           <ColorPickerComponent
             id="color-picker-1"
             value={this.state.fillColor}
             change={this.onFillColorChange}
           />
         </div>
-        <div className="row-header">Stroke-Color</div>
-        <div style={{ paddingTop: "8px" }}>
+        <div className="row-header">
+          <h6 style={{ textAlign: "center" }}>Stroke-Color</h6>
+        </div>
+        <div style={{ paddingTop: "5px", alignSelf: "center" }}>
           <ColorPickerComponent
             id="color-picker-2"
             value={this.state.strokeColor}
             change={this.onStrokeColorChange}
           />
         </div>
-        <div className="row-header">Text-Color</div>
-        <div style={{ paddingTop: "8px" }}>
+        <div className="row-header">
+          <h6 style={{ textAlign: "center" }}>Text-Color</h6>
+        </div>
+        <div style={{ paddingTop: "5px", alignSelf: "center" }}>
           <ColorPickerComponent
             id="color-picker-3"
             value={this.state.textColor}
@@ -68,7 +74,7 @@ type TState = {
 };
 
 type TProps = {
-  colorChange: ChangeEventHandler<HTMLElement>;
-  strokeChage: ChangeEventHandler<HTMLElement>;
-  textColorChange: ChangeEventHandler<HTMLElement>;
+  colorChange: Function;
+  strokeChange: Function;
+  textColorChange: Function;
 };

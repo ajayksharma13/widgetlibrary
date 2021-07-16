@@ -9,15 +9,6 @@ class BaseComponent<
   Props = {},
   State = {},
   Snapshot = {}
-> extends React.PureComponent<Props, State, Snapshot> {
-  rendereComplete() {
-    /**custom render complete function */
-  }
-  componentDidMount() {
-    setTimeout(() => {
-      this.rendereComplete();
-    });
-  }
-}
+> extends React.PureComponent<Props, State, Snapshot> {}
 
 export { BaseComponent };

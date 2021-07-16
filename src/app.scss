@@ -1,5 +1,26 @@
 @import "./libs/bootstrap.css";
 @import "./libs/control.scss";
+@import "../node_modules/@syncfusion/ej2-base/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-react-buttons/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-react-popups/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-react-navigations/styles/material.css";
+
+.e-menu-icon {
+  color: #00ffff;
+  font-size: 26px;
+}
+
+.e-save-icon::before {
+  content: "\e735";
+}
+
+.e-new-icon::before {
+  content: "\e712";
+}
+
+.e-load-icon::before {
+  content: "\e60f";
+}
 
 .page-loading {
   height: 100vh;

@@ -22,7 +22,6 @@ path[id^="Link1"] {
   stroke-dasharray: 8;
   animation: dash 0.5s linear;
   animation-iteration-count: infinite;
-  stroke-width: 3;
 }
 @keyframes dash {
   to {
@@ -38,14 +37,13 @@ path[id^="Link1"] {
 .row {
   margin-left: 0px;
   margin-right: 0px;
-  padding-top: 3px;
-  padding-left: 10px;
-  border-width: 2px;
-  border-color: "black";
+  width: "100%";
+  display: flex;
+  flex-direction: column;
 }
 
 .row-header {
-  font-size: 12px;
+  font-size: 20px;
   font-weight: 500;
 }
 
@@ -78,38 +76,6 @@ path[id^="Link1"] {
   padding-right: 0px;
 }
 
-.image-pattern-style {
-  background-color: white;
-  background-size: contain;
-  background-repeat: no-repeat;
-  height: 75px;
-  width: calc((100% - 12px) / 3);
-  cursor: pointer;
-  border: 1px solid #d5d5d5;
-  background-position: center;
-  float: left;
-}
-
-.image-pattern-style:hover {
-  border-color: gray;
-  border-width: 2px;
-}
-
-.row {
-  margin-left: 0px;
-  margin-right: 0px;
-}
-
-.row-header {
-  font-size: 13px;
-  font-weight: 500;
-}
-
-.e-selected-style {
-  border-color: #006ce6;
-  border-width: 2px;
-}
-
-.e-checkbox-wrapper .e-label {
-  font-size: 12px;
+.control-pane {
+  overflow: hidden;
 }

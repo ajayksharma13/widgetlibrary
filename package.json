@@ -101,6 +101,7 @@
     "@syncfusion/ej2-react-dropdowns": "^19.2.46",
     "@syncfusion/ej2-react-inputs": "^19.2.46",
     "@syncfusion/ej2-react-navigations": "^19.2.46",
+    "@syncfusion/ej2-react-popups": "^19.2.46",
     "@types/styled-components": "^5.1.11",
     "date-fns": "^2.20.1",
     "formik": "^2.2.6",
