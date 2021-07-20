@@ -2,6 +2,12 @@ import React from "react";
 import { BaseComponent } from "../base";
 
 import {
+  setElementValue,
+  TextBoxComponent,
+} from "@syncfusion/ej2-react-inputs";
+import { ButtonComponent } from "@syncfusion/ej2-react-buttons";
+
+import {
   DiagramComponent,
   NodeModel,
   BasicShape,
@@ -10,13 +16,24 @@ import {
   SnapConstraints,
   PointPortModel,
   PortConstraints,
+  Keys,
+  KeyModifiers,
+  CommandManagerModel,
   PortVisibility,
   PointModel,
   UndoRedo,
   Snapping,
   GridlinesModel,
   ConnectorModel,
+  DiagramContextMenu,
+  DataBinding,
+  PrintAndExport,
+  SelectorModel,
 } from "@syncfusion/ej2-react-diagrams";
+
+import ElementEditor from "./elementEditor";
+import { UploaderComponent } from "@syncfusion/ej2-react-inputs";
+import { DialogComponent } from "@syncfusion/ej2-react-popups";
 
 const sleep = (milliseconds: number) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -61,9 +78,31 @@ let snapSettings: SnapSettingsModel = {
   verticalGridlines: gridlines,
 };
 
-import ElementEditor from "./elementEditor";
-import { UploaderComponent } from "@syncfusion/ej2-react-inputs";
-import { DialogComponent } from "@syncfusion/ej2-react-popups";
+const ANIMATION_CSS_ON = `
+path[id^="Link1"] {
+  animation: dash 0.5s linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -16;
+  }
+}
+`;
+
+const ANIMATION_CSS_OFF = `
+path[id^="Link1"] {
+  animation: dash 0.5s linear;
+  animation-iteration-count: 0;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -16;
+  }
+}
+`;
 
 export default class DiagramPanel extends BaseComponent<TProps, TState> {
   state: TState = {
@@ -71,8 +110,36 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
       "https://www.pngmagic.com/product_images/solid-color-background-pastel.jpg",
     width: "1500",
     height: "1000",
-    uploadError: false,
+    showDialog: false,
+    toggleAnimation: false,
+    selectedItem: null,
   };
+
+  public changeX(args: string) {
+    if (diagramInstance.selectedItems.nodes?.length > 0) {
+      //Get the selected node from diagram’s selected items collection.
+      let node: NodeModel = diagramInstance.selectedItems.nodes[0];
+      node.offsetX = parseInt(args);
+    } else if (diagramInstance.selectedItems.connectors?.length > 0) {
+      let connector: ConnectorModel =
+        diagramInstance.selectedItems.connectors[0];
+      connector.sourcePoint.x = parseInt(args);
+    }
+    diagramInstance.dataBind();
+  }
+
+  public changeY(args: string) {
+    if (diagramInstance.selectedItems.nodes?.length > 0) {
+      //Get the selected node from diagram’s selected items collection.
+      let node: NodeModel = diagramInstance.selectedItems.nodes[0];
+      node.offsetY = parseInt(args);
+    } else if (diagramInstance.selectedItems.connectors?.length > 0) {
+      let connector: ConnectorModel =
+        diagramInstance.selectedItems.connectors[0];
+      connector.sourcePoint.y = parseInt(args);
+    }
+    diagramInstance.dataBind();
+  }
   public ColorChange(args: string) {
     if (diagramInstance.selectedItems.nodes != null) {
       if (diagramInstance.selectedItems.nodes?.length > 0) {
@@ -81,13 +148,9 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
         node.style ? (node.style.fill = args) : {};
       }
     } else if (diagramInstance.selectedItems.connectors?.length > 0) {
-      // let connector: ConnectorModel =
-      //   diagramInstance.selectedItems.connectors[0];
-      // connector.style?.fill = args;
       let connector: ConnectorModel =
         diagramInstance.selectedItems.connectors[0];
       connector.style?.fill = "red";
-      console.log(connector);
     }
     diagramInstance.dataBind();
   }
@@ -101,8 +164,6 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
       let connector: ConnectorModel =
         diagramInstance.selectedItems.connectors[0];
       connector.style.strokeColor = args;
-      connector.style?.fill = "red";
-      console.log(connector);
     }
     diagramInstance.dataBind();
   }
@@ -121,18 +182,31 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
     }
 
     diagramInstance.dataBind();
-    // let node: NodeModel = diagramInstance.selectedItems.nodes[0];
-    // node.annotations[0].style.color = args;
-    // diagramInstance.dataBind();
+  }
+
+  public textSizeChange(args: string) {
+    if (diagramInstance.selectedItems.nodes?.length > 0) {
+      //Get the selected node from diagram’s selected items collection.
+      let node: NodeModel = diagramInstance.selectedItems.nodes[0];
+      node.annotations && node.annotations[0].style
+        ? (node.annotations[0].style.fontSize = parseInt(args))
+        : {};
+    } else if (diagramInstance.selectedItems.connectors?.length > 0) {
+      let connector: ConnectorModel =
+        diagramInstance.selectedItems.connectors[0];
+      connector.annotations[0].style?.fontSize = parseInt(args);
+    }
+
+    diagramInstance.dataBind();
   }
 
   setBg = async (reader: FileReader) => {
     sleep(100).then((r) => {
-      // console.log(reader.result);
       const img = new Image();
       img.src = reader.result as string;
-      var imgWidth = img.naturalWidth;
-      var imgHeight = img.naturalHeight;
+      console.log(img);
+      var imgWidth = img.naturalHeight;
+      var imgHeight = img.naturalWidth;
       if (imgWidth > 700 && imgHeight > 500) {
         this.setState({
           diagramBg: reader.result as string,
@@ -142,27 +216,62 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
         console.log(imgWidth, imgHeight);
       } else {
         console.log(imgWidth, imgHeight);
-        this.setState({ uploadError: true });
+        this.setState({ showDialog: true });
       }
     });
   };
 
-  onUploadSuccess = async (args: { [key: string]: Object }) => {
+  onUploadSuccess = (args: { [key: string]: Object }) => {
     let file1: { [key: string]: Object } = args.file as {
       [key: string]: Object;
     };
     let file: Blob = file1.rawFile as Blob;
     let reader: FileReader = new FileReader();
-    await reader.readAsDataURL(file);
-    // console.log(reader);
+    reader.readAsDataURL(file);
     this.setBg(reader);
-    // reader.onloadend = loadDiagram;
   };
 
   public path: object = {
-    removeUrl: "https://ej2.syncfusion.com/services/api/uploadbox/Remove",
+    // removeUrl: "https://ej2.syncfusion.com/services/api/uploadbox/Remove",
     saveUrl: "https://ej2.syncfusion.com/services/api/uploadbox/Save",
   };
+
+  public getCommandManagerSettings(): CommandManagerModel {
+    let commandManager: CommandManagerModel = {
+      commands: [
+        {
+          name: "customGroup",
+          canExecute: (): boolean => {
+            if (
+              diagramInstance.selectedItems.nodes.length > 0 ||
+              diagramInstance.selectedItems.connectors.length > 0
+            ) {
+              return true;
+            }
+            return false;
+          },
+          execute: (): void => {
+            diagramInstance.group();
+          },
+          gesture: { key: Keys.G, keyModifiers: KeyModifiers.Control },
+        },
+        {
+          name: "customUnGroup",
+          canExecute: (): boolean => {
+            if (diagramInstance.selectedItems.nodes[0].children) {
+              return true;
+            }
+            return false;
+          },
+          execute: (): void => {
+            diagramInstance.unGroup();
+          },
+          gesture: { key: Keys.U, keyModifiers: KeyModifiers.Control },
+        },
+      ],
+    };
+    return commandManager;
+  }
 
   render() {
     return (
@@ -174,20 +283,21 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
           height: "100%",
         }}
       >
-        {this.state.uploadError ? (
-          <DialogComponent
-            width="250px"
-            height="150px"
-            showCloseIcon={true}
-            header="Upload Error"
-            // closeOnEscape={true}
-            onClick={() => this.setState({ uploadError: false })}
-          >
-            Image Dimensions should be atleast 700 by 500 px!
-          </DialogComponent>
-        ) : (
-          <div />
-        )}
+        <DialogComponent
+          isModal={true}
+          width="250"
+          height="150px"
+          visible={this.state.showDialog}
+          close={() => {
+            this.setState({ showDialog: false });
+          }}
+          overlayClick={() => {
+            this.setState({ showDialog: false });
+          }}
+          header="Image Dimensions are too Small"
+        >
+          Image Dimensions should be atleast 700 by 500 px!
+        </DialogComponent>
         <div
           className="col-lg-8"
           style={{
@@ -196,12 +306,20 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
             height: "84vh",
           }}
         >
+          <style>
+            {this.state.toggleAnimation ? ANIMATION_CSS_ON : ANIMATION_CSS_OFF}
+          </style>
           <DiagramComponent
             id="diagram"
             ref={(diagram) => {
               diagramInstance = diagram as DiagramComponent;
               this.props.getDiagramInstance(diagramInstance);
             }}
+            click={(args: any) => {
+              this.setState({ selectedItem: args.element });
+            }}
+            contextMenuSettings={{ show: true }}
+            commandManager={this.getCommandManagerSettings()}
             scrollSettings={{ canAutoScroll: true, currentZoom: 1 }}
             pageSettings={{
               background: {
@@ -233,20 +351,113 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
                 obj.ports = getPathPorts(node);
               }
             }}
-          />
-          <Inject services={[UndoRedo, Snapping]} />
-
-          <UploaderComponent
-            style={{ height: "3vh" }}
-            asyncSettings={this.path}
-            success={this.onUploadSuccess}
-          />
+          >
+            <Inject
+              services={[
+                UndoRedo,
+                Snapping,
+                DiagramContextMenu,
+                DataBinding,
+                PrintAndExport,
+              ]}
+            />
+          </DiagramComponent>
+          <div
+            style={{ display: "flex", flexDirection: "row", marginTop: "2vh" }}
+          >
+            <div className="col-lg-5">
+              <UploaderComponent
+                style={{ height: "3vh" }}
+                asyncSettings={this.path}
+                success={this.onUploadSuccess}
+              />
+            </div>
+            <TextBoxComponent
+              placeholder="Set Width"
+              floatLabelType="Auto"
+              width="30vh"
+              value={this.state.width}
+              onChange={(e: any) => {
+                this.setState({ width: e.target.value });
+              }}
+            />
+            <TextBoxComponent
+              placeholder="Set Height"
+              floatLabelType="Auto"
+              width="30vh"
+              value={this.state.height}
+              onChange={(e: any) => {
+                this.setState({ width: e.target.value });
+              }}
+            />
+          </div>
         </div>
-        <div className="col-lg-4 row property-panel-content" id="appearance">
+        <div
+          className="col-lg-4 property-panel-content"
+          id="appearance"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-around",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-around",
+            }}
+          >
+            <ButtonComponent
+              id="toggle"
+              onClick={() => {
+                this.setState({ toggleAnimation: !this.state.toggleAnimation });
+              }}
+              style={{ width: "40%", height: "3vh", margin: "10px" }}
+            >
+              Toggle Animation
+            </ButtonComponent>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-around",
+            }}
+          >
+            <ButtonComponent
+              id="group"
+              onClick={() => {
+                diagramInstance.selectedItems.nodes?.length ||
+                diagramInstance.selectedItems.connectors?.length
+                  ? diagramInstance.group()
+                  : {};
+              }}
+              style={{ width: "40%", height: "3vh", margin: "10px" }}
+            >
+              Group
+            </ButtonComponent>
+            <ButtonComponent
+              id="ungroup"
+              onClick={() => {
+                diagramInstance.selectedItems.nodes?.length ||
+                diagramInstance.selectedItems.connectors?.length
+                  ? diagramInstance.unGroup()
+                  : {};
+              }}
+              style={{ width: "40%", height: "3vh", margin: "10px" }}
+            >
+              Ungroup
+            </ButtonComponent>
+          </div>
           <ElementEditor
             strokeChange={this.StrokeChange}
             colorChange={this.ColorChange}
             textColorChange={this.textColorChange}
+            textSizeChange={this.textSizeChange}
+            changeX={this.changeX}
+            changeY={this.changeY}
+            selectedItem={this.state.selectedItem}
           />
         </div>
       </div>
@@ -258,7 +469,9 @@ type TState = {
   diagramBg: string;
   width: string;
   height: string;
-  uploadError: boolean;
+  showDialog: boolean;
+  toggleAnimation: boolean;
+  selectedItem: SelectorModel | null;
 };
 
 type TProps = {

@@ -22,6 +22,10 @@
   content: "\e60f";
 }
 
+.e-exp-icon::before {
+  content: "\e711";
+}
+
 .page-loading {
   height: 100vh;
   display: flex;

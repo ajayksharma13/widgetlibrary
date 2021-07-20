@@ -16,10 +16,15 @@ import {
   ImageModel,
   DiagramTools,
   ConnectorModel,
+  IExportOptions,
 } from "@syncfusion/ej2-react-diagrams";
 import { UploaderComponent } from "@syncfusion/ej2-react-inputs";
 import "./style.scss";
 import "../../app.scss";
+
+const sleep = (milliseconds: number) => {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
+};
 
 let node: NodeModel;
 let diagramInstance: DiagramComponent;
@@ -60,36 +65,77 @@ class StartUp extends BaseComponent<TProps, TState> {
             id="toolbar_diagram"
             style={{ width: "100%" }}
             clicked={(args: ClickEventArgs): any => {
-              if (args.item.text === "New") {
-                diagramInstance.clear();
-              } else if (args.item.text === "Load") {
-                document
-                  .getElementsByClassName("e-file-select-wrap")[0]
-                  .querySelector("button")
-                  .click();
-              } else if (args.item.id === "palette-icon") {
-                openPalette();
-              } else {
-                download(diagramInstance.saveDiagram());
+              switch (args.item.text) {
+                case "New": {
+                  diagramInstance.clear();
+                  break;
+                }
+                case "Load": {
+                  document
+                    .getElementsByClassName("e-file-select-wrap")[0]
+                    .querySelector("button")
+                    .click();
+                  break;
+                }
+                case "Save": {
+                  download(diagramInstance.saveDiagram());
+                  break;
+                }
+                case "Export": {
+                  var connectors = document.querySelectorAll(
+                    'path[id^="Link1"]'
+                  );
+                  for (let i = 0; i < connectors.length; i += 3) {
+                    var animateElement = document.createElement("animate");
+                    animateElement.setAttributeNS(
+                      null,
+                      "attributeName",
+                      "stroke-dashoffset"
+                    );
+                    animateElement.setAttributeNS(null, "to", "-16");
+                    animateElement.setAttributeNS(null, "dur", "0.5s");
+                    animateElement.setAttributeNS(
+                      null,
+                      "repeatCount",
+                      "indefinite"
+                    );
+                    animateElement.removeAttribute("xmlns");
+                    connectors[i].appendChild(animateElement);
+                    console.log(connectors[i]);
+                  }
+                  let options: IExportOptions = {};
+                  options.mode = "Download";
+                  options.format = "SVG";
+                  diagramInstance.exportDiagram(options);
+                  break;
+                }
+                default: {
+                }
               }
             }}
             items={[
               {
                 text: "New",
-                tooltipText: "New",
+                tooltipText: "Reset Progress",
                 prefixIcon: "e-menu-icon e-new-icon",
               },
               { type: "Separator" },
               {
                 text: "Save",
-                tooltipText: "Save",
+                tooltipText: "Save Progress",
                 prefixIcon: "e-menu-icon e-save-icon",
               },
               { type: "Separator" },
               {
                 text: "Load",
-                tooltipText: "Load",
+                tooltipText: "Restore Previous Work",
                 prefixIcon: "e-menu-icon e-load-icon",
+              },
+              { type: "Separator" },
+              {
+                text: "Export",
+                tooltipText: "as SVG",
+                prefixIcon: "e-menu-icon e-exp-icon",
               },
             ]}
           />
@@ -100,8 +146,8 @@ class StartUp extends BaseComponent<TProps, TState> {
             asyncSettings={{
               saveUrl:
                 "https://aspnetmvc.syncfusion.com/services/api/uploadbox/Save",
-              removeUrl:
-                "https://aspnetmvc.syncfusion.com/services/api/uploadbox/Remove",
+              // removeUrl:
+              //   "https://aspnetmvc.syncfusion.com/services/api/uploadbox/Remove",
             }}
             success={onUploadSuccess}
           />

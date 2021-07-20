@@ -8,7 +8,6 @@ import {
   Menu,
   Segment,
   Sidebar,
-  Visibility,
 } from "semantic-ui-react";
 
 const { MediaContextProvider, Media } = createMedia({

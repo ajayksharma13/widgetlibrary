@@ -18,31 +18,26 @@
   float: left;
 }
 
-path[id^="Link1"] {
-  stroke-dasharray: 8;
-  animation: dash 0.5s linear;
-  animation-iteration-count: infinite;
-}
-@keyframes dash {
-  to {
-    stroke-dashoffset: -16;
-  }
-}
-
 .image-pattern-style:hover {
   border-color: gray;
   border-width: 2px;
 }
 
-.row {
+.editor-panel {
   margin-left: 0px;
   margin-right: 0px;
-  width: "100%";
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
+  border-style: solid;
+  border-width: 2px;
+  width: 80%;
+  height: 60vh;
+  border-radius: 10px;
 }
 
 .row-header {
+  font-style: italic;
   font-size: 20px;
   font-weight: 500;
 }
@@ -78,4 +73,20 @@ path[id^="Link1"] {
 
 .control-pane {
   overflow: hidden;
+}
+
+.svg-icon {
+  width: 1em;
+  height: 1em;
+}
+
+.svg-icon path,
+.svg-icon polygon,
+.svg-icon rect {
+  fill: #4691f6;
+}
+
+.svg-icon circle {
+  stroke: #4691f6;
+  stroke-width: 1;
 }
