@@ -24,43 +24,62 @@ const sizeData: string[] = [
 ];
 
 export default class ElementEditor extends BaseComponent<TProps, TState> {
-  state: TState = {
-    textColor: this.props.selectedItem?.properties.annotations[0].properties
-      .style.properties.color,
-    strokeColor: this.props.selectedItem?.properties.style.properties
-      .strokeColor,
-    fillColor: this.props.selectedItem?.properties.style.properties.fill,
-    textSize: this.props.selectedItem?.properties.annotations[0].properties
-      .style.properties.fontSize,
-    loc_X: "0",
-    loc_Y: "0",
+  state: TState = {};
+
+  getTextColor = (): string => {
+    return this.props.selectedItem
+      ? this.props.selectedItem.propName
+        ? this.props.selectedItem?.properties.annotations[0].properties.style
+            .properties.color
+        : "#000000"
+      : "#000000";
   };
 
-  onTextColorChange = (e: any) => {
-    // console.log(e);
-    this.props.textColorChange(e.currentValue.hex);
-    this.setState({ textColor: e.currentValue.hex });
+  getStrokeColor = (): string => {
+    return this.props.selectedItem
+      ? this.props.selectedItem.propName
+        ? this.props.selectedItem?.properties.style.properties.strokeColor
+        : "#000000"
+      : "#000000";
   };
 
-  onStrokeColorChange = (e: any) => {
-    // console.log(e);
-    this.props.strokeChange(e.currentValue.hex);
-    this.setState({ strokeColor: e.currentValue.hex });
+  getTextSize = (): string => {
+    return this.props.selectedItem
+      ? this.props.selectedItem.propName
+        ? this.props.selectedItem.properties.annotations[0].properties.style.properties.fontSize.toString()
+        : "12"
+      : "12";
   };
 
-  onFillColorChange = (e: any) => {
-    // console.log(e);
-    this.props.colorChange(e.currentValue.hex);
-    this.setState({ fillColor: e.currentValue.hex });
+  getFillColor = (): string => {
+    return this.props.selectedItem
+      ? this.props.selectedItem.propName
+        ? this.props.selectedItem?.properties.style.properties.fill
+        : "#ffffff"
+      : "#ffffff";
   };
 
-  onTextSizeChange = (e: any) => {
-    this.props.textSizeChange(e.value);
-    this.setState({ textSize: e.value });
+  getLocX = (): string => {
+    return this.props.selectedItem
+      ? this.props.selectedItem.propName
+        ? this.props.selectedItem.propName === "nodes"
+          ? this.props.selectedItem.offsetX.toString()
+          : this.props.selectedItem.properties.sourcePoint.properties.x.toString()
+        : "0"
+      : "0";
+  };
+
+  getLocY = (): string => {
+    return this.props.selectedItem
+      ? this.props.selectedItem.propName
+        ? this.props.selectedItem.propName === "nodes"
+          ? this.props.selectedItem.offsetY.toString()
+          : this.props.selectedItem.properties.sourcePoint.properties.y.toString()
+        : "0"
+      : "0";
   };
 
   render() {
-    console.log(this.props.selectedItem);
     return (
       <div
         style={{
@@ -85,8 +104,11 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
           <div style={{ alignSelf: "center" }}>
             <ColorPickerComponent
               id="color-picker-1"
-              value={this.state.fillColor}
-              change={this.onFillColorChange}
+              value={this.getFillColor()}
+              change={(e: any) => {
+                this.props.colorChange(e.currentValue.hex);
+                this.setState({ fillColor: e.currentValue.hex });
+              }}
             />
           </div>
           <div className="row-header">
@@ -95,8 +117,11 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
           <div style={{ alignSelf: "center" }}>
             <ColorPickerComponent
               id="color-picker-2"
-              value={this.state.strokeColor}
-              change={this.onStrokeColorChange}
+              value={this.getStrokeColor()}
+              change={(e: any) => {
+                this.props.strokeChange(e.currentValue.hex);
+                this.setState({ strokeColor: e.currentValue.hex });
+              }}
             />
           </div>
           <div className="row-header">
@@ -105,8 +130,11 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
           <div style={{ alignSelf: "center" }}>
             <ColorPickerComponent
               id="color-picker-3"
-              value={this.state.textColor}
-              change={this.onTextColorChange}
+              value={this.getTextColor()}
+              change={(e: any) => {
+                this.props.textColorChange(e.currentValue.hex);
+                this.setState({ textColor: e.currentValue.hex });
+              }}
             />
           </div>
           <div className="row-header">
@@ -125,8 +153,11 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
               popupHeight="200px"
               popupWidth="20vh"
               placeholder="Select Font Size"
-              change={this.onTextSizeChange}
-              value={this.state.textSize}
+              value={this.getTextSize()}
+              change={(e: any) => {
+                this.props.textSizeChange(e.value);
+                this.setState({ textSize: e.value });
+              }}
             />
           </div>
           <div
@@ -143,7 +174,7 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
               placeholder="Set X Coordinate"
               floatLabelType="Auto"
               width="10vh"
-              value={this.state.loc_X}
+              value={this.getLocX()}
               onChange={(e: any) => {
                 this.props.changeX(e.value);
                 this.setState({ loc_X: e.value });
@@ -153,7 +184,7 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
               placeholder="Set Y Coordinate"
               floatLabelType="Auto"
               width="10vh"
-              value={this.state.loc_Y}
+              value={this.getLocY()}
               onChange={(e: any) => {
                 this.props.changeY(e.value);
                 this.setState({ loc_Y: e.value });
@@ -166,14 +197,7 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
   }
 }
 
-type TState = {
-  textColor: string;
-  fillColor: string;
-  strokeColor: string;
-  textSize: string;
-  loc_X: string;
-  loc_Y: string;
-};
+type TState = {};
 
 type TProps = {
   colorChange: Function;

@@ -17,7 +17,6 @@ import {
 } from "./paletteItems";
 
 import { UploaderComponent } from "@syncfusion/ej2-react-inputs";
-import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
 
 const sleep = (milliseconds: number) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -39,7 +38,6 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
    * default state
    */
   state: Readonly<TState> = {
-    uploadChoice: "SVG",
     showDialog: false,
     svgshapes: svgShapes,
     flowshapes: flowShapes,
@@ -50,77 +48,22 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
   addPaletteItem = async (reader: FileReader, type: string) => {
     sleep(100).then((r) => {
       console.log(reader.result);
-      switch (type) {
-        case "SVG": {
-          var newData = this.state.svgshapes.slice();
-          if (reader.result?.slice(1, 2) == "g") {
-            newData.push({
-              id: Math.floor(Math.random() * 10000).toString(),
-              style: { fill: "none" },
-              annotations: [
-                { content: "", constraints: AnnotationConstraints.Interaction },
-              ],
-              shape: {
-                type: "Native",
-                content: reader.result ? reader.result.toString() : "",
-              },
-            });
-            this.setState({ svgshapes: newData });
-          } else {
-            this.setState({ showDialog: true });
-          }
-          break;
-        }
-        case "Basic": {
-          var newData = this.state.basicshapes.slice();
-          if (reader.result?.slice(1, 2) == "g") {
-            newData.push({
-              id: Math.floor(Math.random() * 10000).toString(),
-              style: { fill: "none" },
-              annotations: [
-                { content: "", constraints: AnnotationConstraints.Interaction },
-              ],
-              shape: {
-                type: "Basic",
-                content: reader.result ? reader.result.toString() : "",
-              },
-            });
-            this.setState({ basicshapes: newData });
-          } else {
-            this.setState({ showDialog: true });
-          }
-          break;
-        }
-        case "Flow": {
-          var newData = this.state.flowshapes.slice();
-          if (reader.result?.slice(1, 2) == "g") {
-            newData.push({
-              id: Math.floor(Math.random() * 10000).toString(),
-              style: { fill: "none" },
-              annotations: [
-                { content: "", constraints: AnnotationConstraints.Interaction },
-              ],
-              shape: {
-                type: "Flow",
-                content: reader.result ? reader.result.toString() : "",
-              },
-            });
-            this.setState({ flowshapes: newData });
-          } else {
-            this.setState({ showDialog: true });
-          }
-          break;
-        }
-        // case "Connector": {
-        //   var newData = this.state.connectorshapes.slice();
-        //   if (reader.result?.slice(1, 2) == "g") {
-        //     newData.push();
-        //     this.setState({ connectorshapes: newData });
-        //   } else {
-        //     this.setState({ showDialog: true });
-        //   }
-        //   break;
-        // }
+      var newData = this.state.svgshapes.slice();
+      if (reader.result?.slice(1, 2) == "g") {
+        newData.push({
+          id: Math.floor(Math.random() * 10000).toString(),
+          style: { fill: "none" },
+          annotations: [
+            { content: "", constraints: AnnotationConstraints.Interaction },
+          ],
+          shape: {
+            type: "Native",
+            content: reader.result ? reader.result.toString() : "",
+          },
+        });
+        this.setState({ svgshapes: newData });
+      } else {
+        this.setState({ showDialog: true });
       }
     });
   };
@@ -132,24 +75,7 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
     let file: Blob = file1.rawFile as Blob;
     let reader: FileReader = new FileReader();
     await reader.readAsText(file);
-    switch (this.state.uploadChoice) {
-      case "SVG": {
-        this.addPaletteItem(reader, "SVG");
-        break;
-      }
-      case "Basic": {
-        this.addPaletteItem(reader, "Basic");
-        break;
-      }
-      case "Flow": {
-        this.addPaletteItem(reader, "Flow");
-        break;
-      }
-      case "Con": {
-        this.addPaletteItem(reader, "Connector");
-        break;
-      }
-    }
+    this.addPaletteItem(reader, "SVG");
   };
 
   componentDidMount() {
@@ -227,19 +153,6 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
               symbolMargin={{ left: 15, right: 15, top: 15, bottom: 15 }}
             />
           </div>
-          <div style={{ margin: "5px" }}>
-            <DropDownListComponent
-              id="ddlelement2"
-              dataSource={["SVG", "Connector", "Basic", "Flow"]}
-              popupHeight="200px"
-              popupWidth="15vh"
-              placeholder="Select Item to Upload"
-              change={(e: any) => {
-                this.setState({ uploadChoice: e.value });
-              }}
-              value={this.state.uploadChoice}
-            />
-          </div>
           <UploaderComponent
             asyncSettings={this.path}
             success={this.onUploadSuccess}
@@ -281,7 +194,6 @@ type TState = {
   basicshapes: NodeModel[];
   connectorshapes: ConnectorModel[];
   showDialog: boolean;
-  uploadChoice: string;
 };
 
 type TProps = {};
