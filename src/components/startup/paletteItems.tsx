@@ -279,7 +279,6 @@ export var svgShapes: NodeModel[] = [
     annotations: [
       { content: "", constraints: AnnotationConstraints.Interaction },
     ],
-
     shape: {
       type: "Native",
       content:

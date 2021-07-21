@@ -10,6 +10,12 @@ import { BaseComponent } from "../base";
 import "./style.scss";
 import { ColorPickerComponent } from "@syncfusion/ej2-react-inputs";
 
+const rgba2hex = function(color: string){
+  const rgba = color.replace(/^rgba?\(|\s+|\)$/g, '').split(',');
+  const hex = `#${((1 << 24) + (parseInt(rgba[0]) << 16) + (parseInt(rgba[1]) << 8) + parseInt(rgba[2])).toString(16).slice(1)}`;
+  return hex;
+}
+
 const sizeData: string[] = [
   "8",
   "12",
@@ -29,16 +35,19 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
   getTextColor = (): string => {
     return this.props.selectedItem
       ? this.props.selectedItem.propName
-        ? this.props.selectedItem?.properties.annotations[0].properties.style
-            .properties.color
-        : "#000000"
-      : "#000000";
+       ? !this.props.selectedItem?.properties.children
+        ? rgba2hex(this.props.selectedItem?.properties.annotations[0].properties.style
+          .properties.color)
+        : this.props.selectedItem?.properties.annotations.length > 0 
+        ? rgba2hex(this.props.selectedItem?.properties.annotations[0].properties.style
+          .properties.color) : "#000000"
+      : "#000000" : "#000000";
   };
 
   getStrokeColor = (): string => {
     return this.props.selectedItem
       ? this.props.selectedItem.propName
-        ? this.props.selectedItem?.properties.style.properties.strokeColor
+        ? rgba2hex(this.props.selectedItem?.properties.style.properties.strokeColor)
         : "#000000"
       : "#000000";
   };
@@ -46,15 +55,19 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
   getTextSize = (): string => {
     return this.props.selectedItem
       ? this.props.selectedItem.propName
-        ? this.props.selectedItem.properties.annotations[0].properties.style.properties.fontSize.toString()
-        : "12"
-      : "12";
+       ? !this.props.selectedItem?.properties.children
+        ? this.props.selectedItem?.properties.annotations[0].properties.style
+          .properties.fontSize.toString()
+        : this.props.selectedItem?.properties.annotations.length > 0 
+        ? this.props.selectedItem?.properties.annotations[0].properties.style
+          .properties.fontSize.toString() : "12"
+      : "12" : "12";
   };
 
   getFillColor = (): string => {
     return this.props.selectedItem
       ? this.props.selectedItem.propName
-        ? this.props.selectedItem?.properties.style.properties.fill
+        ? rgba2hex(this.props.selectedItem?.properties.style.properties.fill)
         : "#ffffff"
       : "#ffffff";
   };
@@ -63,7 +76,7 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
     return this.props.selectedItem
       ? this.props.selectedItem.propName
         ? this.props.selectedItem.propName === "nodes"
-          ? this.props.selectedItem.offsetX.toString()
+          ? this.props.selectedItem.properties.offsetX.toString()
           : this.props.selectedItem.properties.sourcePoint.properties.x.toString()
         : "0"
       : "0";
@@ -73,13 +86,14 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
     return this.props.selectedItem
       ? this.props.selectedItem.propName
         ? this.props.selectedItem.propName === "nodes"
-          ? this.props.selectedItem.offsetY.toString()
+          ? this.props.selectedItem.properties.offsetY.toString()
           : this.props.selectedItem.properties.sourcePoint.properties.y.toString()
         : "0"
       : "0";
   };
 
   render() {
+    console.log(this.props.selectedItem);
     return (
       <div
         style={{
@@ -105,9 +119,9 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
             <ColorPickerComponent
               id="color-picker-1"
               value={this.getFillColor()}
+              noColor={true}
               change={(e: any) => {
-                this.props.colorChange(e.currentValue.hex);
-                this.setState({ fillColor: e.currentValue.hex });
+                this.props.colorChange(e.currentValue.rgba);
               }}
             />
           </div>
@@ -118,9 +132,9 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
             <ColorPickerComponent
               id="color-picker-2"
               value={this.getStrokeColor()}
+              noColor={true}
               change={(e: any) => {
-                this.props.strokeChange(e.currentValue.hex);
-                this.setState({ strokeColor: e.currentValue.hex });
+                this.props.strokeChange(e.currentValue.rgba);
               }}
             />
           </div>
@@ -131,9 +145,9 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
             <ColorPickerComponent
               id="color-picker-3"
               value={this.getTextColor()}
+              noColor={true}
               change={(e: any) => {
-                this.props.textColorChange(e.currentValue.hex);
-                this.setState({ textColor: e.currentValue.hex });
+                this.props.textColorChange(e.currentValue.rgba);
               }}
             />
           </div>
@@ -156,7 +170,6 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
               value={this.getTextSize()}
               change={(e: any) => {
                 this.props.textSizeChange(e.value);
-                this.setState({ textSize: e.value });
               }}
             />
           </div>
@@ -177,7 +190,6 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
               value={this.getLocX()}
               onChange={(e: any) => {
                 this.props.changeX(e.value);
-                this.setState({ loc_X: e.value });
               }}
             />
             <TextBoxComponent
@@ -187,7 +199,6 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
               value={this.getLocY()}
               onChange={(e: any) => {
                 this.props.changeY(e.value);
-                this.setState({ loc_Y: e.value });
               }}
             />
           </div>
