@@ -145,6 +145,18 @@ class StartUp extends BaseComponent<TProps, TState> {
               },
               { type: "Separator" },
               {
+                text: "Grop",
+                tooltipText: "For grouping diagram",
+                prefixIcon: "e-menu-icon e-MT_Recurrence-icon",
+              },
+              { type: "Separator" },
+              {
+                text: "Ungrop",
+                tooltipText: "For ungrouping diagram",
+                prefixIcon: "e-menu-icon e-MT_Recurrence-icon",
+              },
+              { type: "Separator" },
+              {
                 text: "Export",
                 tooltipText: "as SVG",
                 prefixIcon: "e-menu-icon e-exp-icon",

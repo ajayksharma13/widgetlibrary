@@ -196,7 +196,6 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
         diagramInstance.selectedItems.connectors[0];
       connector.annotations[0].style?.fontSize = parseInt(args);
     }
-
     diagramInstance.dataBind();
   }
 
