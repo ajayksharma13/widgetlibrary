@@ -50,7 +50,7 @@ class StartUp extends BaseComponent<TProps, TState> {
   /**
    * @description init method of component
    */
-  private async onInit() {}
+  private async onInit() { }
 
   getDiagramInstance = (instance: DiagramComponent) => {
     diagramInstance = instance;
@@ -130,6 +130,12 @@ class StartUp extends BaseComponent<TProps, TState> {
                 text: "Load",
                 tooltipText: "Restore Previous Work",
                 prefixIcon: "e-menu-icon e-load-icon",
+              },
+              { type: "Separator" },
+              {
+                text: "Toggle Animation",
+                tooltipText: "For Switching on and off animation",
+                prefixIcon: "e-menu-icon e-",
               },
               { type: "Separator" },
               {

@@ -14,6 +14,7 @@ import {
   connectorShapes,
   basicShapes,
   svgShapes,
+  animatedShapes,
 } from "./paletteItems";
 
 import { UploaderComponent } from "@syncfusion/ej2-react-inputs";
@@ -43,6 +44,7 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
     flowshapes: flowShapes,
     basicshapes: basicShapes,
     connectorshapes: connectorShapes,
+    animatedSvgs: animatedShapes,
   };
 
   addPaletteItem = async (reader: FileReader, type: string) => {
@@ -129,6 +131,13 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
                   iconCss: "e-diagram-icons1 e-diagram-basic",
                 },
                 {
+                  id: "animatedSvg",
+                  expanded: true,
+                  symbols: this.state.animatedSvgs,
+                  title: "Animated Shape",
+                  iconCss: "e-diagram-icons1 e-diagram-connector",
+                },
+                {
                   id: "connectors",
                   expanded: true,
                   symbols: this.state.connectorshapes,
@@ -193,6 +202,7 @@ type TState = {
   flowshapes: NodeModel[];
   basicshapes: NodeModel[];
   connectorshapes: ConnectorModel[];
+  animatedSvgs: any[];
   showDialog: boolean;
 };
 
