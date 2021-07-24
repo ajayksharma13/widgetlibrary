@@ -91,7 +91,7 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
 
   render() {
     return (
-      <div className="col-lg-4">
+      <div className="col-lg-3">
         <div style={{ height: "80vh" }} id="palette-space">
           <div className="content-wrapper">
             <DialogComponent

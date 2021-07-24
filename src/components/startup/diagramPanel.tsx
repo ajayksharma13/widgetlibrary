@@ -283,6 +283,7 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
           height: "100%",
         }}
       >
+
         <DialogComponent
           isModal={true}
           width="250"
@@ -299,15 +300,43 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
           Image Dimensions should be atleast 700 by 500 px!
         </DialogComponent>
         <div
-          className="col-lg-8"
+          className="col-lg-10"
           style={{
             display: "flex",
             flexDirection: "column",
             height: "84vh",
           }}
         >
+          <div
+            style={{ display: "flex", flexDirection: "row", marginTop: "2vh" }}
+          >
+            <div className="col-lg-5">
+              <UploaderComponent
+                asyncSettings={this.path}
+                success={this.onUploadSuccess}
+              />
+            </div>
+            <TextBoxComponent
+              placeholder="Set Width"
+              floatLabelType="Auto"
+              width="30vh"
+              value={this.state.width}
+              onChange={(e: any) => {
+                this.setState({ width: e.target.value });
+              }}
+            />
+            <TextBoxComponent
+              placeholder="Set Height"
+              floatLabelType="Auto"
+              width="30vh"
+              value={this.state.height}
+              onChange={(e: any) => {
+                this.setState({ width: e.target.value });
+              }}
+            />
+          </div>
           <style>
-            {this.state.toggleAnimation ? ANIMATION_CSS_ON : ANIMATION_CSS_OFF}
+            {this.props.toggleAnimation ? ANIMATION_CSS_ON : ANIMATION_CSS_OFF}
           </style>
           <DiagramComponent
             id="diagram"
@@ -362,46 +391,20 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
               ]}
             />
           </DiagramComponent>
-          <div
-            style={{ display: "flex", flexDirection: "row", marginTop: "2vh" }}
-          >
-            <div className="col-lg-5">
-              <UploaderComponent
-                style={{ height: "3vh" }}
-                asyncSettings={this.path}
-                success={this.onUploadSuccess}
-              />
-            </div>
-            <TextBoxComponent
-              placeholder="Set Width"
-              floatLabelType="Auto"
-              width="30vh"
-              value={this.state.width}
-              onChange={(e: any) => {
-                this.setState({ width: e.target.value });
-              }}
-            />
-            <TextBoxComponent
-              placeholder="Set Height"
-              floatLabelType="Auto"
-              width="30vh"
-              value={this.state.height}
-              onChange={(e: any) => {
-                this.setState({ width: e.target.value });
-              }}
-            />
-          </div>
+
         </div>
         <div
-          className="col-lg-4 property-panel-content"
+          className="col-lg-3 property-panel-content"
           id="appearance"
           style={{
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-around",
+            marginLeft: "5px",
+            borderLeft: "1px solid #DADCE0",
           }}
         >
-          <div
+          {/* <div
             style={{
               display: "flex",
               flexDirection: "row",
@@ -417,19 +420,20 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
             >
               Toggle Animation
             </ButtonComponent>
-          </div>
+          </div> */}
           <div
             style={{
               display: "flex",
               flexDirection: "row",
               justifyContent: "space-around",
+
             }}
           >
             <ButtonComponent
               id="group"
               onClick={() => {
                 diagramInstance.selectedItems.nodes?.length ||
-                diagramInstance.selectedItems.connectors?.length
+                  diagramInstance.selectedItems.connectors?.length
                   ? diagramInstance.group()
                   : {};
               }}
@@ -441,7 +445,7 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
               id="ungroup"
               onClick={() => {
                 diagramInstance.selectedItems.nodes?.length ||
-                diagramInstance.selectedItems.connectors?.length
+                  diagramInstance.selectedItems.connectors?.length
                   ? diagramInstance.unGroup()
                   : {};
               }}
@@ -476,6 +480,7 @@ type TState = {
 
 type TProps = {
   getDiagramInstance: Function;
+  toggleAnimation: boolean;
 };
 
 function getPorts(obj: NodeModel): PointPortModel[] {

@@ -41,7 +41,9 @@ class StartUp extends BaseComponent<TProps, TState> {
   /**
    * default state
    */
-  state: Readonly<TState> = {};
+  state: Readonly<TState> = {
+    toggleAnimation: false,
+  };
 
   // componentDidMount() {
   //   this.onInit();
@@ -79,6 +81,10 @@ class StartUp extends BaseComponent<TProps, TState> {
                 }
                 case "Save": {
                   download(diagramInstance.saveDiagram());
+                  break;
+                }
+                case "Toggle Animation": {
+                  this.setState({ toggleAnimation: !this.state.toggleAnimation });
                   break;
                 }
                 case "Export": {
@@ -135,7 +141,7 @@ class StartUp extends BaseComponent<TProps, TState> {
               {
                 text: "Toggle Animation",
                 tooltipText: "For Switching on and off animation",
-                prefixIcon: "e-menu-icon e-",
+                prefixIcon: "e-menu-icon e-MT_Recurrence-icon",
               },
               { type: "Separator" },
               {
@@ -163,7 +169,7 @@ class StartUp extends BaseComponent<TProps, TState> {
               style={{ display: "flex", flexDirection: "row" }}
             >
               <SymbolPalette />
-              <DiagramPanel getDiagramInstance={this.getDiagramInstance} />
+              <DiagramPanel getDiagramInstance={this.getDiagramInstance} toggleAnimation={this.state.toggleAnimation} />
             </div>
           </div>
         </div>
@@ -245,7 +251,9 @@ function SetShape(obj: string): void {
 /**
  * State
  */
-type TState = {};
+type TState = {
+  toggleAnimation: boolean;
+};
 
 /**
  * State

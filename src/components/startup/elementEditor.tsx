@@ -10,7 +10,7 @@ import { BaseComponent } from "../base";
 import "./style.scss";
 import { ColorPickerComponent } from "@syncfusion/ej2-react-inputs";
 
-const rgba2hex = function(color: string){
+const rgba2hex = function (color: string) {
   const rgba = color.replace(/^rgba?\(|\s+|\)$/g, '').split(',');
   const hex = `#${((1 << 24) + (parseInt(rgba[0]) << 16) + (parseInt(rgba[1]) << 8) + parseInt(rgba[2])).toString(16).slice(1)}`;
   return hex;
@@ -35,13 +35,13 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
   getTextColor = (): string => {
     return this.props.selectedItem
       ? this.props.selectedItem.propName
-       ? !this.props.selectedItem?.properties.children
-        ? rgba2hex(this.props.selectedItem?.properties.annotations[0].properties.style
-          .properties.color)
-        : this.props.selectedItem?.properties.annotations.length > 0 
-        ? rgba2hex(this.props.selectedItem?.properties.annotations[0].properties.style
-          .properties.color) : "#000000"
-      : "#000000" : "#000000";
+        ? !this.props.selectedItem?.properties.children
+          ? rgba2hex(this.props.selectedItem?.properties.annotations[0].properties.style
+            .properties.color)
+          : this.props.selectedItem?.properties.annotations.length > 0
+            ? rgba2hex(this.props.selectedItem?.properties.annotations[0].properties.style
+              .properties.color) : "#000000"
+        : "#000000" : "#000000";
   };
 
   getStrokeColor = (): string => {
@@ -55,13 +55,13 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
   getTextSize = (): string => {
     return this.props.selectedItem
       ? this.props.selectedItem.propName
-       ? !this.props.selectedItem?.properties.children
-        ? this.props.selectedItem?.properties.annotations[0].properties.style
-          .properties.fontSize.toString()
-        : this.props.selectedItem?.properties.annotations.length > 0 
-        ? this.props.selectedItem?.properties.annotations[0].properties.style
-          .properties.fontSize.toString() : "12"
-      : "12" : "12";
+        ? !this.props.selectedItem?.properties.children
+          ? this.props.selectedItem?.properties.annotations[0].properties.style
+            .properties.fontSize.toString()
+          : this.props.selectedItem?.properties.annotations.length > 0
+            ? this.props.selectedItem?.properties.annotations[0].properties.style
+              .properties.fontSize.toString() : "12"
+        : "12" : "12";
   };
 
   getFillColor = (): string => {
@@ -105,12 +105,12 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
         <div className="editor-panel">
           <div
             style={{
-              borderBottomStyle: "solid",
-              borderBottomWidth: "1px",
-              borderBottomColor: "black",
+              // borderBottomStyle: "solid",
+              // borderBottomWidth: "1px",
+              // borderBottomColor: "black",
             }}
           >
-            <h3 style={{ textAlign: "center" }}>Properties Editor</h3>
+            <h3 style={{ textAlign: "center" }}>Properties</h3>
           </div>
           <div className="row-header">
             <p style={{ textAlign: "center" }}>Fill-Color</p>
