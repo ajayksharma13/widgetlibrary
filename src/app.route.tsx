@@ -31,17 +31,18 @@ const routes: Array<RouteProps & any> = [
       )
     ),
   },
-  // // {
-  // //   id: "login",
-  // //   pageName: "Login",
-  // //   layout: BlankLayout,
-  // //   path: "/login",
-  // //   component: React.lazy(() =>
-  // //     import(
-  // //       /* webpackPrefetch:true,webpackChunkName:'wpc.login' */ "./components/login"
-  // //     )
-  // //   ),
-  // // },
+  
+  {
+    id: "login",
+    pageName: "Login",
+    layout: BlankLayout,
+    path: "/diagram",
+    component: React.lazy(() =>
+      import(
+        /* webpackPrefetch:true,webpackChunkName:'wpc.diagram' */ "./components/diagram-tool"
+      )
+    ),
+  },
   // {
   //   id: "Register",
   //   pageName: "Register",

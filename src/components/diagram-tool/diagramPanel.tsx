@@ -34,7 +34,7 @@ import {
 import ElementEditor from "./elementEditor";
 import { UploaderComponent } from "@syncfusion/ej2-react-inputs";
 import { DialogComponent } from "@syncfusion/ej2-react-popups";
-
+import "./style.scss";
 const sleep = (milliseconds: number) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 };
@@ -105,6 +105,11 @@ path[id^="Link1"] {
 `;
 
 export default class DiagramPanel extends BaseComponent<TProps, TState> {
+  /**
+   * uploader ref
+   */
+  uploaderRef = React.createRef<any>();
+
   state: TState = {
     diagramBg:
       "https://www.pngmagic.com/product_images/solid-color-background-pastel.jpg",
@@ -118,27 +123,27 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
   public changeX(args: string) {
     // const { getDiagramInstance } = this.props;
 
-    if (diagramInstance.selectedItems.nodes?.length > 0) {
+    if (diagramInstance.selectedItems.nodes!.length > 0) {
       //Get the selected node from diagram’s selected items collection.
-      let node: NodeModel = diagramInstance.selectedItems.nodes[0];
+      let node: NodeModel = diagramInstance.selectedItems.nodes?.[0]!;
       node.offsetX = parseInt(args);
-    } else if (diagramInstance.selectedItems.connectors?.length > 0) {
+    } else if (diagramInstance.selectedItems.connectors!.length > 0) {
       let connector: ConnectorModel =
-        diagramInstance.selectedItems.connectors[0];
-      connector.sourcePoint.x = parseInt(args);
+        diagramInstance.selectedItems.connectors?.[0]!;
+      connector.sourcePoint!.x = parseInt(args);
     }
     diagramInstance.dataBind();
   }
 
   public changeY(args: string) {
-    if (diagramInstance.selectedItems.nodes?.length > 0) {
+    if (diagramInstance.selectedItems.nodes!.length > 0) {
       //Get the selected node from diagram’s selected items collection.
-      let node: NodeModel = diagramInstance.selectedItems.nodes[0];
+      let node: NodeModel = diagramInstance.selectedItems.nodes?.[0]!;
       node.offsetY = parseInt(args);
-    } else if (diagramInstance.selectedItems.connectors?.length > 0) {
+    } else if (diagramInstance.selectedItems.connectors!.length > 0) {
       let connector: ConnectorModel =
-        diagramInstance.selectedItems.connectors[0];
-      connector.sourcePoint.y = parseInt(args);
+        diagramInstance.selectedItems.connectors?.[0]!;
+      connector.sourcePoint!.y = parseInt(args);
     }
     diagramInstance.dataBind();
   }
@@ -149,54 +154,53 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
         let node: NodeModel = diagramInstance.selectedItems.nodes[0];
         node.style ? (node.style.fill = args) : {};
       }
-    } else if (diagramInstance.selectedItems.connectors?.length > 0) {
+    } else if (diagramInstance.selectedItems.connectors!.length > 0) {
       let connector: ConnectorModel =
-        diagramInstance.selectedItems.connectors[0];
-      connector.style?.fill = "red";
+        diagramInstance.selectedItems.connectors?.[0]!;
+      connector.style!.fill = "red";
     }
     diagramInstance.dataBind();
   }
 
   public StrokeChange(args: string) {
-    if (diagramInstance.selectedItems.nodes?.length > 0) {
+    if (diagramInstance.selectedItems.nodes!.length > 0) {
       //Get the selected node from diagram’s selected items collection.
-      let node: NodeModel = diagramInstance.selectedItems.nodes[0];
+      let node: NodeModel = diagramInstance.selectedItems.nodes?.[0]!;
       node.style ? (node.style.strokeColor = args) : {};
-    } else if (diagramInstance.selectedItems.connectors?.length > 0) {
+    } else if (diagramInstance.selectedItems.connectors!.length > 0) {
       let connector: ConnectorModel =
-        diagramInstance.selectedItems.connectors[0];
-      connector.style.strokeColor = args;
+        diagramInstance.selectedItems.connectors?.[0]!;
+      connector.style!.strokeColor = args;
     }
     diagramInstance.dataBind();
   }
 
   public textColorChange(args: string) {
-    if (diagramInstance.selectedItems.nodes?.length > 0) {
+    if (diagramInstance.selectedItems.nodes!.length > 0) {
       //Get the selected node from diagram’s selected items collection.
-      let node: NodeModel = diagramInstance.selectedItems.nodes[0];
+      let node: NodeModel = diagramInstance.selectedItems.nodes?.[0]!;
       node.annotations && node.annotations[0].style
         ? (node.annotations[0].style.color = args)
         : {};
-    } else if (diagramInstance.selectedItems.connectors?.length > 0) {
-      let connector: ConnectorModel =
-        diagramInstance.selectedItems.connectors[0];
-      connector.annotations[0].style?.color = args;
+    } else if (diagramInstance.selectedItems.connectors!.length > 0) {
+      let connector: ConnectorModel | any =
+        diagramInstance.selectedItems.connectors?.[0]!;
+      connector.annotations[0].style!.color = args;
     }
-
     diagramInstance.dataBind();
   }
 
   public textSizeChange(args: string) {
-    if (diagramInstance.selectedItems.nodes?.length > 0) {
+    if (diagramInstance.selectedItems.nodes!.length > 0) {
       //Get the selected node from diagram’s selected items collection.
-      let node: NodeModel = diagramInstance.selectedItems.nodes[0];
+      let node: NodeModel = diagramInstance.selectedItems.nodes?.[0]!;
       node.annotations && node.annotations[0].style
         ? (node.annotations[0].style.fontSize = parseInt(args))
         : {};
-    } else if (diagramInstance.selectedItems.connectors?.length > 0) {
-      let connector: ConnectorModel =
-        diagramInstance.selectedItems.connectors[0];
-      connector.annotations[0].style?.fontSize = parseInt(args);
+    } else if (diagramInstance.selectedItems.connectors!.length > 0) {
+      let connector: ConnectorModel | any =
+        diagramInstance.selectedItems.connectors?.[0]!;
+      connector.annotations[0].style!.fontSize = parseInt(args);
     }
     diagramInstance.dataBind();
   }
@@ -205,19 +209,22 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
     sleep(100).then((r) => {
       const img = new Image();
       img.src = reader.result as string;
-      console.log(img);
-      var imgWidth = img.naturalHeight;
-      var imgHeight = img.naturalWidth;
-      if (imgWidth > 700 && imgHeight > 500) {
-        this.setState({
-          diagramBg: reader.result as string,
-          width: imgWidth.toString(),
-          height: imgHeight.toString(),
-        });
-        console.log(imgWidth, imgHeight);
-      } else {
-        console.log(imgWidth, imgHeight);
-        this.setState({ showDialog: true });
+      //Fires immediately after the browser loads the object.
+      img.onload = (e) => {
+        //@ts-ignore
+        let imgWidth = e.target.width;
+        //@ts-ignore
+        let imgHeight = e.target.height;
+        if (Number(imgWidth) > 700 && Number(imgHeight) > 500) {
+          this.setState({
+            diagramBg: reader.result as string,
+            width: imgWidth,
+            height: imgHeight,
+          });
+        } else {
+          console.log(imgWidth, imgHeight);
+          this.setState({ showDialog: true });
+        }
       }
     });
   };
@@ -244,8 +251,8 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
           name: "customGroup",
           canExecute: (): boolean => {
             if (
-              diagramInstance.selectedItems.nodes.length > 0 ||
-              diagramInstance.selectedItems.connectors.length > 0
+              diagramInstance.selectedItems.nodes!.length > 0 ||
+              diagramInstance.selectedItems.connectors!.length > 0
             ) {
               return true;
             }
@@ -259,7 +266,7 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
         {
           name: "customUnGroup",
           canExecute: (): boolean => {
-            if (diagramInstance.selectedItems.nodes[0].children) {
+            if (diagramInstance.selectedItems.nodes?.[0].children) {
               return true;
             }
             return false;
@@ -272,6 +279,13 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
       ],
     };
     return commandManager;
+  }
+
+  uploadHandler = () => {
+    document.getElementById("backgroundUploader")?.click();
+    //  todo:implement with react ref
+    // const node = this.uploaderRef.current;
+    // console.log(node);
   }
 
   render() {
@@ -311,12 +325,18 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
           <div
             style={{ display: "flex", flexDirection: "row", marginTop: "2vh" }}
           >
-            <div className="col-lg-5">
-              <UploaderComponent
-                asyncSettings={this.path}
-                success={this.onUploadSuccess}
-              />
+            <div className="col-lg-5" style={{ display: "flex", alignItems: "center", justifyContent: "center" }} >
+              <div className="display-none">
+                <UploaderComponent
+                  ref={this.uploaderRef}
+                  id="backgroundUploader"
+                  asyncSettings={this.path}
+                  success={this.onUploadSuccess as any}
+                />
+              </div>
+              <button onClick={this.uploadHandler}>Set Background</button>
             </div>
+
             <TextBoxComponent
               placeholder="Set Width"
               floatLabelType="Auto"

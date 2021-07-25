@@ -4,31 +4,42 @@
 @import "../node_modules/@syncfusion/ej2-react-buttons/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-react-popups/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-react-navigations/styles/material.css";
-
 .e-menu-icon {
-  color: #00ffff;
-  font-size: 26px;
+    color: #00ffff;
+    font-size: 26px;
 }
 
 .e-save-icon::before {
-  content: "\e735";
+    content: "\e735";
 }
 
 .e-new-icon::before {
-  content: "\e712";
+    content: "\e712";
 }
 
 .e-load-icon::before {
-  content: "\e60f";
+    content: "\e60f";
 }
 
 .e-exp-icon::before {
-  content: "\e711";
+    content: "\e711";
+}
+
+.e-recurrence-icon::before {
+    content: "\e308";
+}
+
+.e-group-icon::before {
+    content: "\e74b";
+}
+
+.e-ungroup-icon::before {
+    content: "\e74c";
 }
 
 .page-loading {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

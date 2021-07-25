@@ -1,0 +1,142 @@
+// @import "../libs/bootstrap.css";
+// @import "../libs/control.scss";
+// @import "../../node_modules/@syncfusion/ej2-base/styles/material.css";
+// @import "../../node_modules/@syncfusion/ej2-react-buttons/styles/material.css";
+// @import "../../node_modules/@syncfusion/ej2-react-popups/styles/material.css";
+// @import "../../node_modules/@syncfusion/ej2-react-navigations/styles/material.css";
+// .e-menu-icon {
+//     color: #00ffff;
+//     font-size: 26px;
+// }
+
+// .e-save-icon::before {
+//     content: "\e735";
+// }
+
+// .e-new-icon::before {
+//     content: "\e712";
+// }
+
+// .e-load-icon::before {
+//     content: "\e60f";
+// }
+
+// .e-exp-icon::before {
+//     content: "\e711";
+// }
+
+// .e-recurrence-icon::before {
+//     content: "\e308";
+// }
+
+// .e-group-icon::before {
+//     content: "\e74b";
+// }
+
+// .e-ungroup-icon::before {
+//     content: "\e74c";
+// }
+
+// .page-loading {
+//     height: 100vh;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+// }
+
+
+.widget {
+    height: 100%;
+    &__box {
+        height: 100%;
+    }
+}
+
+
+.display-none{
+       display:none;
+}
+.image-pattern-style {
+    background-color: white;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 45px;
+    width: calc((100% - 12px) / 3);
+    cursor: pointer;
+    border: 1px solid #d5d5d5;
+    background-position: center;
+    float: left;
+}
+
+.image-pattern-style:hover {
+    border-color: gray;
+    border-width: 2px;
+}
+
+.editor-panel {
+    margin-left: 0px;
+    margin-right: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    // border-style: solid;
+    // border-width: 2px;
+    width: 80%;
+    height: 60vh;
+    border-radius: 10px;
+}
+
+.row-header {
+    font-style: italic;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.e-checkbox-wrapper .e-label {
+    font-size: 12px;
+}
+
+.property-panel-header {
+    padding-top: 15px;
+    padding-bottom: 5px;
+}
+
+.e-selected-style {
+    border-color: #006ce6;
+    border-width: 2px;
+}
+
+.control-section {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-right: 0px;
+}
+
+.container-fluid {
+    padding-left: 0px;
+}
+
+.diagram-control-pane {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.control-pane {
+    overflow: hidden;
+}
+
+.svg-icon {
+    width: 1em;
+    height: 1em;
+}
+
+.svg-icon path,
+.svg-icon polygon,
+.svg-icon rect {
+    fill: #4691f6;
+}
+
+.svg-icon circle {
+    stroke: #4691f6;
+    stroke-width: 1;
+}

@@ -1,6 +1,5 @@
-import React from "react";
-import { BaseComponent } from "../base";
-
+import React from 'react';
+import { BaseComponent } from '../base';
 import DiagramPanel from "./diagramPanel";
 import { SymbolPalette } from "./symbolPallete";
 import {
@@ -29,10 +28,12 @@ const sleep = (milliseconds: number) => {
 let node: NodeModel;
 let diagramInstance: DiagramComponent;
 
+
 /**
- * Start Up component
+ * Diagram tool component
  */
-class StartUp extends BaseComponent<TProps, TState> {
+class DiagramTool extends BaseComponent<TProps, TState> {
+
   /**
    * default props
    */
@@ -44,7 +45,6 @@ class StartUp extends BaseComponent<TProps, TState> {
   state: Readonly<TState> = {
     toggleAnimation: false,
   };
-
   // componentDidMount() {
   //   this.onInit();
   // }
@@ -58,7 +58,11 @@ class StartUp extends BaseComponent<TProps, TState> {
     diagramInstance = instance;
   };
 
+  /**
+  *render function
+  */
   render() {
+
     return (
       <div className="control-pane">
         <div className="control-section">
@@ -66,6 +70,7 @@ class StartUp extends BaseComponent<TProps, TState> {
             height="3vh"
             id="toolbar_diagram"
             style={{ width: "100%" }}
+            //@ts-ignore
             clicked={(args: ClickEventArgs): any => {
               switch (args.item.text) {
                 case "New": {
@@ -76,7 +81,7 @@ class StartUp extends BaseComponent<TProps, TState> {
                   document
                     .getElementsByClassName("e-file-select-wrap")[0]
                     .querySelector("button")
-                    .click();
+                    ?.click();
                   break;
                 }
                 case "Save": {
@@ -187,7 +192,7 @@ class StartUp extends BaseComponent<TProps, TState> {
               // removeUrl:
               //   "https://aspnetmvc.syncfusion.com/services/api/uploadbox/Remove",
             }}
-            success={onUploadSuccess}
+            success={onUploadSuccess as any}
           />
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div
@@ -204,6 +209,7 @@ class StartUp extends BaseComponent<TProps, TState> {
   }
 }
 
+
 function onUploadSuccess(args: { [key: string]: Object }): void {
   let file1: { [key: string]: Object } = args.file as { [key: string]: Object };
   let file: Blob = file1.rawFile as Blob;
@@ -219,6 +225,7 @@ function loadDiagram(event: ProgressEvent): void {
 
 //save the diagram object in json data.
 function download(data: string): void {
+  // @ts-ignore
   if (window.navigator.msSaveBlob) {
     var blob = new Blob([data], { type: "data:text/json;charset=utf-8," });
     window.navigator.msSaveOrOpenBlob(blob, "Diagram.json");
@@ -285,5 +292,4 @@ type TState = {
  * State
  */
 type TProps = {};
-
-export { StartUp as default };
+export { DiagramTool as default };
