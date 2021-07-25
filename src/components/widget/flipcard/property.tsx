@@ -36,9 +36,9 @@ class FlipcardProperty extends BaseComponent<TProps, TState> {
               placeholder="Footer title"
               autoComplete="off"
               // autoFocus
-              onChange={(e) => {
+               onChange={(e) => {
                 model.changeFooterTitle(e.target.value);
-                onUpdatePanel();
+                 onUpdatePanel();
               }}
               value={model.footerTitle}
               name=""

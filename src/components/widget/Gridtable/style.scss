@@ -1,0 +1,93 @@
+
+@import '../../../libs/color';
+@import '../../../libs/variables';
+
+
+.flipcard-card {
+    .widget {
+        &__box {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: stretch;
+
+            div[class^='widget__'] {
+                text-align: center;
+                border-bottom: 1px solid $borderColor;
+
+                &:last-child {
+                    border-bottom: none;
+                }
+            }
+        }
+
+        &__header {
+            order: 1;
+            flex-basis: 80px;
+
+            >div {
+                height: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                &:first-child {
+                    border-bottom: 1px solid $borderColor;
+                    background-color: #23aba5;
+                    color: #fff;
+                }
+
+                &:last-child {
+                    background-color: #e4f5f4;
+                    font-weight: 700;
+                }
+            }
+        }
+
+        &__content {
+            order: 2;
+            flex: 1;
+
+            >div {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+                font-size: 2em;
+            }
+        }
+
+        &__footer {
+            order: 3;
+            flex-basis: 120px;
+
+
+            table th,
+            table td {
+                height: 50%;
+                border-bottom: 1px solid $borderColor;
+                vertical-align: middle;
+            }
+
+            .footer-title {
+                height: 40px;
+                border-bottom: 1px solid $borderColor;
+                display: flex;
+                justify-content: center;
+                background-color: #e4f5f4;
+                align-items: center;
+            }
+
+            .footer-section {
+                height: 80px;
+
+                table {
+                    height: 100%;
+                    width: 100%;
+                    border-collapse: collapse;
+                    padding: 0;
+                }
+            }
+        }
+    }
+}
