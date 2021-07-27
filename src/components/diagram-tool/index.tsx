@@ -17,10 +17,11 @@ import {
   ConnectorModel,
   IExportOptions,
 } from "@syncfusion/ej2-react-diagrams";
-import { UploaderComponent } from "@syncfusion/ej2-react-inputs";
+import { TextBoxComponent, UploaderComponent } from "@syncfusion/ej2-react-inputs";
 import "./style.scss";
 import "../../app.scss";
-
+import Items from "./menu-items.json";
+import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider';
 const sleep = (milliseconds: number) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 };
@@ -44,6 +45,9 @@ class DiagramTool extends BaseComponent<TProps, TState> {
    */
   state: Readonly<TState> = {
     toggleAnimation: false,
+    menuItem: Items,
+    width: "900",
+    height: "600",
   };
   // componentDidMount() {
   //   this.onInit();
@@ -57,143 +61,143 @@ class DiagramTool extends BaseComponent<TProps, TState> {
   getDiagramInstance = (instance: DiagramComponent) => {
     diagramInstance = instance;
   };
-
+  /**
+   * menu bar click handle
+   * @returns 
+   */
+  onClickMenuItem = (args: ClickEventArgs) => {
+    switch (args.item.text) {
+      case "New": {
+        diagramInstance.clear();
+        break;
+      }
+      case "Load": {
+        document
+        document.getElementById("fileupload")?.click();
+        break;
+      }
+      case "Save": {
+        download(diagramInstance.saveDiagram());
+        break;
+      }
+      case "Toggle Animation": {
+        this.setState({ toggleAnimation: !this.state.toggleAnimation });
+        break;
+      }
+      case "Grop": {
+        diagramInstance.selectedItems.nodes?.length ||
+          diagramInstance.selectedItems.connectors?.length
+          ? diagramInstance.group()
+          : {};
+        break;
+      }
+      case "Ungrop": {
+        diagramInstance.selectedItems.nodes?.length ||
+          diagramInstance.selectedItems.connectors?.length
+          ? diagramInstance.unGroup()
+          : {};
+        break;
+      }
+      case "Export": {
+        var connectors = document.querySelectorAll(
+          'path[id^="Link1"]'
+        );
+        for (let i = 0; i < connectors.length; i += 3) {
+          var animateElement = document.createElement("animate");
+          animateElement.setAttributeNS(
+            null,
+            "attributeName",
+            "stroke-dashoffset"
+          );
+          animateElement.setAttributeNS(null, "to", "-16");
+          animateElement.setAttributeNS(null, "dur", "0.5s");
+          animateElement.setAttributeNS(
+            null,
+            "repeatCount",
+            "indefinite"
+          );
+          animateElement.removeAttribute("xmlns");
+          connectors[i].appendChild(animateElement);
+          console.log(connectors[i]);
+        }
+        let options: IExportOptions = {};
+        options.mode = "Download";
+        options.format = "SVG";
+        diagramInstance.exportDiagram(options);
+        break;
+      }
+      default: {
+      }
+    }
+  }
   /**
   *render function
   */
   render() {
+    console.log(this.state.menuItem);
 
     return (
       <div className="control-pane">
         <div className="control-section">
           <ToolbarComponent
             height="3vh"
-            id="toolbar_diagram"
-            style={{ width: "100%" }}
+            id="Title-bar"
+            cssClass="title-bar"
             //@ts-ignore
-            clicked={(args: ClickEventArgs): any => {
-              switch (args.item.text) {
-                case "New": {
-                  diagramInstance.clear();
-                  break;
-                }
-                case "Load": {
-                  document
-                    .getElementsByClassName("e-file-select-wrap")[0]
-                    .querySelector("button")
-                    ?.click();
-                  break;
-                }
-                case "Save": {
-                  download(diagramInstance.saveDiagram());
-                  break;
-                }
-                case "Toggle Animation": {
-                  this.setState({ toggleAnimation: !this.state.toggleAnimation });
-                  break;
-                }
-                case "Grop": {
-                  diagramInstance.selectedItems.nodes?.length ||
-                    diagramInstance.selectedItems.connectors?.length
-                    ? diagramInstance.group()
-                    : {};
-                  break;
-                }
-                case "Ungrop": {
-                  diagramInstance.selectedItems.nodes?.length ||
-                    diagramInstance.selectedItems.connectors?.length
-                    ? diagramInstance.unGroup()
-                    : {};
-                  break;
-                }
-                case "Export": {
-                  var connectors = document.querySelectorAll(
-                    'path[id^="Link1"]'
-                  );
-                  for (let i = 0; i < connectors.length; i += 3) {
-                    var animateElement = document.createElement("animate");
-                    animateElement.setAttributeNS(
-                      null,
-                      "attributeName",
-                      "stroke-dashoffset"
-                    );
-                    animateElement.setAttributeNS(null, "to", "-16");
-                    animateElement.setAttributeNS(null, "dur", "0.5s");
-                    animateElement.setAttributeNS(
-                      null,
-                      "repeatCount",
-                      "indefinite"
-                    );
-                    animateElement.removeAttribute("xmlns");
-                    connectors[i].appendChild(animateElement);
-                    console.log(connectors[i]);
-                  }
-                  let options: IExportOptions = {};
-                  options.mode = "Download";
-                  options.format = "SVG";
-                  diagramInstance.exportDiagram(options);
-                  break;
-                }
-                default: {
-                }
-              }
-            }}
+            // clicked={this.onClickMenuItem}
             items={[
               {
-                text: "New",
-                tooltipText: "Reset Progress",
-                prefixIcon: "e-menu-icon e-new-icon",
-              },
-              { type: "Separator" },
-              {
-                text: "Save",
-                tooltipText: "Save Progress",
-                prefixIcon: "e-menu-icon e-save-icon",
-              },
-              { type: "Separator" },
-              {
-                text: "Load",
-                tooltipText: "Restore Previous Work",
-                prefixIcon: "e-menu-icon e-load-icon",
-              },
-              { type: "Separator" },
-              {
-                text: "Toggle Animation",
-                tooltipText: "For Switching On And Off Animation",
-                prefixIcon: "e-menu-icon e-recurrence-icon",
-              },
-              { type: "Separator" },
-              {
-                text: "Grop",
-                tooltipText: "For Grouping Diagram",
-                prefixIcon: "e-menu-icon e-group-icon",
-              },
-              { type: "Separator" },
-              {
-                text: "Ungrop",
-                tooltipText: "For Ungrouping Diagram",
-                prefixIcon: "e-menu-icon e-ungroup-icon",
-              },
-              { type: "Separator" },
-              {
-                text: "Export",
-                tooltipText: "as SVG",
-                prefixIcon: "e-menu-icon e-exp-icon",
+                text: "Untitled Diagram",
+                tooltipText: "Rename",
               },
             ]}
           />
-          <UploaderComponent
-            type="file"
-            style={{ height: "3vh" }}
-            id="fileupload"
-            asyncSettings={{
-              saveUrl:
-                "https://aspnetmvc.syncfusion.com/services/api/uploadbox/Save",
-              // removeUrl:
-              //   "https://aspnetmvc.syncfusion.com/services/api/uploadbox/Remove",
-            }}
-            success={onUploadSuccess as any}
+
+
+          <ToolbarComponent
+            height="3vh"
+            id="toolbar_diagram"
+            style={{ width: "100%" }}
+            //@ts-ignore
+            clicked={this.onClickMenuItem}
+            items={this.state.menuItem.items}
           />
+          <Divider className="primary" />
+          <ToolbarComponent
+            height="3vh"
+            id="sub-menu-bar"
+            cssClass="sub-menu"
+            //@ts-ignore
+            // clicked={this.onClickMenuItem}
+            items={[]}
+          >
+
+            <div className="flex-row">
+              <TextBoxComponent placeholder="Set Width" floatLabelType="Never" width="70px"
+              //  value={this.props.width}
+              // onChange={(e: any) => { this.props.diagramWidth(e.target.value); }} 
+              />
+              <div className="m-10" />
+              <TextBoxComponent placeholder="Set Height" floatLabelType="Never" width="70px"
+              //  value={this.props.height} 
+              //  onChange={(e: any) => { this.props.diagramHeight(e.target.value); }}
+              />
+            </div>
+          </ToolbarComponent>
+          <div className="display-none">
+            <UploaderComponent
+              type="file"
+              style={{ height: "3vh" }}
+              id="fileupload"
+              asyncSettings={{
+                saveUrl:
+                  "https://aspnetmvc.syncfusion.com/services/api/uploadbox/Save",
+                // removeUrl:
+                //   "https://aspnetmvc.syncfusion.com/services/api/uploadbox/Remove",
+              }}
+              success={onUploadSuccess as any}
+            />
+          </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div
               className="content-wrapper"
@@ -203,6 +207,9 @@ class DiagramTool extends BaseComponent<TProps, TState> {
               <DiagramPanel getDiagramInstance={this.getDiagramInstance} toggleAnimation={this.state.toggleAnimation} />
             </div>
           </div>
+        </div>
+        <div className="status-bar">
+          <h3>Status bar </h3>
         </div>
       </div>
     );
@@ -286,6 +293,9 @@ function SetShape(obj: string): void {
  */
 type TState = {
   toggleAnimation: boolean;
+  menuItem: any;
+  width: string;
+  height: string;
 };
 
 /**

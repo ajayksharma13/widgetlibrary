@@ -15,10 +15,11 @@ import {
   basicShapes,
   svgShapes,
   animatedShapes,
+  pipesSvg,
 } from "./paletteItems";
 
 import { UploaderComponent } from "@syncfusion/ej2-react-inputs";
-
+import "./style.scss";
 const sleep = (milliseconds: number) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 };
@@ -45,28 +46,29 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
     basicshapes: basicShapes,
     connectorshapes: connectorShapes,
     animatedSvgs: animatedShapes,
+    pipes: pipesSvg,
   };
 
   addPaletteItem = async (reader: FileReader, type: string) => {
     sleep(100).then((r) => {
       console.log(reader.result);
       var newData = this.state.svgshapes.slice();
-      if (reader.result?.slice(1, 2) == "g") {
-        newData.push({
-          id: Math.floor(Math.random() * 10000).toString(),
-          style: { fill: "none" },
-          annotations: [
-            { content: "", constraints: AnnotationConstraints.Interaction },
-          ],
-          shape: {
-            type: "Native",
-            content: reader.result ? reader.result.toString() : "",
-          },
-        });
-        this.setState({ svgshapes: newData });
-      } else {
-        this.setState({ showDialog: true });
-      }
+      // if (reader.result?.slice(1, 2) == "g") {
+      newData.push({
+        id: Math.floor(Math.random() * 10000).toString(),
+        style: { fill: "none" },
+        annotations: [
+          { content: "", constraints: AnnotationConstraints.Interaction },
+        ],
+        shape: {
+          type: "Native",
+          content: reader.result ? reader.result.toString() : "",
+        },
+      });
+      this.setState({ svgshapes: newData });
+      // } else {
+      //   this.setState({ showDialog: true });
+      // }
     });
   };
 
@@ -92,7 +94,12 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
   render() {
     return (
       <div className="col-lg-3">
-        <div style={{ height: "80vh" }} id="palette-space">
+        <div style={{
+          height: "79vh",
+          borderRight: "1px solid #5BD9D4",
+          borderTop: "1px solid #5BD9D4",
+          overflowY: "auto",
+        }} id="palette-space">
           <div className="content-wrapper">
             <DialogComponent
               isModal={true}
@@ -145,6 +152,13 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
                   iconCss: "e-diagram-icons1 e-diagram-connector",
                 },
                 {
+                  id: "pipes",
+                  expanded: true,
+                  symbols: this.state.pipes,
+                  title: "Pipes",
+                  iconCss: "e-diagram-icons1 e-diagram-svgs",
+                },
+                {
                   id: "svg",
                   expanded: true,
                   symbols: this.state.svgshapes,
@@ -162,10 +176,12 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
               symbolMargin={{ left: 15, right: 15, top: 15, bottom: 15 }}
             />
           </div>
-          <UploaderComponent
-            asyncSettings={this.path}
-            success={this.onUploadSuccess}
-          />
+          <div id="svg-uploder">
+            <UploaderComponent
+              asyncSettings={this.path}
+              success={this.onUploadSuccess as any}
+            />
+          </div>
         </div>
       </div>
     );
@@ -203,6 +219,7 @@ type TState = {
   basicshapes: NodeModel[];
   connectorshapes: ConnectorModel[];
   animatedSvgs: any[];
+  pipes: any[];
   showDialog: boolean;
 };
 

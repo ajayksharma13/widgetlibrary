@@ -83,7 +83,9 @@ path[id^="Link1"] {
   animation: dash 0.5s linear;
   animation-iteration-count: infinite;
 }
-
+  #level-1{
+    opacity:0;
+  }
 @keyframes dash {
   to {
     stroke-dashoffset: -16;
@@ -112,9 +114,7 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
 
   state: TState = {
     diagramBg:
-      "https://www.pngmagic.com/product_images/solid-color-background-pastel.jpg",
-    width: "1500",
-    height: "1000",
+      "https://www.solidbackgrounds.com/images/950x350/950x350-white-solid-color-background.jpg",
     showDialog: false,
     toggleAnimation: false,
     selectedItem: null,
@@ -287,7 +287,12 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
     // const node = this.uploaderRef.current;
     // console.log(node);
   }
-
+  setDiagramWidth = (width: string) => {
+    this.setState({ width });
+  }
+  setDiagramHeight = (height: string) => {
+    this.setState({ height });
+  }
   render() {
     return (
       <div
@@ -296,6 +301,7 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
           flexDirection: "row",
           width: "100%",
           height: "100%",
+          borderTop: "1px solid #5BD9D4",
         }}
       >
 
@@ -319,45 +325,13 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
           style={{
             display: "flex",
             flexDirection: "column",
-            height: "84vh",
+            height: "79vh",
           }}
         >
-          <div
-            style={{ display: "flex", flexDirection: "row", marginTop: "2vh" }}
-          >
-            <div className="col-lg-5" style={{ display: "flex", alignItems: "center", justifyContent: "center" }} >
-              <div className="display-none">
-                <UploaderComponent
-                  ref={this.uploaderRef}
-                  id="backgroundUploader"
-                  asyncSettings={this.path}
-                  success={this.onUploadSuccess as any}
-                />
-              </div>
-              <button onClick={this.uploadHandler}>Set Background</button>
-            </div>
 
-            <TextBoxComponent
-              placeholder="Set Width"
-              floatLabelType="Auto"
-              width="30vh"
-              value={this.state.width}
-              onChange={(e: any) => {
-                this.setState({ width: e.target.value });
-              }}
-            />
-            <TextBoxComponent
-              placeholder="Set Height"
-              floatLabelType="Auto"
-              width="30vh"
-              value={this.state.height}
-              onChange={(e: any) => {
-                this.setState({ width: e.target.value });
-              }}
-            />
-          </div>
           <style>
             {this.props.toggleAnimation ? ANIMATION_CSS_ON : ANIMATION_CSS_OFF}
+
           </style>
           <DiagramComponent
             id="diagram"
@@ -412,7 +386,6 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
               ]}
             />
           </DiagramComponent>
-
         </div>
         <div
           className="col-lg-3 property-panel-content"
@@ -420,9 +393,9 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
           style={{
             display: "flex",
             flexDirection: "column",
-            justifyContent: "space-around",
             marginLeft: "5px",
-            borderLeft: "1px solid #DADCE0",
+            borderLeft: "1px solid #5BD9D4",
+            background: "#FBFBFB",
           }}
         >
           {/* <div
@@ -483,6 +456,13 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
             changeX={this.changeX}
             changeY={this.changeY}
             selectedItem={this.state.selectedItem}
+            path={this.path}
+            uploadSuccess={this.onUploadSuccess}
+            height={this.state.height}
+            width={this.state.width}
+            diagramHeight={this.setDiagramHeight}
+            diagramWidth={this.setDiagramWidth}
+            uploadHandler={this.uploadHandler}
           />
         </div>
       </div>
@@ -492,8 +472,6 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
 
 type TState = {
   diagramBg: string;
-  width: string;
-  height: string;
   showDialog: boolean;
   toggleAnimation: boolean;
   selectedItem: SelectorModel | null;
