@@ -3,12 +3,19 @@ import React from "react";
 import { BaseComponent } from "../../base";
 import MimicToolModel from "./model";
 import MimicToolProperty from "./property";
-import DiagJason from "./Diagram.json";
 import "./style.scss";
 import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
 import DiagramTool from "../../diagram-tool";
 import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
-let diagramInstance: DiagramComponent;
+let widgetDiagramInstance: DiagramComponent;
+
+/**
+ * enum has previous work
+ */
+enum previousWork {
+    No = 0,
+    Yes = 1,
+}
 
 class MimicTool extends BaseComponent<TProps, TState> {
     static defaultProps: TProps = {
@@ -19,44 +26,95 @@ class MimicTool extends BaseComponent<TProps, TState> {
   * default state
   */
     state: TState = {
-        isModelOpen: false,
+        isModalOpen: false,
+        hasWork: previousWork.No,
     };
     componentDidMount() {
-        diagramInstance.loadDiagram(JSON.stringify(DiagJason));
+        const { model } = this.props;
+        if (Object.keys(model.diagramObject).length > 0) {
+            this.setState({ hasWork: previousWork.Yes });
+        }
     }
+
+    /**
+     * call back function to update render state
+     */
+    diagramUpdate = () => {
+        this.setState({
+            hasWork: previousWork.Yes,
+        });
+        this.diagramLoader();
+    }
+    /**
+     * diagram loader
+     * condition the object to load diagram
+     */
+    diagramLoader = () => {
+        const { model } = this.props;
+        let obj = JSON.parse(JSON.stringify(model.diagramObject)) as any;
+        obj.scrollSettings.currentZoom = 0.3;
+        obj.snapSettings.horizontalGridlines.lineIntervals = [];
+        obj.snapSettings.verticalGridlines.lineIntervals = [];
+        obj.rulerSettings.showRulers = false;
+        widgetDiagramInstance.loadDiagram(JSON.stringify(obj));
+        console.log(model.diagramObject === obj);
+
+    }
+
+    /**
+     * method to close the modal 
+     */
     closeModal = () => {
-        this.setState({ isModelOpen: false });
+        this.setState({ isModalOpen: false });
     }
-    render() {
+
+    /**
+     * condinally render elemenet
+     */
+    renderContent = () => {
         let { viewbox: { height, width } } = this.props;
         let temp = parseInt(height) - 30;
+        const { hasWork } = this.state;
+        console.log(hasWork);
+
+        if (hasWork == previousWork.No) {
+            return (<div>
+                <p>click here to create a diagram</p>
+            </div>);
+        }
+        else {
+            return (
+                <DiagramComponent
+                    id="widget-diagram"
+                    ref={diagram => (widgetDiagramInstance = diagram as DiagramComponent)}
+                    width={`${width}px`}
+                    height={`${temp}px`}
+                    snapSettings={{ constraints: SnapConstraints.None }}
+                >
+                    <Inject services={[DataBinding, BpmnDiagrams]} />
+                </DiagramComponent>
+            );
+        }
+    }
+
+
+    render() {
         return <div className="mimic-widget" style={{ borderTop: "1px solid" }}>
             <div className="mimic-header">
-                <Icon name="edit" title="Edit" onClick={() => this.setState({ isModelOpen: true })} />
+                <Icon name="edit" title="Edit" onClick={() => this.setState({ isModalOpen: true })} />
             </div>
             <Modal
                 size="fullscreen"
-                open={this.state.isModelOpen}
-                onClose={() => this.setState({ isModelOpen: false })}
+                open={this.state.isModalOpen}
+                onClose={() => this.setState({ isModalOpen: false })}
             >
                 <DiagramTool
                     closeModal={this.closeModal}
+                    model={this.props.model}
+                    updateWidget={this.diagramUpdate}
                 />
             </Modal>
-            <DiagramComponent
-                id="widget-diagram"
-                ref={diagram => (diagramInstance = diagram as DiagramComponent)}
-                width={`${width}px`}
-                height={`${temp}px`}
-                snapSettings={{ constraints: SnapConstraints.None }}
-            // nodes={getNodes()}
-            //Defines the default node and connector properties
-            // getNodeDefaults={(obj, diagram) => {
-            //     return obj;
-            // }}
-            >
-                <Inject services={[DataBinding, BpmnDiagrams]} />
-            </DiagramComponent>
+            {this.renderContent()}
         </div >;
     }
 
@@ -69,11 +127,11 @@ class MimicTool extends BaseComponent<TProps, TState> {
 type TProps = {
     model: MimicToolModel;
     viewbox?: any;
-
 };
 
 type TState = {
-    isModelOpen: boolean;
+    isModalOpen: boolean;
+    hasWork: number;
 };
 
 export { MimicTool as default, MimicToolModel, MimicToolProperty };

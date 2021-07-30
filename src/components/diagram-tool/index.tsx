@@ -17,13 +17,13 @@ import {
   ConnectorModel,
   IExportOptions,
 } from "@syncfusion/ej2-react-diagrams";
-import DiagJason from "./Diagram.json";
 import { TextBoxComponent, UploaderComponent } from "@syncfusion/ej2-react-inputs";
 import "./style.scss";
 import Items from "./menu-items.json";
 import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider';
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
 import Submenu from './submenu-bar';
+import { MimicToolModel } from '../widget/mimic-tool';
 const sleep = (milliseconds: number) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 };
@@ -55,7 +55,12 @@ class DiagramTool extends BaseComponent<TProps, TState> {
     y: 0,
   };
   componentDidMount() {
-    diagramInstance.loadDiagram(JSON.stringify(DiagJason));
+    const { model } = this.props;
+    if (Object.keys(model!.diagramObject).length > 0) {
+      diagramInstance.loadDiagram(JSON.stringify(this.props.model?.diagramObject));
+    }
+    //remove after practising
+    diagramInstance.dataBindingModule
   }
 
   /**
@@ -82,7 +87,10 @@ class DiagramTool extends BaseComponent<TProps, TState> {
         break;
       }
       case "Save": {
-        download(diagramInstance.saveDiagram());
+        this.props.model?.updatediagramObject(JSON.parse(diagramInstance.saveDiagram()));
+        this.props.updateWidget?.();
+        // download(diagramInstance.saveDiagram());
+
         break;
       }
       case "Toggle Animation": {
@@ -290,9 +298,9 @@ function download(data: string): void {
     var a = document.createElement("a");
     a.href = dataStr;
     a.download = "Diagram.json";
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
+    // document.body.appendChild(a);
+    // a.click();
+    // a.remove();
   }
 }
 
@@ -355,5 +363,7 @@ type TState = {
  */
 type TProps = {
   closeModal?: Function;
+  model?: MimicToolModel;
+  updateWidget?: Function;
 };
 export { DiagramTool as default };
