@@ -16,7 +16,7 @@ import {
   svgShapes,
   animatedShapes,
   pipesSvg,
-} from "./paletteItems";
+} from "./palette-items";
 
 import { UploaderComponent } from "@syncfusion/ej2-react-inputs";
 import "./style.scss";
@@ -90,16 +90,14 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
       return { description: { text: symbol.id } };
     };
   }
+  uploadHandler = () => {
+    document.getElementById("svg-uploader")?.click();
+  }
 
   render() {
     return (
       <div className="col-lg-3">
-        <div style={{
-          height: "79vh",
-          borderRight: "1px solid #5BD9D4",
-          borderTop: "1px solid #5BD9D4",
-          overflowY: "auto",
-        }} id="palette-space">
+        <div id="palette-space">
           <div className="content-wrapper">
             <DialogComponent
               isModal={true}
@@ -119,7 +117,7 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
 
             <SymbolPaletteComponent
               id="symbolpalette"
-              ref={(symbolpal) => (palette = symbolpal)}
+              ref={(symbolpal) => (palette = symbolpal!)}
               expandMode={"Single"}
               allowDrag={true}
               palettes={[
@@ -138,6 +136,13 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
                   iconCss: "e-diagram-icons1 e-diagram-basic",
                 },
                 {
+                  id: "pipes",
+                  expanded: true,
+                  symbols: this.state.pipes,
+                  title: "Pipes",
+                  iconCss: "e-diagram-icons1 e-diagram-svgs",
+                },
+                {
                   id: "animatedSvg",
                   expanded: true,
                   symbols: this.state.animatedSvgs,
@@ -150,13 +155,6 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
                   symbols: this.state.connectorshapes,
                   title: "Connectors",
                   iconCss: "e-diagram-icons1 e-diagram-connector",
-                },
-                {
-                  id: "pipes",
-                  expanded: true,
-                  symbols: this.state.pipes,
-                  title: "Pipes",
-                  iconCss: "e-diagram-icons1 e-diagram-svgs",
                 },
                 {
                   id: "svg",
@@ -177,11 +175,17 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
             />
           </div>
           <div id="svg-uploder">
-            <UploaderComponent
-              asyncSettings={this.path}
-              success={this.onUploadSuccess as any}
-            />
+            <div className="display-none">
+              <UploaderComponent
+                id="svg-uploader"
+                asyncSettings={this.path}
+                success={this.onUploadSuccess as any}
+              />
+            </div>
+
           </div>
+
+          <span onClick={this.uploadHandler} className="e-icons e-upload"></span>
         </div>
       </div>
     );

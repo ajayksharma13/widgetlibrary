@@ -1,7 +1,7 @@
 import React from 'react';
 import { BaseComponent } from '../base';
-import DiagramPanel from "./diagramPanel";
-import { SymbolPalette } from "./symbolPallete";
+import DiagramPanel from "./diagram-panel";
+import { SymbolPalette } from "./symbol-pallete";
 import {
   ToolbarComponent,
   ClickEventArgs,
@@ -17,11 +17,13 @@ import {
   ConnectorModel,
   IExportOptions,
 } from "@syncfusion/ej2-react-diagrams";
+import DiagJason from "./Diagram.json";
 import { TextBoxComponent, UploaderComponent } from "@syncfusion/ej2-react-inputs";
 import "./style.scss";
-import "../../app.scss";
 import Items from "./menu-items.json";
 import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider';
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
+import Submenu from './submenu-bar';
 const sleep = (milliseconds: number) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 };
@@ -46,12 +48,15 @@ class DiagramTool extends BaseComponent<TProps, TState> {
   state: Readonly<TState> = {
     toggleAnimation: false,
     menuItem: Items,
-    width: "900",
-    height: "600",
+    width: "1000",
+    height: "700",
+    diagramBg: "https://www.solidbackgrounds.com/images/1280x720/1280x720-white-solid-color-background.jpg",
+    x: 0,
+    y: 0,
   };
-  // componentDidMount() {
-  //   this.onInit();
-  // }
+  componentDidMount() {
+    diagramInstance.loadDiagram(JSON.stringify(DiagJason));
+  }
 
   /**
    * @description init method of component
@@ -130,30 +135,77 @@ class DiagramTool extends BaseComponent<TProps, TState> {
       }
     }
   }
+  setDiagramWidth = (width: string) => {
+    this.setState({ width });
+  }
+  setDiagramHeight = (height: string) => {
+    this.setState({ height });
+  }
+  setDiagrambg = (url: string, width: string, height: string) => {
+    this.setState({
+      diagramBg: url,
+      width: width,
+      height: height,
+    });
+  }
+  setBg = async (reader: FileReader) => {
+    sleep(100).then((r) => {
+      const img = new Image();
+      img.src = reader.result as string;
+      //Fires immediately after the browser loads the object.
+      img.onload = (e) => {
+        //@ts-ignore
+        let imgWidth = e.target.width;
+        //@ts-ignore
+        let imgHeight = e.target.height;
+        if (Number(imgWidth) > 700 && Number(imgHeight) > 500) {
+          this.setDiagrambg(reader.result as string, imgWidth, imgHeight);
+        } else {
+          console.log(imgWidth, imgHeight);
+          // this.setState({ showDialog: true });
+        }
+      }
+    });
+  };
+
+  onUploadSuccess = (args: { [key: string]: Object }) => {
+    let file1: { [key: string]: Object } = args.file as {
+      [key: string]: Object;
+    };
+    let file: Blob = file1.rawFile as Blob;
+    let reader: FileReader = new FileReader();
+    reader.readAsDataURL(file);
+    this.setBg(reader);
+  };
+
+  public path: object = {
+    // removeUrl: "https://ej2.syncfusion.com/services/api/uploadbox/Remove",
+    saveUrl: "https://ej2.syncfusion.com/services/api/uploadbox/Save",
+  };
+
+  uploadHandler = () => {
+    document.getElementById("backgroundUploader")?.click();
+    //  todo:implement with react ref
+    // const node = this.uploaderRef.current;
+    // console.log(node);
+  }
+
+  onMouse = (codX: any, codY: any) => {
+    this.setState({ x: codX, y: codY });
+    const { x, y } = this.state;
+  }
+
   /**
   *render function
   */
   render() {
-    console.log(this.state.menuItem);
-
     return (
       <div className="control-pane">
         <div className="control-section">
-          <ToolbarComponent
-            height="3vh"
-            id="Title-bar"
-            cssClass="title-bar"
-            //@ts-ignore
-            // clicked={this.onClickMenuItem}
-            items={[
-              {
-                text: "Untitled Diagram",
-                tooltipText: "Rename",
-              },
-            ]}
-          />
-
-
+          <div className="title-bar">
+            <h2>Anexee Diagram</h2>
+            <p title="close" onClick={() => this.props.closeModal?.()}>X</p>
+          </div>
           <ToolbarComponent
             height="3vh"
             id="toolbar_diagram"
@@ -162,28 +214,17 @@ class DiagramTool extends BaseComponent<TProps, TState> {
             clicked={this.onClickMenuItem}
             items={this.state.menuItem.items}
           />
-          <Divider className="primary" />
-          <ToolbarComponent
-            height="3vh"
-            id="sub-menu-bar"
-            cssClass="sub-menu"
-            //@ts-ignore
-            // clicked={this.onClickMenuItem}
-            items={[]}
-          >
-
-            <div className="flex-row">
-              <TextBoxComponent placeholder="Set Width" floatLabelType="Never" width="70px"
-              //  value={this.props.width}
-              // onChange={(e: any) => { this.props.diagramWidth(e.target.value); }} 
-              />
-              <div className="m-10" />
-              <TextBoxComponent placeholder="Set Height" floatLabelType="Never" width="70px"
-              //  value={this.props.height} 
-              //  onChange={(e: any) => { this.props.diagramHeight(e.target.value); }}
-              />
-            </div>
-          </ToolbarComponent>
+          <hr className="m-0 custom-hr" />
+          <Submenu
+            height={this.state.height}
+            path={this.path}
+            setDiagramWidth={this.setDiagramWidth}
+            onUploadSuccess={this.onUploadSuccess}
+            setDiagramHeight={this.setDiagramHeight}
+            setDiagrambg={this.setDiagrambg}
+            uploadHandler={this.uploadHandler}
+            width={this.state.width}
+          />
           <div className="display-none">
             <UploaderComponent
               type="file"
@@ -204,12 +245,20 @@ class DiagramTool extends BaseComponent<TProps, TState> {
               style={{ display: "flex", flexDirection: "row" }}
             >
               <SymbolPalette />
-              <DiagramPanel getDiagramInstance={this.getDiagramInstance} toggleAnimation={this.state.toggleAnimation} />
+              <DiagramPanel getDiagramInstance={this.getDiagramInstance}
+                height={this.state.height}
+                width={this.state.width}
+                diagramBg={this.state.diagramBg}
+                setDiagrambg={this.setDiagrambg}
+                toggleAnimation={this.state.toggleAnimation}
+                onMouse={this.onMouse}
+              />
+
             </div>
           </div>
         </div>
         <div className="status-bar">
-          <h3>Status bar </h3>
+          <p className="m-l-10">x:{this.state.x} y:{this.state.y}</p>
         </div>
       </div>
     );
@@ -296,10 +345,15 @@ type TState = {
   menuItem: any;
   width: string;
   height: string;
+  diagramBg: string;
+  x: number;
+  y: number;
 };
 
 /**
- * State
+ * Props
  */
-type TProps = {};
+type TProps = {
+  closeModal?: Function;
+};
 export { DiagramTool as default };

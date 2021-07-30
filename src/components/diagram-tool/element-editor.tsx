@@ -102,25 +102,7 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
           <Grid.Column>
             <Grid.Row>
               <Grid.Column>
-                <h3>Diagram</h3>
-                <div className="display-none">
-                  <UploaderComponent id="backgroundUploader" asyncSettings={this.props.path} success={this.props.uploadSuccess} />
-                </div>
-                <div className="flex-row">
-                  <p style={{ margin: "2px 14px 0 0" }}>Background</p>
-                  <Button onClick={this.props.uploadHandler}>Image</Button>
-                </div>
-                <div className="flex-row">
-                  <TextBoxComponent placeholder="Set Width" floatLabelType="Auto" width="120px" value={this.props.width} onChange={(e: any) => { this.props.diagramWidth(e.target.value); }} />
-                  <div className="m-10" />
-                  <TextBoxComponent placeholder="Set Height" floatLabelType="Auto" width="120px" value={this.props.height} onChange={(e: any) => { this.props.diagramHeight(e.target.value); }} />
-                </div>
-              </Grid.Column>
-            </Grid.Row>
-            <Divider />
-            <Grid.Row>
-              <Grid.Column>
-                <h3>Element</h3>
+                <h3>Properties</h3>
                 <div className="flex-row">
                   <div className="flex-column">
                     <p>Fill-Color</p>
@@ -148,16 +130,16 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
                     <p style={{ paddingBottom: "1px" }}>Text-Size</p>
 
                     <div>
-                      <DropDownListComponent id="ddlelement" dataSource={sizeData} popupHeight="200px" popupWidth="120px" placeholder="Select Font Size" value={this.getTextSize()} change={(e: any) => { this.props.textSizeChange(e.value); }} />
+                      <DropDownListComponent id="ddlelement" dataSource={sizeData} popupHeight="200px" popupWidth="100px" placeholder="Select Font Size" value={this.getTextSize()} change={(e: any) => { this.props.textSizeChange(e.value); }} />
                     </div>
                   </div>
                 </div>
                 <div className="flex-row">
                   <div className="flex-column">
-                    <TextBoxComponent placeholder="Set X Coordinate" floatLabelType="Auto" width="10vh" value={this.getLocX()} onChange={(e: any) => { this.props.changeX(e.value); }} />
+                    <TextBoxComponent placeholder="Set X Coordinate" floatLabelType="Auto" width="120px" value={this.getLocX()} onChange={(e: any) => { this.props.changeX(e.value); }} />
                   </div>
                   <div className="flex-column">
-                    <TextBoxComponent placeholder="Set Y Coordinate" floatLabelType="Auto" width="10vh" value={this.getLocY()} onChange={(e: any) => { this.props.changeY(e.value); }} />
+                    <TextBoxComponent placeholder="Set Y Coordinate" floatLabelType="Auto" width="120px" value={this.getLocY()} onChange={(e: any) => { this.props.changeY(e.value); }} />
                   </div>
                 </div>
               </Grid.Column>
@@ -178,12 +160,6 @@ type TProps = {
   textSizeChange: Function;
   changeX: Function;
   changeY: Function;
-  selectedItem: SelectorModel | null;
-  path: object;
-  uploadSuccess: any;
-  width: string;
-  height: string;
-  diagramWidth: Function;
-  diagramHeight: Function;
-  uploadHandler: () => void;
+  selectedItem: SelectorModel | any;
+
 };

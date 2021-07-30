@@ -1,0 +1,30 @@
+.mimic-widget {
+    .mimic-header {
+        position: absolute;
+        z-index: 103;
+        width: 100%;
+        height: 2em;
+        opacity: 0.3;
+        background-color: aquamarine;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+}
+
+.dimmed.dimmable>.ui.animating.dimmer,
+.dimmed.dimmable>.ui.visible.dimmer,
+.ui.active.dimmer {
+    padding: 0 !important;
+}
+
+.modals.dimmer .ui.scrolling.modal {
+    margin: 0 !important;
+    height: 100vh !important;
+    width: 100vw !important;
+}
+
+.ui.modal {
+    border-radius: 0 !important;
+}

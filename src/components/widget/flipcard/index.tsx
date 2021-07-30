@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Grid, Header, Table } from "semantic-ui-react";
 import { BaseComponent } from "../../base";
 import FlipcardModel from "./model";
 import FlipcardProperty from "./property";

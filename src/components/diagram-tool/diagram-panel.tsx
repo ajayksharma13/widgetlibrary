@@ -29,9 +29,10 @@ import {
   DataBinding,
   PrintAndExport,
   SelectorModel,
+  LayoutAnimation,
 } from "@syncfusion/ej2-react-diagrams";
 
-import ElementEditor from "./elementEditor";
+import ElementEditor from "./element-editor";
 import { UploaderComponent } from "@syncfusion/ej2-react-inputs";
 import { DialogComponent } from "@syncfusion/ej2-react-popups";
 import "./style.scss";
@@ -113,10 +114,7 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
   uploaderRef = React.createRef<any>();
 
   state: TState = {
-    diagramBg:
-      "https://www.solidbackgrounds.com/images/950x350/950x350-white-solid-color-background.jpg",
     showDialog: false,
-    toggleAnimation: false,
     selectedItem: null,
   };
 
@@ -216,11 +214,7 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
         //@ts-ignore
         let imgHeight = e.target.height;
         if (Number(imgWidth) > 700 && Number(imgHeight) > 500) {
-          this.setState({
-            diagramBg: reader.result as string,
-            width: imgWidth,
-            height: imgHeight,
-          });
+          this.props.setDiagrambg(reader.result as string, imgWidth, imgHeight);
         } else {
           console.log(imgWidth, imgHeight);
           this.setState({ showDialog: true });
@@ -281,29 +275,15 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
     return commandManager;
   }
 
-  uploadHandler = () => {
-    document.getElementById("backgroundUploader")?.click();
-    //  todo:implement with react ref
-    // const node = this.uploaderRef.current;
-    // console.log(node);
+
+  _onMouseMove = (e: any) => {
+    this.props.onMouse(e.screenX - 273, e.screenY - 175);
   }
-  setDiagramWidth = (width: string) => {
-    this.setState({ width });
-  }
-  setDiagramHeight = (height: string) => {
-    this.setState({ height });
-  }
+
+
   render() {
     return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          width: "100%",
-          height: "100%",
-          borderTop: "1px solid #5BD9D4",
-        }}
-      >
+      <div className="diagram-panel">
 
         <DialogComponent
           isModal={true}
@@ -325,15 +305,15 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
           style={{
             display: "flex",
             flexDirection: "column",
-            height: "79vh",
+            height: "76vh",
           }}
+          onMouseMove={this._onMouseMove}
         >
-
           <style>
             {this.props.toggleAnimation ? ANIMATION_CSS_ON : ANIMATION_CSS_OFF}
-
           </style>
           <DiagramComponent
+            getCustomCursor={"pointer"}
             id="diagram"
             ref={(diagram) => {
               diagramInstance = diagram as DiagramComponent;
@@ -347,17 +327,19 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
             scrollSettings={{ canAutoScroll: true, currentZoom: 1 }}
             pageSettings={{
               background: {
-                source: this.state.diagramBg,
+                source: this.props.diagramBg,
               },
-              width: this.state.diagramBg.length
-                ? parseInt(this.state.width)
+              width: this.props.diagramBg.length
+                ? parseInt(this.props.width)
                 : 0,
-              height: this.state.diagramBg.length
-                ? parseInt(this.state.height)
+              height: this.props.diagramBg.length
+                ? parseInt(this.props.height)
                 : 0,
             }}
             snapSettings={snapSettings}
-            rulerSettings={{ showRulers: true }}
+            rulerSettings={{
+              showRulers: true,
+            }}
             //Sets the default values of a node
             getNodeDefaults={(node: NodeModel) => {
               let obj: NodeModel = node;
@@ -383,71 +365,14 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
                 DiagramContextMenu,
                 DataBinding,
                 PrintAndExport,
+                LayoutAnimation,
               ]}
             />
           </DiagramComponent>
         </div>
         <div
           className="col-lg-3 property-panel-content"
-          id="appearance"
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            marginLeft: "5px",
-            borderLeft: "1px solid #5BD9D4",
-            background: "#FBFBFB",
-          }}
-        >
-          {/* <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-around",
-            }}
-          >
-            <ButtonComponent
-              id="toggle"
-              onClick={() => {
-                this.setState({ toggleAnimation: !this.state.toggleAnimation });
-              }}
-              style={{ width: "40%", height: "3vh", margin: "10px" }}
-            >
-              Toggle Animation
-            </ButtonComponent>
-          </div> */}
-          {/* <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-around",
-
-            }}
-          >
-            <ButtonComponent
-              id="group"
-              onClick={() => {
-                diagramInstance.selectedItems.nodes?.length ||
-                  diagramInstance.selectedItems.connectors?.length
-                  ? diagramInstance.group()
-                  : {};
-              }}
-              style={{ width: "40%", height: "3vh", margin: "10px" }}
-            >
-              Group
-            </ButtonComponent>
-            <ButtonComponent
-              id="ungroup"
-              onClick={() => {
-                diagramInstance.selectedItems.nodes?.length ||
-                  diagramInstance.selectedItems.connectors?.length
-                  ? diagramInstance.unGroup()
-                  : {};
-              }}
-              style={{ width: "40%", height: "3vh", margin: "10px" }}
-            >
-              Ungroup
-            </ButtonComponent>
-          </div> */}
+          id="appearance">
           <ElementEditor
             strokeChange={this.StrokeChange}
             colorChange={this.ColorChange}
@@ -456,13 +381,6 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
             changeX={this.changeX}
             changeY={this.changeY}
             selectedItem={this.state.selectedItem}
-            path={this.path}
-            uploadSuccess={this.onUploadSuccess}
-            height={this.state.height}
-            width={this.state.width}
-            diagramHeight={this.setDiagramHeight}
-            diagramWidth={this.setDiagramWidth}
-            uploadHandler={this.uploadHandler}
           />
         </div>
       </div>
@@ -471,15 +389,18 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
 }
 
 type TState = {
-  diagramBg: string;
   showDialog: boolean;
-  toggleAnimation: boolean;
   selectedItem: SelectorModel | null;
 };
 
 type TProps = {
   getDiagramInstance: Function;
   toggleAnimation: boolean;
+  width: string;
+  height: string;
+  diagramBg: string;
+  setDiagrambg: Function;
+  onMouse: any;
 };
 
 function getPorts(obj: NodeModel): PointPortModel[] {

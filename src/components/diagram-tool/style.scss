@@ -1,40 +1,83 @@
-// @import "../libs/bootstrap.css";
-// @import "../libs/control.scss";
-// @import "../../node_modules/@syncfusion/ej2-base/styles/material.css";
-// @import "../../node_modules/@syncfusion/ej2-react-buttons/styles/material.css";
-// @import "../../node_modules/@syncfusion/ej2-react-popups/styles/material.css";
-// @import "../../node_modules/@syncfusion/ej2-react-navigations/styles/material.css";
-// .e-menu-icon {
-//     color: #00ffff;
-//     font-size: 26px;
-// }
-// .e-save-icon::before {
-//     content: "\e735";
-// }
-// .e-new-icon::before {
-//     content: "\e712";
-// }
-// .e-load-icon::before {
-//     content: "\e60f";
-// }
-// .e-exp-icon::before {
-//     content: "\e711";
-// }
-// .e-recurrence-icon::before {
-//     content: "\e308";
-// }
-// .e-group-icon::before {
-//     content: "\e74b";
-// }
-// .e-ungroup-icon::before {
-//     content: "\e74c";
-// }
-// .page-loading {
-//     height: 100vh;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-// }
+@import "../../libs/bootstrap.css";
+@import "../../libs/control.scss";
+@import "../../libs/mixins.scss";
+@import "../../libs/color.scss";
+@import "../../../node_modules/@syncfusion/ej2-base/styles/material.css";
+@import "../../../node_modules/@syncfusion/ej2-react-buttons/styles/material.css";
+@import "../../../node_modules/@syncfusion/ej2-react-popups/styles/material.css";
+@import "../../../node_modules/@syncfusion/ej2-react-navigations/styles/material.css";
+.e-menu-icon {
+    color: $primaryColor !important;
+    font-size: 26px;
+}
+
+.e-save-icon::before {
+    content: "\e735";
+}
+
+.e-new-icon::before {
+    content: "\e712";
+}
+
+.e-load-icon::before {
+    content: "\e60f";
+}
+
+.e-exp-icon::before {
+    content: "\e711";
+}
+
+.e-recurrence-icon::before {
+    content: "\e308";
+}
+
+.e-group-icon::before {
+    content: "\e74b";
+}
+
+.e-ungroup-icon::before {
+    content: "\e74c";
+}
+
+.e-import:before {
+    content: "\e715";
+    color: $primaryColor !important;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.e-upload:before {
+    content: "\e710";
+    font-size: 2.5em;
+    color: $primaryColor;
+}
+
+.e-upload {
+    border: none !important;
+    position: absolute;
+    bottom: 0;
+    cursor: pointer;
+    width: auto;
+    left: 4px;
+}
+
+.upload-text {
+    position: relative;
+    top: -7px;
+}
+
+.upload-tag {
+    margin: 1em;
+    cursor: pointer;
+}
+
+.page-loading {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .widget {
     height: 100%;
     &__box {
@@ -44,6 +87,19 @@
 
 .display-none {
     display: none;
+}
+
+// diagram starting block customizer
+.e-diagram .e-ruler-overlap {
+    background-color: $primaryColor;
+}
+
+e-diagram .e-ruler {
+    background-color: $primaryColor !important;
+}
+
+.custom-hr {
+    border-color: $borderColor !important;
 }
 
 .image-pattern-style {
@@ -92,7 +148,7 @@
 }
 
 .e-selected-style {
-    border-color: #5bd9d4;
+    border-color: $primaryColor;
     border-width: 2px;
 }
 
@@ -137,7 +193,7 @@
 .status-bar {
     width: 100%;
     height: 5vh;
-    border: 1px solid #5bd9d4;
+    border: 1px solid $primaryColor;
     display: flex;
     align-items: center;
     align-content: center;
@@ -149,6 +205,15 @@
     width: 100%;
     position: relative;
     bottom: 0;
+}
+
+// diagram panel styling
+.diagram-panel {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    border-top: 1px solid $primaryColor;
 }
 
 // Element Editor styling
@@ -173,12 +238,16 @@
         font-size: 1.1em;
     }
     .colour-picker {
-        border: 1px solid #A0A0A0;
+        border: 1px solid #a0a0a0;
         margin-left: 0.5em;
         .e-split-btn-wrapper .e-dropdown-btn {
-            border-left: 1px solid #A0A0A0;
-            color: #5BD9D4;
+            border-left: 1px solid #a0a0a0;
+            color: $primaryColor;
         }
+    }
+    .e-input-group:not(.e-float-icon-left),
+    .e-input-group.e-control-wrapper:not(.e-float-icon-left) {
+        margin-top: -4px;
     }
 }
 
@@ -187,11 +256,75 @@
 //     height:50px !important;
 // }
 .title-bar {
-    .e-tbar-btn-text {
-        font-size: 1.5em !important;
+    width: 100%;
+    height: 5vh;
+    background-color: #fafafa;
+    h2 {
+        float: left;
+        margin: auto 0.6em;
+    }
+    p {
+        float: right;
+        margin: auto 0.6em;
+        cursor: pointer;
+        font-size: 1.5em;
+        font-weight: 900;
     }
 }
 
 .sub-menu {
-    padding-left:2em;
+    display: flex;
+    padding-left: 0em;
+    padding-bottom: 2px;
+    height: 5vh;
+    background: #fafafa;
+    .flex-row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin: 1em;
+    }
+    .flex-column {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 50%;
+        margin: 0 1em;
+    }
+}
+
+#ddlelement {
+    padding: 0;
+}
+
+//symbolpalette styling
+#symbolpalette {
+    .e-accordion .e-acrdn-item.e-select.e-selected.e-expand-state>.e-acrdn-header .e-acrdn-header-icon,
+    .e-accordion .e-acrdn-item.e-select.e-selected.e-expand-state>.e-acrdn-header .e-acrdn-header-content,
+    .e-accordion .e-acrdn-item.e-select.e-expand-state>.e-acrdn-header .e-acrdn-header-icon,
+    .e-accordion .e-acrdn-item.e-select.e-expand-state>.e-acrdn-header .e-acrdn-header-content {
+        color: $primaryColor;
+    }
+    .e-accordion .e-acrdn-item .e-acrdn-panel .e-acrdn-content {
+        padding: 0 !important;
+    }
+    .e-accordion .e-acrdn-item .e-acrdn-header {
+        padding-left: 0.2em !important;
+    }
+}
+
+#palette-space {
+    height: 76vh;
+    border-right: 1px solid $primaryColor;
+    border-top: 1px solid $primaryColor;
+    overflow-y: auto;
+}
+
+// property-panel-content styling
+.property-panel-content {
+    display: flex;
+    flex-direction: column;
+    margin-left: 5px;
+    border-left: 1px solid $primaryColor;
+    background: #fbfbfb;
 }
