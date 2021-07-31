@@ -4,38 +4,37 @@
             "tooltipText": "Reset Progress",
             "prefixIcon": "e-menu-icon e-new-icon"
         },
-        { "type": "Separator" },
+
         {
             "text": "Save",
             "tooltipText": "Save Progress",
             "prefixIcon": "e-menu-icon e-save-icon"
         },
-        { "type": "Separator" },
+
         {
             "text": "Load",
             "tooltipText": "Restore Previous Work",
             "prefixIcon": "e-menu-icon e-load-icon"
         },
 
-        { "type": "Separator" },
         {
             "text": "Grop",
             "tooltipText": "For Grouping Diagram",
             "prefixIcon": "e-menu-icon e-group-icon"
         },
-        { "type": "Separator" },
+
         {
             "text": "Ungrop",
             "tooltipText": "For Ungrouping Diagram",
             "prefixIcon": "e-menu-icon e-ungroup-icon"
         },
-        { "type": "Separator" },
+
         {
             "text": "Export",
             "tooltipText": "as SVG",
             "prefixIcon": "e-menu-icon e-exp-icon"
         },
-        { "type": "Separator" },
+
         {
             "text": "Toggle Animation",
             "tooltipText": "For Switching On And Off Animation",

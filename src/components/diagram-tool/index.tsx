@@ -211,8 +211,8 @@ class DiagramTool extends BaseComponent<TProps, TState> {
       <div className="control-pane">
         <div className="control-section">
           <div className="title-bar">
-            <h2>Anexee Diagram</h2>
-            <p title="close" onClick={() => this.props.closeModal?.()}>X</p>
+            <p>Anexee Diagram</p>
+            <span title="Close" onClick={() => this.props.closeModal?.()} className="e-icons e-close"></span>
           </div>
           <ToolbarComponent
             height="3vh"
@@ -261,7 +261,6 @@ class DiagramTool extends BaseComponent<TProps, TState> {
                 toggleAnimation={this.state.toggleAnimation}
                 onMouse={this.onMouse}
               />
-
             </div>
           </div>
         </div>

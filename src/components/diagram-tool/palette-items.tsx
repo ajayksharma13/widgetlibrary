@@ -4,7 +4,8 @@ import {
   AnnotationConstraints,
   NativeModel,
 } from "@syncfusion/ej2-react-diagrams";
-
+import Pipe from "./pipe.json";
+import Valves from "./pipe-valves.json";
 export var flowShapes: NodeModel[] = [
   {
     id: "Terminator",
@@ -312,72 +313,107 @@ export var svgShapes: NodeModel[] = [
   // },
 ];
 
-export var pipesSvg: NodeModel[] = [
+export var pipesSvg: NodeModel[] = Pipe.pipes.map((item) => (
   {
-    id: "09-svg",
+    id: item.id,
     style: { fill: "none" },
     addInfo: [{ text: 'Close Open Tasks2' }],
-    // tooltip: { position: "BottomRight", openOn: "Auto", content: "Hexagon", width: "100px", height: "50px" },
     annotations: [
       { content: "", constraints: AnnotationConstraints.Interaction },
     ],
     shape: {
       type: "Native",
-      // shape: 'PreDefinedProcess',
-      content:
-        '<g xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">  <title>0</title>  <g>    <g>      <rect x="6.29" y="15.63" width="33.75" height="18.75" transform="translate(48.17 1.83) rotate(90)" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px"/>      <rect x="20.35" y="33.91" width="5.63" height="21.56" rx="1" ry="1" transform="translate(67.85 21.52) rotate(90)" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px"/>      <rect x="20.35" y="-5.47" width="5.63" height="21.56" rx="1" ry="1" transform="translate(28.48 -17.85) rotate(90)" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px"/>    </g>    <rect x="13.32" y="18.77" width="19.69" height="12.01" rx="1.61" ry="1.61" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px"/>    <rect x="13.32" y="18.29" width="19.69" height="12.01" rx="0.82" ry="0.82" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px"/>  </g>  <g>    <path d="M32.4,31.23c.55.41-1,2.5-1.59,2A19.2,19.2,0,0,0,24.38,28c-.56-.42,1.48-2.87,2-2.35C28.16,27.83,29.8,29.94,32.4,31.23Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>    <path d="M23.88,20.09c6.59.34,6.08,10.25-.51,9.91S17.29,19.75,23.88,20.09Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>    <ellipse cx="23.73" cy="24.96" rx="4.02" ry="4.06" transform="translate(-2.43 47.35) rotate(-87.02)" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px"/>    <path d="M21.61,25.94l1.7,1.53,2.12-.66.23-.29.43-2.17-1.7-1.53-2.12.66-.23.29Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>    <path d="M21.33,25.58,23,27.11l2.12-.66.23-.3L25.82,24l-1.7-1.53L22,23.11l-.23.3Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>    <polygon points="23.08 26.95 21.46 25.49 21.91 23.37 23.98 22.71 25.6 24.16 25.15 26.28 24.25 26.57 24.22 26.5 24 26.54 23.89 26.68 23.08 26.95" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>    <polygon points="22.83 23.08 22.91 22.89 23.29 22.77 23.18 22.97 23.77 24.85 24.25 26.57 24.22 26.5 24 26.54 23.89 26.68 22.83 23.08" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>    <polygon points="22.91 22.89 23.29 22.77 23.18 22.97 24.25 26.57 24.22 26.5 24 26.54 22.91 22.89" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>    <path d="M31.63,29.37c2.31,3.05,4.46,6,8,7.68.67.5-1.6,3.39-2.28,2.74a24.24,24.24,0,0,0-8.64-7.15C28,32.13,30.95,28.71,31.63,29.37Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>  </g></g>',
+      content: item.content
+    } as NativeModel,
+  }
 
-    } as NativeModel,
-  },
+));
+export var valvesSvg: NodeModel[] = Valves.Valves.map((item) => (
   {
-    id: "L-pipe",
+    id: item.id,
     style: { fill: "none" },
+    addInfo: [{ text: 'Close Open Tasks2' }],
     annotations: [
       { content: "", constraints: AnnotationConstraints.Interaction },
     ],
     shape: {
       type: "Native",
-      content: '<g xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">  <title>0</title>  <g>    <rect x="11.4" y="-5.4" width="6.28" height="24.07" rx="1" ry="1" transform="translate(7.9 21.17) rotate(-90)" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px"/>    <rect x="41.22" y="24.43" width="6.28" height="24.07" rx="1" ry="1" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px"/>    <path d="M41.22,26V47.45A37.68,37.68,0,0,1,3.55,9.78H25A16.25,16.25,0,0,0,41.22,26Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>    <rect x="41.22" y="24.43" width="6.28" height="24.07" rx="1" ry="1" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px"/>    <path d="M41.22,26V47.45A37.68,37.68,0,0,1,3.55,9.78H25A16.25,16.25,0,0,0,41.22,26Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>  </g></g>'
-      ,
+      content: item.content
     } as NativeModel,
-  },
-  {
-    id: "U-pipe",
-    style: { fill: "none" },
-    annotations: [
-      { content: "", constraints: AnnotationConstraints.Interaction },
-    ],
-    shape: {
-      type: "Native",
-      content: '<g xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">  <title>0</title>  <g>    <path d="M32.07,25.93a9,9,0,0,0-9-8.86H19.71l0-.21c0-.31-.75-.56-1-.56H12v-11h6.66c.27,0,1-.25,1-.56l0-.21,3.35,0A21.51,21.51,0,0,1,44.64,25.91v0A21.5,21.5,0,0,1,23.09,47.4h0l-3.35,0,0-.21c0-.31-.76-.56-1-.56H12v-11h6.66c.27,0,1-.25,1-.56l0-.21h3.37A9,9,0,0,0,32.07,25.93Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>    <g>      <path d="M9.53,16.61V4.3H17c.52,0,1.41-.4,1.46-.89,11.11,0-7.43,0,3.68,0a31.47,31.47,0,0,1,0,14.13H18.48c-.05-.5-.94-.89-1.46-.89Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>      <path d="M9.53,16.61V4.3H17c.52,0,1.41-.4,1.46-.89h0v14.1h0c-.05-.5-.94-.89-1.46-.89Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>    </g>    <g>      <path d="M9.53,47.49V35.17H17c.52,0,1.41-.4,1.46-.89,11.11,0-7.43,0,3.68,0a31.47,31.47,0,0,1,0,14.13H18.48c-.05-.5-.94-.89-1.46-.89Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>      <path d="M9.53,47.49V35.17H17c.52,0,1.41-.4,1.46-.89h0v14.1h0c-.05-.5-.94-.89-1.46-.89Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>    </g>  </g></g>'
-      ,
-    } as NativeModel,
-  },
-  {
-    id: "U-2-pipe",
-    style: { fill: "none" },
-    annotations: [
-      { content: "", constraints: AnnotationConstraints.Interaction },
-    ],
-    shape: {
-      type: "Native",
-      content: '<g xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">  <title>0</title>  <g>    <path d="M24.65,32.1a9,9,0,0,1-8.86-9V19.74l-.21,0c-.31,0-.56-.75-.56-1V12H4V18.7c0,.27-.25,1-.56,1l-.21,0,0,3.35A21.51,21.51,0,0,0,24.63,44.67h0A21.5,21.5,0,0,0,46.12,23.12v0l0-3.35-.21,0c-.31,0-.56-.76-.56-1V12h-11V18.7c0,.27-.25,1-.56,1l-.21,0v3.37A9,9,0,0,1,24.65,32.1Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>    <g>      <path d="M15.34,9.57H3V17c0,.52-.4,1.41-.89,1.46,0,11.11,0-7.43,0,3.68a31.47,31.47,0,0,0,14.13,0V18.51c-.5-.05-.89-.94-.89-1.46Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>      <path d="M15.34,9.57H3V17c0,.52-.4,1.41-.89,1.46h14.1c-.5-.05-.89-.94-.89-1.46Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>    </g>    <g>      <path d="M46.21,9.57H33.9V17c0,.52-.4,1.41-.89,1.46,0,11.11,0-7.43,0,3.68a31.47,31.47,0,0,0,14.13,0V18.51c-.5-.05-.89-.94-.89-1.46Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>      <path d="M46.21,9.57H33.9V17c0,.52-.4,1.41-.89,1.46H47.1c-.5-.05-.89-.94-.89-1.46Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>    </g>  </g></g>'
-      ,
-    } as NativeModel,
-  },
-  {
-    id: "l-2-pipe",
-    style: { fill: "none" },
-    annotations: [
-      { content: "", constraints: AnnotationConstraints.Interaction },
-    ],
-    shape: {
-      type: "Native",
-      content: '<g xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">  <title>0</title>  <g>    <path d="M22.81,24.52h-14V45.45H25.52A20.93,20.93,0,0,0,46.45,24.52h0V7.78H25.52v14A2.71,2.71,0,0,1,22.81,24.52Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px"/>    <rect x="2.5" y="22.43" width="6.28" height="24.07" rx="1" ry="1" transform="translate(11.28 68.93) rotate(180)" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px"/>    <rect x="32.33" y="-7.4" width="6.28" height="24.07" rx="1" ry="1" transform="translate(30.83 40.1) rotate(-90)" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px"/>  </g></g>'
-      ,
-    } as NativeModel,
-  },
-];
+  }
+
+));
+
+
+
+
+// [
+//   {
+//     id: "09-svg",
+//     style: { fill: "none" },
+//     addInfo: [{ text: 'Close Open Tasks2' }],
+//     annotations: [
+//       { content: "", constraints: AnnotationConstraints.Interaction },
+//     ],
+//     shape: {
+//       type: "Native",
+//       content:
+//         '<g xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">  <title>0</title>  <g>    <g>      <rect x="6.29" y="15.63" width="33.75" height="18.75" transform="translate(48.17 1.83) rotate(90)" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px"/>      <rect x="20.35" y="33.91" width="5.63" height="21.56" rx="1" ry="1" transform="translate(67.85 21.52) rotate(90)" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px"/>      <rect x="20.35" y="-5.47" width="5.63" height="21.56" rx="1" ry="1" transform="translate(28.48 -17.85) rotate(90)" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px"/>    </g>    <rect x="13.32" y="18.77" width="19.69" height="12.01" rx="1.61" ry="1.61" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px"/>    <rect x="13.32" y="18.29" width="19.69" height="12.01" rx="0.82" ry="0.82" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px"/>  </g>  <g>    <path d="M32.4,31.23c.55.41-1,2.5-1.59,2A19.2,19.2,0,0,0,24.38,28c-.56-.42,1.48-2.87,2-2.35C28.16,27.83,29.8,29.94,32.4,31.23Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>    <path d="M23.88,20.09c6.59.34,6.08,10.25-.51,9.91S17.29,19.75,23.88,20.09Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>    <ellipse cx="23.73" cy="24.96" rx="4.02" ry="4.06" transform="translate(-2.43 47.35) rotate(-87.02)" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px"/>    <path d="M21.61,25.94l1.7,1.53,2.12-.66.23-.29.43-2.17-1.7-1.53-2.12.66-.23.29Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>    <path d="M21.33,25.58,23,27.11l2.12-.66.23-.3L25.82,24l-1.7-1.53L22,23.11l-.23.3Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>    <polygon points="23.08 26.95 21.46 25.49 21.91 23.37 23.98 22.71 25.6 24.16 25.15 26.28 24.25 26.57 24.22 26.5 24 26.54 23.89 26.68 23.08 26.95" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>    <polygon points="22.83 23.08 22.91 22.89 23.29 22.77 23.18 22.97 23.77 24.85 24.25 26.57 24.22 26.5 24 26.54 23.89 26.68 22.83 23.08" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>    <polygon points="22.91 22.89 23.29 22.77 23.18 22.97 24.25 26.57 24.22 26.5 24 26.54 22.91 22.89" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>    <path d="M31.63,29.37c2.31,3.05,4.46,6,8,7.68.67.5-1.6,3.39-2.28,2.74a24.24,24.24,0,0,0-8.64-7.15C28,32.13,30.95,28.71,31.63,29.37Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>  </g></g>',
+//     } as NativeModel,
+//   },
+//   {
+//     id: "L-pipe",
+//     style: { fill: "none" },
+//     annotations: [
+//       { content: "", constraints: AnnotationConstraints.Interaction },
+//     ],
+//     shape: {
+//       type: "Native",
+//       content:
+//         '<g xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">  <title>0</title>  <g>    <rect x="11.4" y="-5.4" width="6.28" height="24.07" rx="1" ry="1" transform="translate(7.9 21.17) rotate(-90)" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px"/>    <rect x="41.22" y="24.43" width="6.28" height="24.07" rx="1" ry="1" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px"/>    <path d="M41.22,26V47.45A37.68,37.68,0,0,1,3.55,9.78H25A16.25,16.25,0,0,0,41.22,26Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>    <rect x="41.22" y="24.43" width="6.28" height="24.07" rx="1" ry="1" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px"/>    <path d="M41.22,26V47.45A37.68,37.68,0,0,1,3.55,9.78H25A16.25,16.25,0,0,0,41.22,26Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>  </g></g>'
+//       ,
+//     } as NativeModel,
+//   },
+//   {
+//     id: "U-pipe",
+//     style: { fill: "none" },
+//     annotations: [
+//       { content: "", constraints: AnnotationConstraints.Interaction },
+//     ],
+//     shape: {
+//       type: "Native",
+//       content:
+//         '<g xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">  <title>0</title>  <g>    <path d="M32.07,25.93a9,9,0,0,0-9-8.86H19.71l0-.21c0-.31-.75-.56-1-.56H12v-11h6.66c.27,0,1-.25,1-.56l0-.21,3.35,0A21.51,21.51,0,0,1,44.64,25.91v0A21.5,21.5,0,0,1,23.09,47.4h0l-3.35,0,0-.21c0-.31-.76-.56-1-.56H12v-11h6.66c.27,0,1-.25,1-.56l0-.21h3.37A9,9,0,0,0,32.07,25.93Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>    <g>      <path d="M9.53,16.61V4.3H17c.52,0,1.41-.4,1.46-.89,11.11,0-7.43,0,3.68,0a31.47,31.47,0,0,1,0,14.13H18.48c-.05-.5-.94-.89-1.46-.89Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>      <path d="M9.53,16.61V4.3H17c.52,0,1.41-.4,1.46-.89h0v14.1h0c-.05-.5-.94-.89-1.46-.89Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>    </g>    <g>      <path d="M9.53,47.49V35.17H17c.52,0,1.41-.4,1.46-.89,11.11,0-7.43,0,3.68,0a31.47,31.47,0,0,1,0,14.13H18.48c-.05-.5-.94-.89-1.46-.89Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>      <path d="M9.53,47.49V35.17H17c.52,0,1.41-.4,1.46-.89h0v14.1h0c-.05-.5-.94-.89-1.46-.89Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>    </g>  </g></g>'
+//       ,
+//     } as NativeModel,
+//   },
+//   {
+//     id: "U-2-pipe",
+//     style: { fill: "none" },
+//     annotations: [
+//       { content: "", constraints: AnnotationConstraints.Interaction },
+//     ],
+//     shape: {
+//       type: "Native",
+//       content:
+//         '<g xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">  <title>0</title>  <g>    <path d="M24.65,32.1a9,9,0,0,1-8.86-9V19.74l-.21,0c-.31,0-.56-.75-.56-1V12H4V18.7c0,.27-.25,1-.56,1l-.21,0,0,3.35A21.51,21.51,0,0,0,24.63,44.67h0A21.5,21.5,0,0,0,46.12,23.12v0l0-3.35-.21,0c-.31,0-.56-.76-.56-1V12h-11V18.7c0,.27-.25,1-.56,1l-.21,0v3.37A9,9,0,0,1,24.65,32.1Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>    <g>      <path d="M15.34,9.57H3V17c0,.52-.4,1.41-.89,1.46,0,11.11,0-7.43,0,3.68a31.47,31.47,0,0,0,14.13,0V18.51c-.5-.05-.89-.94-.89-1.46Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>      <path d="M15.34,9.57H3V17c0,.52-.4,1.41-.89,1.46h14.1c-.5-.05-.89-.94-.89-1.46Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>    </g>    <g>      <path d="M46.21,9.57H33.9V17c0,.52-.4,1.41-.89,1.46,0,11.11,0-7.43,0,3.68a31.47,31.47,0,0,0,14.13,0V18.51c-.5-.05-.89-.94-.89-1.46Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>      <path d="M46.21,9.57H33.9V17c0,.52-.4,1.41-.89,1.46H47.1c-.5-.05-.89-.94-.89-1.46Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px;fill-rule: evenodd"/>    </g>  </g></g>'
+//       ,
+//     } as NativeModel,
+//   },
+//   {
+//     id: "l-2-pipe",
+//     style: { fill: "none" },
+//     annotations: [
+//       { content: "", constraints: AnnotationConstraints.Interaction },
+//     ],
+//     shape: {
+//       type: "Native",
+//       content:
+//         '<g xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">  <title>0</title>  <g>    <path d="M22.81,24.52h-14V45.45H25.52A20.93,20.93,0,0,0,46.45,24.52h0V7.78H25.52v14A2.71,2.71,0,0,1,22.81,24.52Z" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px"/>    <rect x="2.5" y="22.43" width="6.28" height="24.07" rx="1" ry="1" transform="translate(11.28 68.93) rotate(180)" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px"/>    <rect x="32.33" y="-7.4" width="6.28" height="24.07" rx="1" ry="1" transform="translate(30.83 40.1) rotate(-90)" style="fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px"/>  </g></g>'
+//       ,
+//     } as NativeModel,
+//   },
+// ];
 
 export var animatedShapes: NodeModel[] = [
   {

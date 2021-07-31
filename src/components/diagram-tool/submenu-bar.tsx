@@ -15,13 +15,13 @@ class Submenu extends Component<TProps, TState>{
                 </div>
                 <div className="flex-row">
                     <span className="m-r-5">width:</span>
-                    <TextBoxComponent placeholder="Set Width" floatLabelType="Never" width="70px"
+                    <TextBoxComponent placeholder="Set Width" floatLabelType="Never" width="55px"
                         value={this.props.width}
                         onChange={(e: any) => { this.props.setDiagramWidth(e.target.value); }}
                     />
                     <div className="m-10" />
                     <span className="m-r-5">height:</span>
-                    <TextBoxComponent placeholder="Set Height" floatLabelType="Never" width="70px"
+                    <TextBoxComponent placeholder="Set Height" floatLabelType="Never" width="55px"
                         value={this.props.height}
                         onChange={(e: any) => { this.props.setDiagramHeight(e.target.value); }}
                     />

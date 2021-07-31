@@ -78,9 +78,11 @@ class MimicTool extends BaseComponent<TProps, TState> {
         console.log(hasWork);
 
         if (hasWork == previousWork.No) {
-            return (<div>
-                <p>click here to create a diagram</p>
-            </div>);
+            return (
+                <div className="no-work-div">
+                    <p onClick={() => this.setState({ isModalOpen: true })}>Click edit to create a diagram</p>
+                </div>
+            );
         }
         else {
             return (
@@ -99,10 +101,13 @@ class MimicTool extends BaseComponent<TProps, TState> {
 
 
     render() {
+        const { hasWork } = this.state;
         return <div className="mimic-widget" style={{ borderTop: "1px solid" }}>
-            <div className="mimic-header">
-                <Icon name="edit" title="Edit" onClick={() => this.setState({ isModalOpen: true })} />
-            </div>
+            {(hasWork != previousWork.No) && <>  <div className="mimic-header" />
+                <Icon name="edit"
+                    color="yellow" title="Edit"
+                    onClick={() => this.setState({ isModalOpen: true })}
+                    className="diagram-edit-icon" /></>}
             <Modal
                 size="fullscreen"
                 open={this.state.isModalOpen}

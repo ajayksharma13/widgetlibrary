@@ -284,7 +284,6 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
   render() {
     return (
       <div className="diagram-panel">
-
         <DialogComponent
           isModal={true}
           width="250"
@@ -305,7 +304,7 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
           style={{
             display: "flex",
             flexDirection: "column",
-            height: "76vh",
+            height: "79.5vh",
           }}
           onMouseMove={this._onMouseMove}
         >

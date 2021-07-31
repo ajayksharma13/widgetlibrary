@@ -48,14 +48,27 @@
 
 .e-upload:before {
     content: "\e710";
-    font-size: 2.5em;
+    font-size: 2em;
     color: $primaryColor;
+}
+
+.e-close:before {
+    content: "\e7fc";
+    font-size: 1.27em;
+    color: $fontGreyColor;
+}
+
+.e-close {
+    position: relative;
+    top: 1em;
+    right: 1em;
+    cursor: pointer;
 }
 
 .e-upload {
     border: none !important;
     position: absolute;
-    bottom: 0;
+    bottom: 10px;
     cursor: pointer;
     width: auto;
     left: 4px;
@@ -218,19 +231,19 @@ e-diagram .e-ruler {
 
 // Element Editor styling
 .element-editor {
-    margin: 2em 7px;
+    margin: 0.3em 5px;
     .flex-row {
         display: flex;
         flex-direction: row;
         align-items: center;
-        margin: 1em;
+        margin: 0.98em 0.3em;
     }
     .flex-column {
         display: flex;
         flex-direction: column;
         justify-content: center;
         width: 50%;
-        margin: 0 1em;
+        margin: 0 0.5em;
     }
     .ui.button {
         border-radius: 0.4rem;
@@ -259,12 +272,13 @@ e-diagram .e-ruler {
     width: 100%;
     height: 5vh;
     background-color: #fafafa;
-    h2 {
-        float: left;
-        margin: auto 0.6em;
+    display: flex;
+    justify-content: space-between;
+    p:first-child {
+        font-size: 1.5em;
+        margin: auto 0.69em;
     }
-    p {
-        float: right;
+    p:nth-child(2) {
         margin: auto 0.6em;
         cursor: pointer;
         font-size: 1.5em;
@@ -274,7 +288,7 @@ e-diagram .e-ruler {
 
 .sub-menu {
     display: flex;
-    padding-left: 0em;
+    padding-left: 0.2em;
     padding-bottom: 2px;
     height: 5vh;
     background: #fafafa;
@@ -282,7 +296,7 @@ e-diagram .e-ruler {
         display: flex;
         flex-direction: row;
         align-items: center;
-        margin: 1em;
+        margin: 0.8em;
     }
     .flex-column {
         display: flex;
@@ -290,6 +304,13 @@ e-diagram .e-ruler {
         justify-content: center;
         width: 50%;
         margin: 0 1em;
+    }
+    input.e-input {
+        padding: 0 !important;
+        padding-left: 3px !important;
+    }
+    span::after {
+        margin: 0 !important;
     }
 }
 
@@ -299,22 +320,24 @@ e-diagram .e-ruler {
 
 //symbolpalette styling
 #symbolpalette {
+    position: relative;
+    z-index: 1003;
     .e-accordion .e-acrdn-item.e-select.e-selected.e-expand-state>.e-acrdn-header .e-acrdn-header-icon,
     .e-accordion .e-acrdn-item.e-select.e-selected.e-expand-state>.e-acrdn-header .e-acrdn-header-content,
     .e-accordion .e-acrdn-item.e-select.e-expand-state>.e-acrdn-header .e-acrdn-header-icon,
     .e-accordion .e-acrdn-item.e-select.e-expand-state>.e-acrdn-header .e-acrdn-header-content {
         color: $primaryColor;
     }
+    .e-accordion .e-acrdn-item .e-acrdn-header {
+        padding-left: 0.34em !important;
+    }
     .e-accordion .e-acrdn-item .e-acrdn-panel .e-acrdn-content {
         padding: 0 !important;
-    }
-    .e-accordion .e-acrdn-item .e-acrdn-header {
-        padding-left: 0.2em !important;
     }
 }
 
 #palette-space {
-    height: 76vh;
+    height: 79.5vh;
     border-right: 1px solid $primaryColor;
     border-top: 1px solid $primaryColor;
     overflow-y: auto;
@@ -327,4 +350,11 @@ e-diagram .e-ruler {
     margin-left: 5px;
     border-left: 1px solid $primaryColor;
     background: #fbfbfb;
+}
+
+// toolbar styling
+#toolbar_diagram {
+    .e-toolbar-items {
+        padding-left: 0.19em !important;
+    }
 }
