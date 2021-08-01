@@ -14,7 +14,7 @@ import {
 import Flipcard, { FlipcardModel, FlipcardProperty } from "../widget/flipcard";
 import "./style.scss";
 import WidgetPanel from "../widget/panel";
-import MimicTool, { MimicToolModel, MimicToolProperty } from "../widget/mimic-tool";
+import MimicTool, { MimicToolModel, MimicToolProperty } from "../widget/mimic";
 
 /**
  * Start Up component
