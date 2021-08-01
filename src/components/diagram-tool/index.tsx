@@ -89,6 +89,7 @@ class DiagramTool extends BaseComponent<TProps, TState> {
       case "Save": {
         this.props.model?.updatediagramObject(JSON.parse(diagramInstance.saveDiagram()));
         this.props.updateWidget?.();
+        this.props.closeModal?.();
         // download(diagramInstance.saveDiagram());
 
         break;
