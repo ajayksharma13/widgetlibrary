@@ -98,14 +98,14 @@ class DiagramTool extends BaseComponent<TProps, TState> {
         this.setState({ toggleAnimation: !this.state.toggleAnimation });
         break;
       }
-      case "Grop": {
+      case "Group": {
         diagramInstance.selectedItems.nodes?.length ||
           diagramInstance.selectedItems.connectors?.length
           ? diagramInstance.group()
           : {};
         break;
       }
-      case "Ungrop": {
+      case "Ungroup": {
         diagramInstance.selectedItems.nodes?.length ||
           diagramInstance.selectedItems.connectors?.length
           ? diagramInstance.unGroup()

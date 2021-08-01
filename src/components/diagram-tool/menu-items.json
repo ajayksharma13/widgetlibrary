@@ -18,13 +18,13 @@
         },
 
         {
-            "text": "Grop",
+            "text": "Group",
             "tooltipText": "For Grouping Diagram",
             "prefixIcon": "e-menu-icon e-group-icon"
         },
 
         {
-            "text": "Ungrop",
+            "text": "Ungroup",
             "tooltipText": "For Ungrouping Diagram",
             "prefixIcon": "e-menu-icon e-ungroup-icon"
         },
