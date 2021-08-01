@@ -4,7 +4,8 @@ import ModelBase from "../model.base";
  * Mimic tool model cum logic class
  */
 class MimicToolModel extends ModelBase {
-    diagramObject: object = {};
+    value: any = {};
+    title: string = "Diagram";
 
     /**
      * create instance of flipcard
@@ -16,9 +17,7 @@ class MimicToolModel extends ModelBase {
     }
 
     public updatediagramObject(data: object): void {
-        this.diagramObject = data;
-        console.log(this.diagramObject);
-
+        this.value = data;
     }
 }
 

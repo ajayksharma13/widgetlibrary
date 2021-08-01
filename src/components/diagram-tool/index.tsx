@@ -56,8 +56,8 @@ class DiagramTool extends BaseComponent<TProps, TState> {
   };
   componentDidMount() {
     const { model } = this.props;
-    if (Object.keys(model!.diagramObject).length > 0) {
-      diagramInstance.loadDiagram(JSON.stringify(this.props.model?.diagramObject));
+    if (Object.keys(model!.value).length > 0) {
+      diagramInstance.loadDiagram(JSON.stringify(this.props.model?.value));
     }
     //remove after practising
     diagramInstance.dataBindingModule

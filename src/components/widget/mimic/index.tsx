@@ -31,7 +31,7 @@ class MimicTool extends BaseComponent<TProps, TState> {
     };
     componentDidMount() {
         const { model } = this.props;
-        if (Object.keys(model.diagramObject).length > 0) {
+        if (Object.keys(model.value).length > 0) {
             this.setState({ hasWork: previousWork.Yes });
         }
     }
@@ -51,14 +51,12 @@ class MimicTool extends BaseComponent<TProps, TState> {
      */
     diagramLoader = () => {
         const { model } = this.props;
-        let obj = JSON.parse(JSON.stringify(model.diagramObject)) as any;
+        let obj = JSON.parse(JSON.stringify(model.value)) as any;
         obj.scrollSettings.currentZoom = 0.3;
         obj.snapSettings.horizontalGridlines.lineIntervals = [];
         obj.snapSettings.verticalGridlines.lineIntervals = [];
         obj.rulerSettings.showRulers = false;
         widgetDiagramInstance.loadDiagram(JSON.stringify(obj));
-        console.log(model.diagramObject === obj);
-
     }
 
     /**
