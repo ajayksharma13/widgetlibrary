@@ -23,7 +23,7 @@ import Items from "./menu-items.json";
 import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider';
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
 import Submenu from './submenu-bar';
-import { MimicToolModel } from '../widget/mimic';
+import { MimicModel } from '../widget/mimic';
 const sleep = (milliseconds: number) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 };
@@ -363,7 +363,7 @@ type TState = {
  */
 type TProps = {
   closeModal?: Function;
-  model?: MimicToolModel;
+  model?: MimicModel;
   updateWidget?: Function;
 };
 export { DiagramTool as default };

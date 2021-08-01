@@ -3,7 +3,7 @@ import ModelBase from "../model.base";
 /**
  * Mimic tool model cum logic class
  */
-class MimicToolModel extends ModelBase {
+class MimicModel extends ModelBase {
     value: any = {};
     title: string = "Diagram";
 
@@ -11,8 +11,8 @@ class MimicToolModel extends ModelBase {
      * create instance of flipcard
      * @param {object} data
      */
-    static instance(data: MimicToolModel = new MimicToolModel()) {
-        let instance = Object.assign(new MimicToolModel(), data);
+    static instance(data: MimicModel = new MimicModel()) {
+        let instance = Object.assign(new MimicModel(), data);
         return instance;
     }
 
@@ -21,4 +21,4 @@ class MimicToolModel extends ModelBase {
     }
 }
 
-export { MimicToolModel as default };
+export { MimicModel as default };

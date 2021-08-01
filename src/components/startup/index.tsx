@@ -14,7 +14,7 @@ import {
 import Flipcard, { FlipcardModel, FlipcardProperty } from "../widget/flipcard";
 import "./style.scss";
 import WidgetPanel from "../widget/panel";
-import MimicTool, { MimicToolModel, MimicToolProperty } from "../widget/mimic";
+import MimicTool, { MimicModel, MimicToolProperty } from "../widget/mimic";
 
 /**
  * Start Up component
@@ -142,7 +142,7 @@ class StartUp extends BaseComponent<TProps, TState> {
     const { width = "500", height = "300" } = this.state;
 
     const flipcardModel = FlipcardModel.instance();
-    const mimicToolModel = MimicToolModel.instance();
+    const mimicModel = MimicModel.instance();
     return (
       <Grid columns="2">
         <Grid.Column>
@@ -167,12 +167,12 @@ class StartUp extends BaseComponent<TProps, TState> {
               margin: "20px",
             }}
           >
-            <WidgetPanel Property={MimicToolProperty} model={MimicToolModel}>
+            <WidgetPanel Property={MimicToolProperty} model={MimicModel}>
               {() => (
                 <MimicTool
                   // {...this.flipCardRender}
                   //data={this.flipcardData}
-                  model={mimicToolModel}
+                  model={mimicModel}
                   viewbox={{ height, width }}
                 />
               )}

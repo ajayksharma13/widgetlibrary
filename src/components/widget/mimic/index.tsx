@@ -1,7 +1,7 @@
 import { BpmnDiagrams, DataBinding, DiagramComponent, Inject, SnapConstraints } from "@syncfusion/ej2-react-diagrams";
 import React from "react";
 import { BaseComponent } from "../../base";
-import MimicToolModel from "./model";
+import MimicModel from "./model";
 import MimicToolProperty from "./property";
 import "./style.scss";
 import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
@@ -19,7 +19,7 @@ enum previousWork {
 
 class MimicTool extends BaseComponent<TProps, TState> {
     static defaultProps: TProps = {
-        model: new MimicToolModel(),
+        model: new MimicModel(),
     }
 
     /**
@@ -128,7 +128,7 @@ class MimicTool extends BaseComponent<TProps, TState> {
  * Prop types
  */
 type TProps = {
-    model: MimicToolModel;
+    model: MimicModel;
     viewbox?: any;
 };
 
@@ -137,4 +137,4 @@ type TState = {
     hasWork: number;
 };
 
-export { MimicTool as default, MimicToolModel, MimicToolProperty };
+export { MimicTool as default, MimicModel, MimicToolProperty };
