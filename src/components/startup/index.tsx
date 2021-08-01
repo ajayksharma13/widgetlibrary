@@ -14,7 +14,7 @@ import {
 import Flipcard, { FlipcardModel, FlipcardProperty } from "../widget/flipcard";
 import "./style.scss";
 import WidgetPanel from "../widget/panel";
-import MimicTool, { MimicModel, MimicToolProperty } from "../widget/mimic";
+import MimicTool, { MimicModel, MimicProperty } from "../widget/mimic";
 
 /**
  * Start Up component
@@ -167,7 +167,7 @@ class StartUp extends BaseComponent<TProps, TState> {
               margin: "20px",
             }}
           >
-            <WidgetPanel Property={MimicToolProperty} model={MimicModel}>
+            <WidgetPanel Property={MimicProperty} model={MimicModel}>
               {() => (
                 <MimicTool
                   // {...this.flipCardRender}

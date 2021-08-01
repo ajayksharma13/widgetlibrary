@@ -2,7 +2,7 @@ import { BpmnDiagrams, DataBinding, DiagramComponent, Inject, SnapConstraints } 
 import React from "react";
 import { BaseComponent } from "../../base";
 import MimicModel from "./model";
-import MimicToolProperty from "./property";
+import MimicProperty from "./property";
 import "./style.scss";
 import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
 import DiagramTool from "../../diagram-tool";
@@ -137,4 +137,4 @@ type TState = {
     hasWork: number;
 };
 
-export { MimicTool as default, MimicModel, MimicToolProperty };
+export { MimicTool as default, MimicModel, MimicProperty };

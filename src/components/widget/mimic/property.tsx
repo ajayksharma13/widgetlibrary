@@ -2,20 +2,20 @@ import { Formik, FormikProps } from "formik";
 import * as React from "react";
 import { Form, Grid, Header, Input, Segment, Table } from "semantic-ui-react";
 import { BaseComponent } from "../../base";
-import MimicToolModel from "./model";
+import MimicModel from "./model";
 import "./style.scss";
 
 /**
  * MimicTool Property
  */
-class MimicToolProperty extends BaseComponent<TProps, TState> {
+class MimicProperty extends BaseComponent<TProps, TState> {
     /*
      * default state
      */
     state: TState = {};
 
     static defaultProps: TProps = {
-        model: new MimicToolModel(),
+        model: new MimicModel(),
         onUpdatePanel: () => { },
     };
 
@@ -25,7 +25,7 @@ class MimicToolProperty extends BaseComponent<TProps, TState> {
             <div className="MimicTool-card property">
                 <div className="property__header">
                     <Header as="h4" className="header primary">
-                        MimicTool
+                        Mimic
                     </Header>
                 </div>
             </div>
@@ -34,10 +34,10 @@ class MimicToolProperty extends BaseComponent<TProps, TState> {
 }
 
 type TProps = {
-    model: MimicToolModel;
+    model: MimicModel;
     onUpdatePanel: Function;
 };
 
 type TState = {};
 
-export { MimicToolProperty as default };
+export { MimicProperty as default };
