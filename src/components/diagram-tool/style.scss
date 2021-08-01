@@ -71,7 +71,7 @@
     bottom: 10px;
     cursor: pointer;
     width: auto;
-    left: 4px;
+    right: 1em;
 }
 
 .upload-text {
@@ -307,7 +307,8 @@ e-diagram .e-ruler {
     }
     input.e-input {
         padding: 0 !important;
-        padding-left: 3px !important;
+        padding-left: 0.3em !important;
+        margin-top: 0.5em !important;
     }
     span::after {
         margin: 0 !important;
@@ -332,7 +333,7 @@ e-diagram .e-ruler {
         padding-left: 0.34em !important;
     }
     .e-accordion .e-acrdn-item .e-acrdn-panel .e-acrdn-content {
-        padding: 0 !important;
+        padding: 1px 0 10px !important;
     }
 }
 

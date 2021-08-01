@@ -21,6 +21,7 @@ import {
 
 import { UploaderComponent } from "@syncfusion/ej2-react-inputs";
 import "./style.scss";
+import { ExpandMode } from "@syncfusion/ej2-react-navigations";
 const sleep = (milliseconds: number) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 };
@@ -91,6 +92,9 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
       }
       return { description: { text: symbol.id } };
     };
+    //find alternative and remove this 
+    //@ts-ignore
+    document.getElementsByClassName("e-acrdn-item")[0].click();
   }
   uploadHandler = () => {
     document.getElementById("svg-uploader")?.click();
@@ -175,13 +179,14 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
                 },
               ]}
               enableAnimation={true}
+
               width={"100%"}
               height={"100%"}
-              symbolWidth={80}
-              symbolHeight={80} //set Node default value
+              symbolWidth={65}
+              symbolHeight={65} //set Node default value
               getNodeDefaults={this.nodeDefaults.bind(this)}
-              getSymbolInfo={this.symbolInfo.bind(this)}
-              symbolMargin={{ left: 15, right: 15, top: 15, bottom: 15 }}
+              // getSymbolInfo={this.symbolInfo}
+              symbolMargin={{ left: 5, right: 5, top: 5, bottom: 5 }}
             />
           </div>
           <div id="svg-uploder">
@@ -218,10 +223,11 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
     return symbol;
   }
 
-  public symbolInfo(symbol: SymbolInfo): SymbolInfo {
-    symbol.fit = true;
-    return symbol;
-  }
+  // public symbolInfo = (symbol: SymbolInfo): SymbolInfo => {
+  //   symbol.fit = true;
+  //   symbol.tooltip;
+  //   return symbol;
+  // }
 }
 
 /**
