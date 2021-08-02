@@ -84,8 +84,8 @@ path[id^="Link1"] {
   animation: dash 0.5s linear;
   animation-iteration-count: infinite;
 }
-  #level-1{
-    opacity:0;
+  #water{
+    opacity=0;
   }
 @keyframes dash {
   to {
@@ -314,6 +314,7 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
           <DiagramComponent
             getCustomCursor={"pointer"}
             id="diagram"
+
             ref={(diagram) => {
               diagramInstance = diagram as DiagramComponent;
               this.props.getDiagramInstance(diagramInstance);

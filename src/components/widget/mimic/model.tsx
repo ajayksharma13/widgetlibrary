@@ -16,7 +16,7 @@ class MimicModel extends ModelBase {
         return instance;
     }
 
-    public updatediagramObject(data: object): void {
+    public updatediagramObject(data: any): void {
         this.value = data;
     }
 }

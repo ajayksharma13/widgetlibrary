@@ -214,6 +214,17 @@ e-diagram .e-ruler {
     bottom: 0;
 }
 
+.e-toolbar .e-tbar-btn {
+    &:hover {
+        background-color: transparent !important;
+        background: transparent !important;
+    }
+    &:active {
+        background-color: transparent !important;
+        background: transparent !important;
+    }
+}
+
 #svg-uploder {
     width: 100%;
     position: relative;

@@ -3,6 +3,10 @@ import React, { Component } from 'react'
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
 
 class Submenu extends Component<TProps, TState>{
+
+    state: Readonly<TState> = {
+    };
+
     render() {
         return (
             <div className="sub-menu">

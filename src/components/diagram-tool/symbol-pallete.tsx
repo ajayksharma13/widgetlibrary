@@ -92,9 +92,6 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
       }
       return { description: { text: symbol.id } };
     };
-    //find alternative and remove this 
-    //@ts-ignore
-    document.getElementsByClassName("e-acrdn-item")[0].click();
   }
   uploadHandler = () => {
     document.getElementById("svg-uploader")?.click();
@@ -179,9 +176,9 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
                 },
               ]}
               enableAnimation={true}
-
               width={"100%"}
               height={"100%"}
+              symbolDragSize={{ height: 65, width: 65 }}
               symbolWidth={65}
               symbolHeight={65} //set Node default value
               getNodeDefaults={this.nodeDefaults.bind(this)}

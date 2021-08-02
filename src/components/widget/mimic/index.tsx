@@ -39,7 +39,8 @@ class MimicTool extends BaseComponent<TProps, TState> {
     /**
      * call back function to update render state
      */
-    diagramUpdate = () => {
+    diagramUpdate = (data: any) => {
+        this.props.model.updatediagramObject?.(JSON.parse(data));
         this.setState({
             hasWork: previousWork.Yes,
         });
@@ -101,11 +102,14 @@ class MimicTool extends BaseComponent<TProps, TState> {
     render() {
         const { hasWork } = this.state;
         return <div className="mimic-widget" style={{ borderTop: "1px solid" }}>
-            {(hasWork != previousWork.No) && <>  <div className="mimic-header" />
+            {(hasWork != previousWork.No) &&
                 <Icon name="edit"
-                    color="yellow" title="Edit"
+                    title="Edit"
                     onClick={() => this.setState({ isModalOpen: true })}
-                    className="diagram-edit-icon" /></>}
+                    className="diagram-edit-icon primary"
+                    circular
+                    inverted
+                />}
             <Modal
                 size="fullscreen"
                 open={this.state.isModalOpen}
@@ -113,8 +117,8 @@ class MimicTool extends BaseComponent<TProps, TState> {
             >
                 <DiagramTool
                     closeModal={this.closeModal}
-                    model={this.props.model}
                     updateWidget={this.diagramUpdate}
+                    {...this.props.model}
                 />
             </Modal>
             {this.renderContent()}

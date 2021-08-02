@@ -40,7 +40,7 @@ class DiagramTool extends BaseComponent<TProps, TState> {
   /**
    * default props
    */
-  static defaultProps: TProps = {};
+  // static defaultProps: TProps = {};
 
   /**
    * default state
@@ -55,9 +55,9 @@ class DiagramTool extends BaseComponent<TProps, TState> {
     y: 0,
   };
   componentDidMount() {
-    const { model } = this.props;
-    if (Object.keys(model!.value).length > 0) {
-      diagramInstance.loadDiagram(JSON.stringify(this.props.model?.value));
+    const { value } = this.props;
+    if (Object.keys(value).length > 0) {
+      diagramInstance.loadDiagram(JSON.stringify(value));
     }
     //remove after practising
     diagramInstance.dataBindingModule
@@ -87,11 +87,9 @@ class DiagramTool extends BaseComponent<TProps, TState> {
         break;
       }
       case "Save": {
-        this.props.model?.updatediagramObject(JSON.parse(diagramInstance.saveDiagram()));
-        this.props.updateWidget?.();
+        this.props.updateWidget?.(diagramInstance.saveDiagram());
         this.props.closeModal?.();
         // download(diagramInstance.saveDiagram());
-
         break;
       }
       case "Toggle Animation": {
@@ -363,7 +361,7 @@ type TState = {
  */
 type TProps = {
   closeModal?: Function;
-  model?: MimicModel;
   updateWidget?: Function;
+  value?: any;
 };
 export { DiagramTool as default };

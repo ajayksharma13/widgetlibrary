@@ -1,18 +1,4 @@
 .mimic-widget {
-    .mimic-header {
-        position: absolute;
-        z-index: 103;
-        width: 100%;
-        height: 2.5em;
-        opacity: 0.6;
-        background-color: #0e0e14;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        filter: blur(1px);
-        z-index: 5;
-    }
     .no-work-div {
         color: #6d6d6d;
         display: flex;
@@ -27,11 +13,17 @@
         }
     }
     .diagram-edit-icon {
-        font-size: 1.4em;
+        font-size: 1.2em;
         position: absolute;
         right: 0.3em;
-        top: 1.8em;
+        bottom: 0.5em;
         z-index: 19;
+        cursor: pointer;
+    }
+    i.inverted.bordered.icon,
+    i.inverted.circular.icon {
+        background-color: #505052 !important;
+        color: #0fc574 !important;
     }
 }
 
