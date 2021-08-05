@@ -17,6 +17,13 @@ enum previousWork {
     Yes = 1,
 }
 
+/**
+ * dummy timmer Function
+ */
+const timer = (ms: any) => new Promise(res => setTimeout(res, ms));
+
+
+
 class MimicTool extends BaseComponent<TProps, TState> {
     static defaultProps: TProps = {
         model: new MimicModel(),
@@ -36,6 +43,47 @@ class MimicTool extends BaseComponent<TProps, TState> {
         }
     }
 
+    configureScript = async () => {
+        const { model: { dataBinding } } = this.props;
+        const diagramElement = document.getElementById("widget-diagram");
+        let element: any[] = [];
+        //injecting respective data id 
+        dataBinding.map((item) => {
+            const { jsonData: { controlledType, mutableElementId } } = item as any;
+            if (controlledType) {
+                diagramElement?.querySelectorAll("#" + mutableElementId)[0]?.setAttribute("data-id", mutableElementId);
+                element.push(
+                    {
+                        attribute: item.attribute,
+                        data: document.querySelectorAll(`[data-id*="${mutableElementId}"]`)[0],
+                    });
+            }
+            else {
+                diagramElement?.querySelectorAll("#" + mutableElementId)?.forEach((node) => {
+                    node.setAttribute("class", mutableElementId);
+                });
+            }
+        });
+
+
+        //temp code to genrate random value repalced by api
+        for (let i = 0; i <= 100; i++) {
+            element.map((item) => {
+                item.data.setAttribute(item.attribute, i.toString());
+                console.log(item.attribute);
+            });
+            console.log(i);
+            await timer(300);
+        }
+    }
+
+    dataBinder = (obj: any) => {
+        // const unique = this.props.model.dataBinding.filter((data) => (obj?.nodeId === data.nodeId)).length;
+        // if (unique == 0) {
+        this.props.model.appendBindingElement(obj);
+        // }
+    }
+
     /**
      * call back function to update render state
      */
@@ -45,6 +93,7 @@ class MimicTool extends BaseComponent<TProps, TState> {
             hasWork: previousWork.Yes,
         });
         this.diagramLoader();
+        this.props.model.dataBinding.length && this.configureScript();
     }
     /**
      * diagram loader
@@ -71,7 +120,8 @@ class MimicTool extends BaseComponent<TProps, TState> {
      * condinally render elemenet
      */
     renderContent = () => {
-        let { viewbox: { height, width } } = this.props;
+        // this.configureScript();
+        let { viewbox: { height, width }, model } = this.props;
         let temp = parseInt(height) - 30;
         const { hasWork } = this.state;
         console.log(hasWork);
@@ -101,27 +151,36 @@ class MimicTool extends BaseComponent<TProps, TState> {
 
     render() {
         const { hasWork } = this.state;
-        return <div className="mimic-widget" style={{ borderTop: "1px solid" }}>
-            {(hasWork != previousWork.No) &&
-                <Icon name="edit"
-                    title="Edit"
-                    onClick={() => this.setState({ isModalOpen: true })}
-                    className="diagram-edit-icon primary"
-                    circular
-                    inverted
-                />}
-            <Modal
-                size="fullscreen"
-                open={this.state.isModalOpen}
-                onClose={() => this.setState({ isModalOpen: false })}
-            >
-                <DiagramTool
-                    closeModal={this.closeModal}
-                    updateWidget={this.diagramUpdate}
-                    {...this.props.model}
-                />
-            </Modal>
-            {this.renderContent()}
+        return <div className="mimic-widget widget" style={{ borderTop: "1px solid" }}>
+            <div className="widget__box">
+                <div className="widget__header">
+                    <div className="sub-header">
+                    </div>
+                </div>
+                <div className="widget__content">
+                    {(hasWork != previousWork.No) &&
+                        <Icon name="edit"
+                            title="Edit"
+                            onClick={() => this.setState({ isModalOpen: true })}
+                            className="diagram-edit-icon primary"
+                            circular
+                            inverted
+                        />}
+                    <Modal
+                        size="fullscreen"
+                        open={this.state.isModalOpen}
+                        onClose={() => this.setState({ isModalOpen: false })}
+                    >
+                        <DiagramTool
+                            closeModal={this.closeModal}
+                            updateWidget={this.diagramUpdate}
+                            dataBinder={this.dataBinder}
+                            {...this.props.model}
+                        />
+                    </Modal>
+                    {this.renderContent()}
+                </div>
+            </div>
         </div >;
     }
 

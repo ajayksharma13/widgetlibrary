@@ -179,8 +179,8 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
               width={"100%"}
               height={"100%"}
               symbolDragSize={{ height: 65, width: 65 }}
-              symbolWidth={65}
-              symbolHeight={65} //set Node default value
+              symbolWidth={35}
+              symbolHeight={35} //set Node default value
               getNodeDefaults={this.nodeDefaults.bind(this)}
               // getSymbolInfo={this.symbolInfo}
               symbolMargin={{ left: 5, right: 5, top: 5, bottom: 5 }}

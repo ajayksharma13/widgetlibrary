@@ -8,10 +8,8 @@ import {
 } from "@syncfusion/ej2-react-diagrams";
 import { BaseComponent } from "../base";
 import { ColorPickerComponent } from "@syncfusion/ej2-react-inputs";
-import { Divider } from 'semantic-ui-react';
+import Svgs from "./pipe.json";
 import "./style.scss";
-import { Grid } from "semantic-ui-react";
-import { Button } from "semantic-ui-react";
 
 const rgba2hex = function (color: string) {
   const rgba = color.replace(/^rgba?\(|\s+|\)$/g, '').split(',');
@@ -32,8 +30,24 @@ const sizeData: string[] = [
   "72",
 ];
 
+const parameterData: string[] = [
+  "Fill Percent",
+  "Progress",
+  "switch",
+];
+const attributeData: string[] = [
+  "width",
+  "height",
+  "x",
+  "y",
+];
+
+
 export default class ElementEditor extends BaseComponent<TProps, TState> {
-  state: TState = {};
+  state: TState = {
+    selectedParameter: "",
+    selectedAttribute: "",
+  };
 
   getTextColor = (): string => {
     return this.props.selectedItem
@@ -94,8 +108,54 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
         : "0"
       : "0";
   };
+
+  getAngel = (): string => {
+    return this.props.selectedItem
+      ? this.props.selectedItem.propName
+        ? this.props.selectedItem.propName === "nodes"
+          ? this.props.selectedItem.properties.rotateAngle.toString()
+          : this.props.selectedItem.properties.rotateAngle.toString()
+        : "0"
+      : "0";
+  };
+
+  bind = (id: string) => {
+    const svgId = id.split("-")[0];
+    let element = Svgs.svgShapes.filter((item: any) => (item.id == svgId + "-"))[0];
+
+    let obj = {
+      nodeid: id,
+      paramterId: this.state.selectedParameter,
+      attribute: this.state.selectedAttribute,
+      defaultValue: 0,
+      jsonData: element.data,
+    }
+    this.props.dataBinder(obj);
+  }
+
+  renderParameter = () => {
+    const id = this.props.selectedItem.id.split("-")[0];
+    return (<div>
+      <p className="m-b-20">Selected Element:- {id}</p>
+      {
+        (id != "diagram") &&
+        <div><p>Select Parameter</p>
+          <DropDownListComponent id="parameter" width="100%" dataSource={parameterData} popupHeight="200px" popupWidth="100px" placeholder="Select Parameter" value={this.state.selectedParameter} change={(e: any) => { this.setState({ selectedParameter: e.value }) }} />
+          <div className="m-t-20" />
+          <p>Select Attribute</p>
+          <DropDownListComponent id="attribute" width="100%" dataSource={attributeData} popupHeight="200px" popupWidth="100px" placeholder="Select Attribute" value={this.state.selectedAttribute} change={(e: any) => { this.setState({ selectedAttribute: e.value }) }} />
+          <button className="m-t-10" onClick={() => this.bind(this.props.selectedItem.id)}>Bind</button>
+        </div>
+      }
+    </div>
+    );
+
+  }
+
+
   render() {
-    console.log(this.props.selectedItem);
+    // console.log(this.props.selectedItem);
+    // this.props.selectedItem && this.props.temp(this.props.selectedItem);
     return (
       <div className="element-editor">
 
@@ -140,12 +200,28 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
                   </div>
                 </div> */}
 
+        {/* <div className="flex-row" >
+
+          <div className="flex-column">
+            <TextBoxComponent placeholder="Rotation Angel" floatLabelType="Auto" width="120px" value={this.getAngel()} onChange={(e: any) => { this.props.changeAngle(e.value); }} />
+          </div>
+        </div> */}
+        <div className="flex-row" >
+          {this.props.selectedItem &&
+            <div className="flex-column">
+              {this.renderParameter()}
+            </div>
+          }
+        </div>
       </div>
     );
   }
 }
 
-type TState = {};
+type TState = {
+  selectedParameter: string;
+  selectedAttribute: string;
+};
 
 type TProps = {
   colorChange: Function;
@@ -155,5 +231,7 @@ type TProps = {
   changeX: Function;
   changeY: Function;
   selectedItem: SelectorModel | any;
-
+  changeAngle: Function;
+  temp: Function;
+  dataBinder: Function;
 };

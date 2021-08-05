@@ -275,6 +275,7 @@ export var basicShapes: NodeModel[] = [
 export var svgShapes: NodeModel[] = Pipe.svgShapes.map((item) => ({
   id: item.id,
   style: { fill: "none" },
+
   annotations: [
     { content: "", constraints: AnnotationConstraints.Interaction },
   ],
@@ -327,6 +328,7 @@ export var animatedShapes: NodeModel[] = [
   {
     id: "svg1",
     style: { fill: "none" },
+    // layoutInfo: {properties:{}},
     annotations: [
       { content: "revolver", constraints: AnnotationConstraints.Interaction },
     ],

@@ -259,6 +259,7 @@ class DiagramTool extends BaseComponent<TProps, TState> {
                 setDiagrambg={this.setDiagrambg}
                 toggleAnimation={this.state.toggleAnimation}
                 onMouse={this.onMouse}
+                dataBinder={this.props.dataBinder!}
               />
             </div>
           </div>
@@ -363,5 +364,6 @@ type TProps = {
   closeModal?: Function;
   updateWidget?: Function;
   value?: any;
+  dataBinder?: Function;
 };
 export { DiagramTool as default };

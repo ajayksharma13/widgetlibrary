@@ -145,6 +145,16 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
     }
     diagramInstance.dataBind();
   }
+
+  public changeAngle(args: string) {
+    if (diagramInstance.selectedItems.nodes!.length > 0) {
+      //Get the selected node from diagram’s selected items collection.
+      let node: NodeModel = diagramInstance.selectedItems.nodes?.[0]!;
+      node.rotateAngle = parseInt(args);
+    }
+    diagramInstance.dataBind();
+  }
+
   public ColorChange(args: string) {
     if (diagramInstance.selectedItems.nodes != null) {
       if (diagramInstance.selectedItems.nodes?.length > 0) {
@@ -279,9 +289,15 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
   _onMouseMove = (e: any) => {
     this.props.onMouse(e.screenX - 273, e.screenY - 175);
   }
-
+  temp = (itemid: any) => {
+    const id = itemid;
+    let obj: any = JSON.parse(diagramInstance.saveDiagram());
+    let svg = obj.nodes.filter((node: any) => node.id.includes(id));
+    console.log(svg[0].shape.content);
+  }
 
   render() {
+
     return (
       <div className="diagram-panel">
         <DialogComponent
@@ -304,7 +320,7 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
           style={{
             display: "flex",
             flexDirection: "column",
-            height: "79.5vh",
+            height: "78.2vh",
           }}
           onMouseMove={this._onMouseMove}
         >
@@ -381,6 +397,9 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
             changeX={this.changeX}
             changeY={this.changeY}
             selectedItem={this.state.selectedItem}
+            changeAngle={this.changeAngle}
+            temp={this.temp}
+            dataBinder={this.props.dataBinder}
           />
         </div>
       </div>
@@ -401,6 +420,7 @@ type TProps = {
   diagramBg: string;
   setDiagrambg: Function;
   onMouse: any;
+  dataBinder: Function;
 };
 
 function getPorts(obj: NodeModel): PointPortModel[] {

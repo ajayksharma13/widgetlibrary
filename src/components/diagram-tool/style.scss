@@ -42,19 +42,19 @@
 .e-import:before {
     content: "\e715";
     color: $primaryColor !important;
-    font-size: 22px;
+    font-size: 1.1em;
     cursor: pointer;
 }
 
 .e-upload:before {
     content: "\e710";
-    font-size: 2em;
+    font-size: 1.5em;
     color: $primaryColor;
 }
 
 .e-close:before {
     content: "\e7fc";
-    font-size: 1.27em;
+    font-size: 1em;
     color: $fontGreyColor;
 }
 
@@ -68,7 +68,7 @@
 .e-upload {
     border: none !important;
     position: absolute;
-    bottom: 10px;
+    bottom: 1em;
     cursor: pointer;
     width: auto;
     right: 1em;
@@ -243,6 +243,9 @@ e-diagram .e-ruler {
 // Element Editor styling
 .element-editor {
     margin: 0.3em 5px;
+    h3 {
+        font-size: 1.1em;
+    }
     .flex-row {
         display: flex;
         flex-direction: row;
@@ -286,8 +289,8 @@ e-diagram .e-ruler {
     display: flex;
     justify-content: space-between;
     p:first-child {
-        font-size: 1.5em;
-        margin: auto 0.69em;
+        font-size: 1.2em;
+        margin: auto 0.89em;
     }
     p:nth-child(2) {
         margin: auto 0.6em;
@@ -339,9 +342,19 @@ e-diagram .e-ruler {
     .e-accordion .e-acrdn-item.e-select.e-expand-state>.e-acrdn-header .e-acrdn-header-icon,
     .e-accordion .e-acrdn-item.e-select.e-expand-state>.e-acrdn-header .e-acrdn-header-content {
         color: $primaryColor;
+        font-size: 1em;
+        .e-toggle-icon {
+            font-size: 0.85em;
+        }
     }
     .e-accordion .e-acrdn-item .e-acrdn-header {
         padding-left: 0.34em !important;
+        .e-acrdn-header-content {
+            font-size: 1em;
+        }
+        .e-toggle-icon {
+            font-size: 0.85em;
+        }
     }
     .e-accordion .e-acrdn-item .e-acrdn-panel .e-acrdn-content {
         padding: 1px 0 10px !important;
@@ -349,7 +362,7 @@ e-diagram .e-ruler {
 }
 
 #palette-space {
-    height: 79.5vh;
+    height: 78.2vh;
     border-right: 1px solid $primaryColor;
     border-top: 1px solid $primaryColor;
     overflow-y: auto;
@@ -367,6 +380,6 @@ e-diagram .e-ruler {
 // toolbar styling
 #toolbar_diagram {
     .e-toolbar-items {
-        padding-left: 0.19em !important;
+        padding-left: 0.04em !important;
     }
 }

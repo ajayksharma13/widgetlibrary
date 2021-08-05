@@ -107,6 +107,30 @@
         {
             "id": "0-26",
             "content": "<g xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 50 50\">  <title>0</title>  <g>    <rect x=\"1.56\" y=\"21.18\" width=\"45\" height=\"6.64\" transform=\"translate(48.56 0.44) rotate(90)\" style=\"fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px\"/>    <path d=\"M26.46,17.69h4.15a0,0,0,0,1,0,0V26a0,0,0,0,1,0,0h0a4.15,4.15,0,0,1-4.15-4.15V17.69a0,0,0,0,1,0,0Z\" transform=\"translate(23.8 -13.78) rotate(45)\" style=\"fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px\"/>    <rect x=\"31.2\" y=\"15.45\" width=\"1.64\" height=\"6.3\" rx=\"0.82\" ry=\"0.82\" transform=\"translate(-3.78 28.1) rotate(-45)\" style=\"fill: #ccc;stroke: gray;stroke-miterlimit: 10;stroke-width: 0.25px\"/>  </g></g>"
+        },
+        {
+            "id": "tank-",
+            "content": "<g width=\"100\" height=\"100\" viewBox=\"0 0 100 100\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"100\" height=\"100\" fill=\"#505052\"/><rect id=\"water\" y=\"40\" width=\"100\" height=\"100\" fill=\"#1AA5E0\"/></g>",
+            "data": {
+                "controlledType": 1,
+                "mutableElementId": "water"
+            }
+        },
+        {
+            "id": "progressbar-",
+            "content": "<svg width=\"100\" height=\"12\" viewBox=\"0 0 107 12\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"100\" height=\"12\" rx=\"4\" fill=\"#2C2C2C\"/><rect id=\"status\" width=\"40\" x=\"0\" height=\"12\" rx=\"4\" fill=\"#28FFBF\"/></svg>",
+            "data": {
+                "controlledType": 1,
+                "mutableElementId": "status"
+            }
+        },
+        {
+            "id": "fan-",
+            "content": "<svg width=\"100\" height=\"100\" viewBox=\"0 0 100 100\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"100\" height=\"100\" fill=\"#505052\"/><circle cx=\"93\" cy=\"93\" r=\"2\" fill=\"#C4C4C4\"/><circle cx=\"5\" cy=\"6\" r=\"2\" fill=\"#C4C4C4\"/><circle cx=\"93\" cy=\"6\" r=\"2\" fill=\"#C4C4C4\"/><circle cx=\"5\" cy=\"93\" r=\"2\" fill=\"#C4C4C4\"/><circle cx=\"50\" cy=\"50\" r=\"40\" fill=\"#C4C4C4\"/><rect id=\"blade\" x=\"44\" y=\"18\" width=\"12\" height=\"64\" rx=\"6\" fill=\"#505051\"/><rect id=\"blade\" x=\"18\" y=\"44\" width=\"64\" height=\"12\" rx=\"6\" fill=\"#505051\"/><circle cx=\"50\" cy=\"50\" r=\"10\" fill=\"#C4C4C4\"/>  <style>  @keyframes spin {         from {             transform: rotateZ(0deg);                   } to {             transform: rotateZ(360deg);         }    }.blade{   animation-name: spin;    animation-duration: 500ms;    animation-iteration-count: infinite;    animation-timing-function: linear;  transform-origin: center center;}  </style>  </svg>",
+            "data": {
+                "controlledType": 0,
+                "mutableElementId": "blade"
+            }
         }
     ]
 }
