@@ -1,9 +1,22 @@
+@import "../../../libs/variables.scss";
+@import "../../../libs/color.scss";
+.ui.dimmer {
+    background-color: #fff;
+}
+
 .mimic-widget {
     &__box {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: stretch;
+        div[class^="widget__"] {
+            text-align: center;
+            border-bottom: 1px solid $borderColor;
+            &:last-child {
+                border-bottom: none;
+            }
+        }
     }
     &__header {
         order: 1;
@@ -32,6 +45,11 @@
         p {
             cursor: pointer;
         }
+    }
+    .dimmed.dimmable>.ui.animating.dimmer,
+    .dimmed.dimmable>.ui.visible.dimmer,
+    .ui.active.dimmer {
+        background-color: #fff !important;
     }
     .diagram-edit-icon {
         background-color: #0fc574 !important;

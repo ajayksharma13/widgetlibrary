@@ -5,7 +5,9 @@ import MimicModel from "./model";
 import MimicProperty from "./property";
 import "./style.scss";
 import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
-import DiagramTool from "../../diagram-tool";
+// import DiagramTool from "../../diagram-tool";
+// import DiagramTool from "../../diagram-tool";
+const DiagramTool = React.lazy(() => import("../../diagram-tool"));
 import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
 import { Button } from "semantic-ui-react";
 let widgetDiagramInstance: DiagramComponent;
@@ -155,7 +157,7 @@ class MimicComponent extends BaseComponent<TProps, TState> {
 
     render() {
         const { hasWork } = this.state;
-        return <div className="mimic-widget widget" style={{ borderTop: "1px solid" }}>
+        return <div className="mimic-widget widget" >
             <div className="widget__box">
                 <div className="widget__header">
                     <div className="sub-header">

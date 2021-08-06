@@ -65,22 +65,6 @@
         }
     ],
     "svgShapes": [{
-            "id": "tank-",
-            "content": "<g width=\"100\" height=\"100\" viewBox=\"0 0 100 100\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"100\" height=\"100\" fill=\"#505052\"/><rect id=\"water\" y=\"40\" width=\"100\" height=\"100\" fill=\"#1AA5E0\"/></g>",
-            "data": {
-                "controlledType": 1,
-                "mutableElementId": "water"
-            }
-        },
-        {
-            "id": "progressbar-",
-            "content": "<svg width=\"100\" height=\"12\" viewBox=\"0 0 107 12\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"100\" height=\"12\" rx=\"4\" fill=\"#2C2C2C\"/><rect id=\"status\" width=\"40\" x=\"0\" height=\"12\" rx=\"4\" fill=\"#28FFBF\"/></svg>",
-            "data": {
-                "controlledType": 1,
-                "mutableElementId": "status"
-            }
-        },
-        {
             "id": "fan-",
             "content": "<svg width=\"100\" height=\"100\" viewBox=\"0 0 100 100\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"100\" height=\"100\" fill=\"#505052\"/><circle cx=\"93\" cy=\"93\" r=\"2\" fill=\"#C4C4C4\"/><circle cx=\"5\" cy=\"6\" r=\"2\" fill=\"#C4C4C4\"/><circle cx=\"93\" cy=\"6\" r=\"2\" fill=\"#C4C4C4\"/><circle cx=\"5\" cy=\"93\" r=\"2\" fill=\"#C4C4C4\"/><circle cx=\"50\" cy=\"50\" r=\"40\" fill=\"#C4C4C4\"/><rect id=\"blade\" x=\"44\" y=\"18\" width=\"12\" height=\"64\" rx=\"6\" fill=\"#505051\"/><rect id=\"blade\" x=\"18\" y=\"44\" width=\"64\" height=\"12\" rx=\"6\" fill=\"#505051\"/><circle cx=\"50\" cy=\"50\" r=\"10\" fill=\"#C4C4C4\"/>  <style>  @keyframes spin {         from {             transform: rotateZ(0deg);                   } to {             transform: rotateZ(360deg);         }    }.blade{   animation-name: spin;    animation-duration: 500ms;    animation-iteration-count: infinite;    animation-timing-function: linear;  transform-origin: center center;}  </style>  </svg>",
             "data": {
