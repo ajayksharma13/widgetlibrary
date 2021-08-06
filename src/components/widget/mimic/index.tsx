@@ -7,6 +7,7 @@ import "./style.scss";
 import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
 import DiagramTool from "../../diagram-tool";
 import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
+import { Button } from "semantic-ui-react";
 let widgetDiagramInstance: DiagramComponent;
 
 /**
@@ -67,13 +68,13 @@ class MimicComponent extends BaseComponent<TProps, TState> {
 
 
         //temp code to genrate random value repalced by api
-        for (let i = 0; i <= 100; i++) {
+        for (let i = 0; i <= 50; i++) {
             element.map((item) => {
                 item.data.setAttribute(item.attribute, i.toString());
                 console.log(item.attribute);
             });
             console.log(i);
-            await timer(300);
+            await timer(1000);
         }
     }
 
@@ -163,20 +164,17 @@ class MimicComponent extends BaseComponent<TProps, TState> {
                 <div className="widget__content">
                     {(hasWork != previousWork.No) &&
                         <>
-                            <Icon name="edit"
+
+                            <Button circular
+                                onClick={() => this.setState({ isModalOpen: true })}
+                                className="diagram-edit-icon "
                                 title="Edit"
+                                icon='edit' />
+                            <Button circular
                                 onClick={() => this.setState({ isModalOpen: true })}
-                                className="diagram-edit-icon primary"
-                                circular
-                                inverted
-                            />
-                            <Icon name="window maximize outline"
+                                className="diagram-fullscreen-icon"
                                 title="Fullscreen"
-                                onClick={() => this.setState({ isModalOpen: true })}
-                                className="diagram-fullscreen-icon primary"
-                                circular
-                                inverted
-                            />
+                                icon='window maximize outline' />
                         </>
                     }
                     <Modal

@@ -1,4 +1,22 @@
 .mimic-widget {
+    &__box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: stretch;
+    }
+    &__header {
+        order: 1;
+        flex-basis: 80px;
+    }
+    &__content {
+        order: 2;
+        flex: 1;
+    }
+    &__footer {
+        order: 3;
+        flex-basis: 120px;
+    }
     .no-work-div {
         color: #6d6d6d;
         background: url(./diagrambg.svg);
@@ -16,7 +34,9 @@
         }
     }
     .diagram-edit-icon {
-        font-size: 1.2em;
+        background-color: #0fc574 !important;
+        color: white !important;
+        font-size: 1em;
         position: absolute;
         right: 0.3em;
         bottom: 0.5em;
@@ -24,17 +44,14 @@
         cursor: pointer;
     }
     .diagram-fullscreen-icon {
-        font-size: 1.2em;
+        background-color: #0fc574 !important;
+        color: white !important;
+        font-size: 1em;
         position: absolute;
         right: 0.3em;
-        bottom: 3em;
+        bottom: 4em;
         z-index: 19;
         cursor: pointer;
-    }
-    i.inverted.bordered.icon,
-    i.inverted.circular.icon {
-        background-color: #505052 !important;
-        color: #0fc574 !important;
     }
 }
 

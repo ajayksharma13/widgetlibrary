@@ -166,13 +166,13 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
                   title: "Connectors",
                   iconCss: "e-diagram-icons1 e-diagram-connector",
                 },
-                {
-                  id: "svg",
-                  expanded: true,
-                  symbols: this.state.animatedSvgs,
-                  title: "SVG Shapes",
-                  iconCss: "e-diagram-icons1 e-diagram-svgs",
-                },
+                // {
+                //   id: "svg",
+                //   expanded: true,
+                //   symbols: this.state.animatedSvgs,
+                //   title: "SVG Shapes",
+                //   iconCss: "e-diagram-icons1 e-diagram-svgs",
+                // },
               ]}
               enableAnimation={true}
               width={"100%"}
@@ -193,10 +193,8 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
                 success={this.onUploadSuccess as any}
               />
             </div>
-
           </div>
-
-          <span onClick={this.uploadHandler} className="e-icons e-upload"></span>
+          {/* <span onClick={this.uploadHandler} className="e-icons e-upload"></span> */}
         </div>
       </div>
     );
