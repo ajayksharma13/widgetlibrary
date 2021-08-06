@@ -24,7 +24,7 @@ const timer = (ms: any) => new Promise(res => setTimeout(res, ms));
 
 
 
-class MimicTool extends BaseComponent<TProps, TState> {
+class MimicComponent extends BaseComponent<TProps, TState> {
     static defaultProps: TProps = {
         model: new MimicModel(),
     }
@@ -102,8 +102,10 @@ class MimicTool extends BaseComponent<TProps, TState> {
     diagramLoader = () => {
         const { model, viewbox: { height, width }, } = this.props;
         let obj = JSON.parse(JSON.stringify(model.value)) as any;
-        obj.scrollSettings.currentZoom = 0.3;
+        obj.scrollSettings.currentZoom = 1;
         obj.pageSettings.background.source = "";
+        obj.pageSettings.width = parseInt(width);
+        obj.pageSettings.height = parseInt(height);
         obj.snapSettings.horizontalGridlines.lineIntervals = [];
         obj.snapSettings.verticalGridlines.lineIntervals = [];
         obj.rulerSettings.showRulers = false;
@@ -211,4 +213,4 @@ type TState = {
     hasWork: number;
 };
 
-export { MimicTool as default, MimicModel, MimicProperty };
+export { MimicComponent as default, MimicModel, MimicProperty };

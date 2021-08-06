@@ -14,7 +14,7 @@ import {
 import Flipcard, { FlipcardModel, FlipcardProperty } from "../widget/flipcard";
 import "./style.scss";
 import WidgetPanel from "../widget/panel";
-import MimicTool, { MimicModel, MimicProperty } from "../widget/mimic";
+import MimicComponent, { MimicModel, MimicProperty } from "../widget/mimic";
 
 /**
  * Start Up component
@@ -169,7 +169,7 @@ class StartUp extends BaseComponent<TProps, TState> {
           >
             <WidgetPanel Property={MimicProperty} model={MimicModel}>
               {() => (
-                <MimicTool
+                <MimicComponent
                   // {...this.flipCardRender}
                   //data={this.flipcardData}
                   model={mimicModel}

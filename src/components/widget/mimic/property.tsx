@@ -6,7 +6,7 @@ import MimicModel from "./model";
 import "./style.scss";
 
 /**
- * MimicTool Property
+ * Mimic Property
  */
 class MimicProperty extends BaseComponent<TProps, TState> {
     /*
