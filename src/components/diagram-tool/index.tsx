@@ -87,9 +87,9 @@ class DiagramTool extends BaseComponent<TProps, TState> {
         break;
       }
       case "Save": {
+        // download(diagramInstance.saveDiagram());
         this.props.updateWidget?.(diagramInstance.saveDiagram());
         this.props.closeModal?.();
-        // download(diagramInstance.saveDiagram());
         break;
       }
       case "Toggle Animation": {
@@ -297,9 +297,9 @@ function download(data: string): void {
     var a = document.createElement("a");
     a.href = dataStr;
     a.download = "Diagram.json";
-    // document.body.appendChild(a);
-    // a.click();
-    // a.remove();
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
   }
 }
 

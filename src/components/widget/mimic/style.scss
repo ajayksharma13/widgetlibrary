@@ -1,6 +1,9 @@
 .mimic-widget {
     .no-work-div {
         color: #6d6d6d;
+        background: url(./diagrambg.svg);
+        background-repeat: no-repeat;
+        background-size: cover;
         display: flex;
         justify-content: center;
         font-size: 1.3em;
@@ -17,6 +20,14 @@
         position: absolute;
         right: 0.3em;
         bottom: 0.5em;
+        z-index: 19;
+        cursor: pointer;
+    }
+    .diagram-fullscreen-icon {
+        font-size: 1.2em;
+        position: absolute;
+        right: 0.3em;
+        bottom: 3em;
         z-index: 19;
         cursor: pointer;
     }

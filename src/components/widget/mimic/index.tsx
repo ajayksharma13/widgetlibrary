@@ -100,9 +100,10 @@ class MimicTool extends BaseComponent<TProps, TState> {
      * condition the object to load diagram
      */
     diagramLoader = () => {
-        const { model } = this.props;
+        const { model, viewbox: { height, width }, } = this.props;
         let obj = JSON.parse(JSON.stringify(model.value)) as any;
         obj.scrollSettings.currentZoom = 0.3;
+        obj.pageSettings.background.source = "";
         obj.snapSettings.horizontalGridlines.lineIntervals = [];
         obj.snapSettings.verticalGridlines.lineIntervals = [];
         obj.rulerSettings.showRulers = false;
@@ -129,7 +130,7 @@ class MimicTool extends BaseComponent<TProps, TState> {
         if (hasWork == previousWork.No) {
             return (
                 <div className="no-work-div">
-                    <p onClick={() => this.setState({ isModalOpen: true })}>Click edit to create a diagram</p>
+                    <p onClick={() => this.setState({ isModalOpen: true })}>Click to create a diagram</p>
                 </div>
             );
         }
@@ -159,13 +160,23 @@ class MimicTool extends BaseComponent<TProps, TState> {
                 </div>
                 <div className="widget__content">
                     {(hasWork != previousWork.No) &&
-                        <Icon name="edit"
-                            title="Edit"
-                            onClick={() => this.setState({ isModalOpen: true })}
-                            className="diagram-edit-icon primary"
-                            circular
-                            inverted
-                        />}
+                        <>
+                            <Icon name="edit"
+                                title="Edit"
+                                onClick={() => this.setState({ isModalOpen: true })}
+                                className="diagram-edit-icon primary"
+                                circular
+                                inverted
+                            />
+                            <Icon name="window maximize outline"
+                                title="Fullscreen"
+                                onClick={() => this.setState({ isModalOpen: true })}
+                                className="diagram-fullscreen-icon primary"
+                                circular
+                                inverted
+                            />
+                        </>
+                    }
                     <Modal
                         size="fullscreen"
                         open={this.state.isModalOpen}

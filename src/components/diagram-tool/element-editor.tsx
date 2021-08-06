@@ -158,7 +158,6 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
     // this.props.selectedItem && this.props.temp(this.props.selectedItem);
     return (
       <div className="element-editor">
-
         <h3>Properties</h3>
         <div className="flex-row">
           <div className="flex-column">
@@ -208,9 +207,9 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
         </div> */}
         <div className="flex-row" >
           {this.props.selectedItem &&
-            <div className="flex-column">
+            <>
               {this.renderParameter()}
-            </div>
+            </>
           }
         </div>
       </div>

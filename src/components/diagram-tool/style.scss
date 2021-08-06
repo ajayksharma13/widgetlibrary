@@ -32,15 +32,15 @@
 }
 
 .e-group-icon::before {
-    content: "\e74b";
+    content: "\e5a7";
 }
 
 .e-ungroup-icon::before {
-    content: "\e74c";
+    content: "\e5a6";
 }
 
 .e-import:before {
-    content: "\e715";
+    content: "\e900";
     color: $primaryColor !important;
     font-size: 1.1em;
     cursor: pointer;
@@ -104,7 +104,7 @@
 
 // diagram starting block customizer
 .e-diagram .e-ruler-overlap {
-    background-color: $primaryColor;
+    background-color: #fafafa;
 }
 
 e-diagram .e-ruler {
@@ -244,7 +244,13 @@ e-diagram .e-ruler {
 .element-editor {
     margin: 0.3em 5px;
     h3 {
-        font-size: 1.1em;
+        font-size: 1em;
+        color: #0fc574;
+        margin-left: 0.7em;
+        margin-top: 0.3em;
+    }
+    p {
+        font-size: 0.85em;
     }
     .flex-row {
         display: flex;

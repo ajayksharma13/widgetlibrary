@@ -9,7 +9,6 @@
             "text": "Save",
             "tooltipText": "Save Progress",
             "prefixIcon": "e-menu-icon e-save-icon"
-
         },
 
         {
@@ -28,18 +27,6 @@
             "text": "Ungroup",
             "tooltipText": "For Ungrouping Diagram",
             "prefixIcon": "e-menu-icon e-ungroup-icon"
-        },
-
-        {
-            "text": "Export",
-            "tooltipText": "as SVG",
-            "prefixIcon": "e-menu-icon e-exp-icon"
-        },
-
-        {
-            "text": "Toggle Animation",
-            "tooltipText": "For Switching On And Off Animation",
-            "prefixIcon": "e-menu-icon e-recurrence-icon"
         }
     ]
 }

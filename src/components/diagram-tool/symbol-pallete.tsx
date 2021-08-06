@@ -152,12 +152,11 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
                   title: "Valves",
                   iconCss: "e-diagram-icons1 e-diagram-svgs",
                 },
-
                 {
-                  id: "animatedSvg",
+                  id: "ParameterizedShapes",
                   expanded: true,
-                  symbols: this.state.animatedSvgs,
-                  title: "Animated Shape",
+                  symbols: this.state.svgshapes,
+                  title: "Parametrized Shapes",
                   iconCss: "e-diagram-icons1 e-diagram-connector",
                 },
                 {
@@ -170,7 +169,7 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
                 {
                   id: "svg",
                   expanded: true,
-                  symbols: this.state.svgshapes,
+                  symbols: this.state.animatedSvgs,
                   title: "SVG Shapes",
                   iconCss: "e-diagram-icons1 e-diagram-svgs",
                 },

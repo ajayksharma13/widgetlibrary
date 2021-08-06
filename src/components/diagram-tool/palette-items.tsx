@@ -290,7 +290,6 @@ export var svgShapes: NodeModel[] = Pipe.svgShapes.map((item) => ({
 export var pipesSvg: NodeModel[] = Pipe.pipes.map((item) => (
   {
     id: item.id,
-    width: 100,
     style: { fill: "none" },
     addInfo: [{ text: 'Close Open Tasks2' }],
     annotations: [
@@ -326,7 +325,7 @@ export var valvesSvg: NodeModel[] = Valves.Valves.map((item) => (
 
 export var animatedShapes: NodeModel[] = [
   {
-    id: "svg1",
+    id: "tower tank",
     style: { fill: "none" },
     // layoutInfo: {properties:{}},
     annotations: [
@@ -334,8 +333,7 @@ export var animatedShapes: NodeModel[] = [
     ],
     shape: {
       type: "Native",
-      content:
-        '<svg viewBox="0 0 160 160" width="160" height="160"><circle cx="80" cy="80" r="50" /><g transform=" matrix(0.866, -0.5, 0.25, 0.433, 80, 80)"><path d="M 0,70 A 65,70 0 0,0 65,0 5,5 0 0,1 75,0 75,70 0 0,1 0,70Z" fill="#fff"><animateTransform attributeName="transform" type="rotate" from="360 0 0" to="0 0 0" dur="1s" repeatCount="indefinite" /></path> </g> <path d="M 50,0 A 50,50 0 0,0 -50,0Z" transform="matrix(0.866, -0.5, 0.5, 0.866, 80, 80)" /></svg>',
+      content: "<g id=\"Layer_1\" data-name=\"Layer 1\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 105.71 122.88\"><defs><style>.cls-1{fill-rule:evenodd;}</style></defs><title>water-tank</title><path class=\"cls-1\" d=\"M52.84,39.72c1.8,7.69,8.89,13.28,8.89,17.82,0,11.55-17.76,11.55-17.76,0,0-4.56,7.09-10.1,8.87-17.82Zm48.42-3.16H93.82V79.37a7.38,7.38,0,0,1-2.18,5.22h0A7.33,7.33,0,0,1,89.68,86v36.88H83v-1.3L52.82,106.14,22.7,121.52v1.36H16V86a7.43,7.43,0,0,1-4.13-6.64V36.56H4.44a4.43,4.43,0,0,1-2.31-8.22L47.26.64h0A4.43,4.43,0,0,1,51.66.52L103,28a4.44,4.44,0,0,1-1.73,8.54ZM75.17,86.78H30.51L52.82,98.2,75.17,86.78ZM60.58,102.17,83,113.64V90.72h0L60.58,102.17Zm-15.53,0L22.72,90.73h0v22.86l22.35-11.42ZM18.57,64.75A53.22,53.22,0,0,0,41,64.24a12.75,12.75,0,0,0,6.54,5.59,14.74,14.74,0,0,0,5.33,1v0a14.53,14.53,0,0,0,5.33-1,12.58,12.58,0,0,0,8.17-12.28c0-.31,0-.62,0-.92,7.12-1.57,13.85-1.34,20.82,3.73V36.56H18.57V64.75Zm28.87-8.51a.9.9,0,0,1,1.79-.16,8.62,8.62,0,0,0,.87,3.25,5.81,5.81,0,0,0,2.25,2.32.9.9,0,0,1-.91,1.55,7.39,7.39,0,0,1-2.93-3,10.32,10.32,0,0,1-1.07-3.93Z\"/></g>"
     } as NativeModel,
   },
   {
