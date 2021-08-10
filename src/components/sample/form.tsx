@@ -306,7 +306,6 @@ class SampleFormComponent extends BaseComponent<TClientRoute<TProps>, TState> {
                     <Form.Select
                       search
                       label="City"
-                      multiple={true}
                       autoComplete="off"
                       onChange={helpers.handleChange}
                       onBlur={helpers.handleBlur}
