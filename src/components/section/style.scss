@@ -1,0 +1,245 @@
+@import '../../libs/color.scss';
+@import '../../libs/variables.scss';
+
+.app-header {
+  .header-bg {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: $headerHeight;
+  }
+
+  .menu-section {
+    height: $headerHeight;
+    box-shadow: none !important;
+    border: none !important;
+    border-bottom: 2px solid $secondaryColor !important;
+
+    .button {
+      font-size: 1.5em !important;
+
+      &:active {
+        background: none !important;
+      }
+
+      &:focus {
+        background: none !important;
+      }
+    }
+
+    .logo-title {
+      font-size: 1.5em;
+      color: $primaryColor;
+
+      span {
+        text-shadow: 1px 1px #ccc;
+      }
+    }
+
+    .logo {
+      margin-right: 0.5em;
+      cursor: pointer;
+      //width: 200px;
+      // padding-top: 10px;
+      // padding-left: 15px;
+
+
+    }
+
+    .user-pic {
+      width: 1.5em;
+      height: 1.5em;
+    }
+  }
+
+  .ui.dropdown {
+    border: none !important;
+  }
+
+  .ui.primary.buttons .button:hover,
+  .ui.primary.button:hover {
+    background-color: transparent !important;
+  }
+
+  .header-in-desktop {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+}
+
+.ui.floating.label {
+  /* position: absolute; */
+  /* z-index: 100; */
+  top: 1.2rem;
+  left: 94%;
+  margin: 0em 0em 0em -1.5rem !important;
+  font-size: 0.2em !important;
+}
+
+.ui.labels .label,
+.ui.label {
+  // font-size: 1rem;
+}
+
+.map-marker {
+  margin-bottom: 1rem !important;
+}
+
+.ui.menu .item {
+  i.icon {
+    margin: 0;
+    padding-bottom: 0em !important;
+  }
+}
+
+.user-dropdown {
+  border: none !important;
+  padding: 0 !important;
+
+  .icon {
+    font-size: 1.5em;
+  }
+
+  .user-dropdown-menu {
+    border-radius: 20px !important;
+    margin-top: 18px !important;
+    margin-right: 1.5rem !important;
+    top: 60px !important;
+    right: -1.7em !important;
+    z-index: 1000 !important;
+    box-shadow: 0 0 10px $boxShadowColor !important;
+
+    .user-dropdown-card {
+      // position: relative !important;
+      // z-index: auto !important;
+      font-size: 0.95em !important;
+      width: 250px !important;
+      border-radius: 20px;
+      background-image: linear-gradient(to bottom,
+          #dcfffd,
+          #e3feff,
+          #ecfeff,
+          #f4fdff,
+          #fdfcfe,
+          #fcfafd,
+          #fdf7fb,
+          #fdf5f9,
+          #fef2f6);
+
+      .profile-image-background {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        height: 110px;
+        background: $secondaryColor;
+
+        .user-image {
+          background-color: #ccc !important;
+        }
+      }
+
+      #profile-edit-icon {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 17px !important;
+      }
+
+      .ui.card>.extra {
+        border-top: 2px solid rgba(0, 0, 0, 0.05) !important;
+      }
+
+      .card-user-details {
+        float: right;
+      }
+    }
+
+    .user-dropdown-button-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .ui.primary.button {
+        &:hover {
+          background-color: $secondaryColor !important;
+          color: rgba(255, 255, 255, 0.8);
+        }
+
+        &:active {
+          background-color: $secondaryColor !important;
+          color: rgba(255, 255, 255, 0.8);
+        }
+
+        &:visited {
+          background-color: $secondaryColor !important;
+          color: rgba(255, 255, 255, 0.8);
+        }
+      }
+
+      .dropdown-button {
+        font-size: 0.78571429rem !important;
+      }
+
+      .user-dropdown-links {
+        color: $secondaryColor !important;
+
+        .link-label {
+          position: relative;
+          top: -3px !important;
+        }
+      }
+
+      .link-icon {
+        margin-bottom: 10px !important;
+        color: $secondaryColor !important;
+        font-size: 20px !important;
+        font-weight: lighter;
+      }
+    }
+  }
+}
+
+// .ui.bottom.attached.label:first-child ~ :last-child:not(.attached) {
+//   margin-top: 0em;
+//   margin-bottom: 0rem !important;
+// }
+//...........sidebar section...............................
+.dashboard-layout .content-section .dashboard .sidebar,
+.dashboard-layout .content-section .dashboard .pusher {
+  padding-top: 0 !important;
+}
+
+@media only screen and (max-width: 767px) {
+  .app-header {
+    .menu-section {
+      .logo {
+        width: 65%;
+        padding-top: 0 !important;
+        margin-top: -15px;
+        margin-left: -17px;
+      }
+    }
+  }
+
+  .ui.menu:not(.vertical) {
+    .fitted.item {
+      flex-basis: 60%;
+    }
+
+    .right.menu .item:first-child {
+      padding: 0 !important;
+    }
+
+    .right.menu .item:last-child {
+      padding-right: 0px;
+
+      a {
+        padding: 0 !important;
+      }
+    }
+  }
+}

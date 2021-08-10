@@ -1,9 +1,28 @@
 @import "./libs/bootstrap.css";
 @import "./libs/control.scss";
+@import "./libs/color.scss";
 
 .page-loading {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.error-boundary {
+  margin: auto;
+  max-width: 600px;
+  background: $boxShadowColor;
+  padding: 1em;
+}
+
+path[id^="Link"] {
+  animation: dash 0.5s linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -16;
+  }
 }

@@ -1,76 +1,182 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
-import {
-  Menu,
-  Input,
+import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
+import Sidebar, {
   StrictSidebarProps,
-  Sidebar,
-  Segment,
-  Grid,
-  Header,
-  MenuItemProps,
-} from "semantic-ui-react";
-import "./layout.scss";
+} from "semantic-ui-react/dist/commonjs/modules/Sidebar";
+import Menu from "semantic-ui-react/dist/commonjs/collections/Menu";
+import { MenuItemProps } from "semantic-ui-react/dist/commonjs/collections/Menu/MenuItem";
 
-class DashboardLayout extends React.Component<TProps, TState> {
+import { AppHeader, AppSidebar } from "../section";
+import "./style.scss";
+import { TClientRoute, TRouteProps } from "../../types";
+import Utils, { ScreenUtil, SCREEN_BREAKPOINT } from "../../utils";
+import { Icon, Ref } from "semantic-ui-react";
+import { compose } from "recompose";
+import withRouterHOC from "../../hoc/with-router";
+import withToastHOC from "../../hoc/with-toast";
+
+/**
+ * Dashboard layout
+ */
+class CompactDashboard extends React.Component<
+  TClientRoute<TProps> & TRouteProps,
+  TState
+> {
+  segmentRef: React.MutableRefObject<any> = React.createRef();
+  childFn: any = {};
   state = {
-    activeMenu: "home",
     sidebar: {
-      visible: false,
+      visible: true,
     },
+    SidebarArgs: {},
+    isShowSidebar: false,
+    searchedParts: [],
   };
 
-  private onChangeMenu = (event: any, menuProps: MenuItemProps) => {
+  /**
+   * toggle sidebar
+   */
+  private onToggleMenuSidebar = (event: any, menuProps: MenuItemProps) => {
     const { sidebar } = this.state;
     this.setState({
-      activeMenu: menuProps.name,
       sidebar: {
         visible: !sidebar.visible,
       },
     });
   };
 
-  public render() {
-    const { children } = this.props;
-    const { activeMenu, sidebar } = this.state;
-    return (
-      <div>
-        <Sidebar.Pushable as="div">
-          <Sidebar
-            as={Segment}
-            animation="push"
-            direction="left"
-            visible={sidebar.visible}
-          ></Sidebar>
+  // refresh child component
+  refreshChildFn = () => {
+    this.childFn.refresh?.();
+  };
 
-          <Sidebar.Pusher>
-            <Menu attached inverted>
-              <Menu.Item
-                name="home"
-                active={activeMenu === "home"}
-                onClick={this.onChangeMenu}
+  /**
+   * sidebar component
+   */
+  onLoadSidebar = (
+    isShowSidebar = !this.state.isShowSidebar,
+    SidebarComponent: React.ComponentClass<any, any> | undefined = undefined,
+    SidebarArgs: any = {},
+    SidebarCallBack: Function | undefined = undefined
+  ) => {
+    this.setState({
+      isShowSidebar,
+      SidebarArgs,
+      SidebarComponent,
+      SidebarCallBack,
+    });
+    this.props.update({
+      q: { sidebar: SidebarComponent?.displayName || SidebarComponent?.name },
+    });
+
+    // hide scroll when sidebar show
+    window.scroll({ top: 0 });
+    setTimeout(
+      () =>
+        ((document.getElementsByTagName(
+          "body"
+        ) as any)[0].style.overflow = isShowSidebar ? "hidden" : "auto")
+    );
+  };
+
+  /**
+   * change state
+   * @param value
+   */
+  private onChangeLayoutState = async (value: any = {}) => {
+    await Utils.asyncState(this, value);
+  };
+
+  public render() {
+    const { children, ...restProps } = this.props as any;
+    const {
+      sidebar,
+      isShowSidebar,
+      SidebarArgs,
+      SidebarComponent,
+      SidebarCallBack,
+    } = this.state as TState;
+    const { width = "screen half" } = SidebarArgs;
+    const isTabNMobile =
+      ScreenUtil.getWindowDimension().width < SCREEN_BREAKPOINT.tablet;
+    return (
+      <Sidebar.Pushable as={Segment} className="basic sidebar-section">
+        <Sidebar
+          as="div"
+          className={isTabNMobile ? "bg-white wide" : `bg-white ${width}`}
+          animation="overlay"
+          onHide={() => this.onLoadSidebar(false, undefined)}
+          vertical="true"
+          width="wide"
+          direction="right"
+          visible={isShowSidebar}
+          target={isTabNMobile ? undefined : this.segmentRef}
+        >
+          <Segment basic className="sidebar-section p-0">
+            <React.Suspense fallback={<div>loading...</div>}>
+              {SidebarComponent && (
+                <SidebarComponent
+                  {...SidebarArgs}
+                  SidebarCallBack={SidebarCallBack}
+                  onChangeSidebar={this.onLoadSidebar}
+                  onChangeLayoutState={this.onChangeLayoutState}
+                ></SidebarComponent>
+              )}
+            </React.Suspense>
+            <Icon
+              link
+              title="Close"
+              onClick={() => this.onLoadSidebar(false)}
+              className="sidebar-close-icon"
+              name="close"
+            />
+          </Segment>
+        </Sidebar>
+        <Sidebar.Pusher dimmed={isShowSidebar}>
+          <div className="dashboard-layout">
+            <Ref innerRef={this.segmentRef}>
+              <AppHeader
+                {...restProps}
+                onChangeSidebar={this.onLoadSidebar}
+                onToggleMenuSidebar={this.onToggleMenuSidebar}
+                currentSidebarComponent={
+                  SidebarComponent?.displayName || SidebarComponent?.name
+                }
+                currentLayout="dashboard"
               />
-              <Menu.Item
-                name="messages"
-                active={activeMenu === "messages"}
-                onClick={this.onChangeMenu}
-              />
-              <Menu.Item
-                name="friends"
-                active={activeMenu === "friends"}
-                onClick={this.onChangeMenu}
-              />
-              <Menu.Menu position="right">
-                <Menu.Item>
-                  <Input icon="search" placeholder="Search..." />
-                </Menu.Item>
-                <Menu.Item name="logout" as={Link} to="/" />
-              </Menu.Menu>
-            </Menu>
-            {children(this.state)}
-          </Sidebar.Pusher>
-        </Sidebar.Pushable>
-      </div>
+            </Ref>
+
+            <Segment basic className="content-section">
+              <Sidebar.Pushable className="dashboard-section" as="div">
+                <Sidebar
+                  className="menu-sidebar"
+                  as={Menu}
+                  animation="push"
+                  vertical="true"
+                  direction="left"
+                  onHidden={this.refreshChildFn}
+                  onShow={this.refreshChildFn}
+                  visible={sidebar.visible}
+                >
+                  <AppSidebar
+                    isUserLogged={restProps.isUserLogged}
+                  ></AppSidebar>
+                </Sidebar>
+                <Sidebar.Pusher>
+                  <div>
+                    {children({
+                      ...this.state,
+                      ...restProps,
+                      childFn: this.childFn,
+                      onChangeSidebar: this.onLoadSidebar,
+                    })}
+                  </div>
+                </Sidebar.Pusher>
+              </Sidebar.Pushable>
+            </Segment>
+          </div>
+        </Sidebar.Pusher>
+      </Sidebar.Pushable>
     );
   }
 }
@@ -86,18 +192,19 @@ type TProps = {
  * state
  */
 type TState = {
-  activeMenu?: string;
   sidebar: StrictSidebarProps;
+  isShowSidebar: boolean;
+  SidebarComponent?: React.ComponentClass<any, any>;
+  SidebarArgs: any;
+  SidebarCallBack?: Function;
 };
 
-const style = {
-  h1: {
-    marginTop: "3em",
-  },
+const CompactDashboardLayout = compose<
+  TClientRoute<TProps> & TRouteProps,
+  TProps
+>(
+  withRouterHOC,
+  withToastHOC
+)(CompactDashboard);
 
-  sidebar: {
-    overflow: "hidden",
-  },
-};
-
-export { DashboardLayout as default };
+export { CompactDashboardLayout as default };

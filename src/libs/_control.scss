@@ -1,4 +1,5 @@
 @import './variables.scss';
+@import './color.scss';
 
 .b-n {
   border: none !important;
@@ -459,6 +460,25 @@ ul {
   display: flex;
 }
 
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.justify-flex-center {
+  justify-content: center;
+}
+
+.align-flex-center {
+  align-items: center;
+}
+
 .d-table-row {
   display: table-row;
 }
@@ -523,6 +543,47 @@ textarea {
   }
 }
 
+
+/* For Custom Alert*/
+
+@mixin alertMixin($color) {
+  background: $color !important;
+  box-shadow: none !important;
+  color: #fff !important;
+  padding: 1.6em 1.5em;
+  min-width: 460px !important;
+  max-width: 460px !important;
+
+  @media (max-width: 769px) {
+    min-width: 320px !important;
+    max-width: 320px !important;
+  }
+
+  @media (max-width: 330px) {
+    min-width: 264px !important;
+    max-width: 264px !important;
+  }
+
+  .icon {
+    font-size: 225% !important;
+  }
+
+  .header {
+    color: #fff !important;
+    font-size: 0.95em;
+    -ms-word-break: break-all;
+    word-break: break-all;
+    word-break: break-word;
+  }
+
+  p {
+    font-size: 1.15em;
+    -ms-word-break: break-all;
+    word-break: break-all;
+    word-break: break-word;
+  }
+}
+
 .info.message {
   @include alertMixin(#48c6ec);
 }
@@ -539,7 +600,7 @@ textarea {
   @include alertMixin(#40b242);
 }
 
-.unstock-alert {
+.ui-alert {
   &.ui-alerts {
     padding: 10px;
 
@@ -565,4 +626,116 @@ textarea {
   }
 }
 
+.visibility-hidden {
+  visibility: hidden !important;
+}
+
+.visibility-show {
+  visibility: visible !important;
+}
+
+
+.tab {
+  &__menu {
+    display: flex;
+    color: $primaryColor;
+    font-size: 13px;
+
+
+    div {
+      padding: 0.6em 1.2em;
+      border-bottom: 2px solid transparent;
+      transition: border 200ms ease-in-out;
+      cursor: pointer;
+
+      &:hover {
+        background: rgba($color: $primaryColor, $alpha: 0.1);
+      }
+
+      &.active {
+        border-bottom: 2px solid $primaryColor;
+      }
+    }
+  }
+
+  &__content {
+
+    // div {
+    //   animation: fadeInAnimation ease-in 200ms;
+    //   animation-iteration-count: 1;
+    //   animation-fill-mode: forwards;
+    // }
+
+    // @keyframes fadeInAnimation {
+    //   0% {
+    //     opacity: 0;
+    //   }
+
+    //   100% {
+    //     opacity: 1;
+    //   }
+    // }
+  }
+}
+
+
 /*end*/
+
+
+/* Start Page */
+
+.inner__page {
+  padding: 2em;
+
+  &__header {
+    margin-bottom: 0 !important;
+  }
+
+  .list {
+    &__header {
+      color: $fontGreyColor;
+    }
+
+    &__table {
+      font-size: 0.95em;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+  }
+
+  .form {
+    &__segment {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+
+    &__header {
+      color: $fontGreyColor;
+    }
+  }
+}
+
+.e-treeview {
+  ul:first-child {
+    padding: 0 !important;
+  }
+
+  .e-checkbox-wrapper .e-frame.e-check,
+  .e-css.e-checkbox-wrapper .e-frame.e-check,
+  .e-checkbox-wrapper .e-frame,
+  .e-css.e-checkbox-wrapper .e-frame {
+    border-radius: 50% !important;
+  }
+
+  .e-checkbox-wrapper .e-check::before,
+  .e-css.e-checkbox-wrapper .e-check::before {
+    font-size: 0.9em;
+  }
+
+  .e-checkbox-wrapper .e-frame,
+  .e-css.e-checkbox-wrapper .e-frame {
+    width: 19.5px !important;
+  }
+}
+
+/* End Page */

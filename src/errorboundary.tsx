@@ -10,17 +10,18 @@ type TProps = {};
  */
 type TState = {
   hasError: boolean;
+  error: any;
 };
 
 class ErrorBoundary extends React.Component<TProps, TState> {
   constructor(props: TProps) {
     super(props);
-    this.state = { hasError: false };
+    this.state = { hasError: false, error: {} };
   }
 
   static getDerivedStateFromError(error: any) {
     // Update state so the next render will show the fallback UI.
-    return { hasError: true };
+    return { hasError: true, error };
   }
 
   componentDidCatch(error: any, errorInfo: any) {
@@ -32,7 +33,12 @@ class ErrorBoundary extends React.Component<TProps, TState> {
   render() {
     if (this.state.hasError) {
       // You can render any custom fallback UI
-      return <h1>Please contact to a site administrator.</h1>;
+      return (
+        <div className="error-boundary">
+          <h2>Please contact to a site administrator.</h2>
+          {this.state.error}
+        </div>
+      );
     }
 
     return this.props.children;

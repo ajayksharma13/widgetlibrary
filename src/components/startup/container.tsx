@@ -83,7 +83,7 @@ class DesktopContainer extends React.Component<
 
     return (
       <Media greaterThan="mobile">
-        {/* <Visibility
+        <Visibility
           once={false}
           onBottomPassed={this.showFixedMenu}
           onBottomPassedReverse={this.hideFixedMenu}
@@ -125,7 +125,7 @@ class DesktopContainer extends React.Component<
             </Menu>
             <HomepageHeading />
           </Segment>
-        </Visibility> */}
+        </Visibility>
 
         {children}
       </Media>

@@ -9,13 +9,13 @@
 
 .ui.form .field > label{
     color : @primaryColor;
-    font-size: 1.1em;
+    font-size: 0.95em;
 }
 
 
 .ui.form input:not([type]), .ui.form input[type="date"], .ui.form input[type="datetime-local"], .ui.form input[type="email"], .ui.form input[type="number"], .ui.form input[type="password"], .ui.form input[type="search"], .ui.form input[type="tel"], .ui.form input[type="time"], .ui.form input[type="text"], .ui.form input[type="file"], .ui.form input[type="url"] ,.ui.form textarea{   
     border: none;
-    padding: 0.67285714em 0.52em;
+    padding: 0.17285714em 0.52em 0.57285714em;
     border-radius: 0 !important;
     /* box-shadow: 0 5px 5px #aaaaaac4 !important; */
     border-bottom: 1px solid @grey;
@@ -31,7 +31,17 @@
     min-width: 100%;
     border: none !important;
     border-radius: 0em !important;        
+      padding: 0.17285714em 0.52em 0.57285714em;
     border-bottom: 1px solid #CCCCCC !important;
+    min-height: 2.114286em;
+
+    input{
+        margin: 0!important;
+    }
+
+    > .text{
+            padding-top: 0.575em;
+    }
 }
 
 .ui.form .field > .ui.input > input {
@@ -54,4 +64,8 @@
 
 .ui.form .field .prompt.label{
     background: transparent !important;
+}
+
+.ui.form .field .ui.checkbox{
+    font-size:0.9rem !important;
 }

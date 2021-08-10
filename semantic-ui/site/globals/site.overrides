@@ -86,8 +86,7 @@
 }
 
 .custom-box {
-  padding: 2rem; 
-  background-color: @grey80;
+  padding: 2rem;  
 
  &.primary {
       color: @white;

@@ -1,0 +1,36 @@
+@import '../../libs/variables.scss';
+@import '../../libs/color.scss';
+
+.login {
+    &__sidebackground {
+        background: url('#{$imagePath}login@2x.png');
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        //background-size: contain;
+        box-shadow: 0 0 10px $boxShadowColor;
+        height: 100vh;
+    }
+
+    &__form {}
+
+    &__segment {
+        max-width: 400px;
+        margin: auto !important;
+
+        .header {
+            font-weight: normal !important;
+            margin-bottom: 2em;
+            color: $fontGreyColor;
+        }
+
+        .error-message {
+            text-align: left;
+            margin: 0em 0em 2em !important;
+        }
+
+        button {
+            margin: 0 1em !important;
+            padding: 0.78571429em 2.5em 0.78571429em !important;
+        }
+    }
+}
