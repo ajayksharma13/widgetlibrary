@@ -30,6 +30,7 @@ import {
   PrintAndExport,
   SelectorModel,
   LayoutAnimation,
+  UserHandleEventsArgs,
 } from "@syncfusion/ej2-react-diagrams";
 
 import ElementEditor from "./element-editor";
@@ -320,7 +321,7 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
           style={{
             display: "flex",
             flexDirection: "column",
-            height: "78.2vh",
+            height: "83.4vh",
           }}
           onMouseMove={this._onMouseMove}
         >
@@ -400,6 +401,7 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
             changeAngle={this.changeAngle}
             temp={this.temp}
             dataBinder={this.props.dataBinder}
+            dataBinding={this.props.dataBinding}
           />
         </div>
       </div>
@@ -421,6 +423,7 @@ type TProps = {
   setDiagrambg: Function;
   onMouse: any;
   dataBinder: Function;
+  dataBinding: any;
 };
 
 function getPorts(obj: NodeModel): PointPortModel[] {

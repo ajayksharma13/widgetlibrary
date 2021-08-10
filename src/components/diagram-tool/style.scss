@@ -212,6 +212,9 @@ e-diagram .e-ruler {
     align-content: center;
     position: fixed;
     bottom: 0;
+    p {
+        font-weight: 900;
+    }
 }
 
 .e-toolbar .e-tbar-btn {
@@ -243,7 +246,7 @@ e-diagram .e-ruler {
 // Element Editor styling
 .element-editor {
     margin: 0.3em 5px;
-    h3 {
+    h4 {
         font-size: 1em;
         color: #0fc574;
         margin-left: 0.7em;
@@ -368,7 +371,7 @@ e-diagram .e-ruler {
 }
 
 #palette-space {
-    height: 78.2vh;
+    height: 83.4vh;
     border-right: 1px solid $primaryColor;
     border-top: 1px solid $primaryColor;
     overflow-y: auto;

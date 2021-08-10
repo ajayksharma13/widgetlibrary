@@ -48,15 +48,15 @@ class DiagramTool extends BaseComponent<TProps, TState> {
   state: Readonly<TState> = {
     toggleAnimation: false,
     menuItem: Items,
-    width: "1000",
-    height: "700",
+    width: "835",
+    height: "500",
     diagramBg: "https://www.solidbackgrounds.com/images/1280x720/1280x720-white-solid-color-background.jpg",
     x: 0,
     y: 0,
   };
   componentDidMount() {
     const { value } = this.props;
-    if (Object.keys(value).length > 0) {
+    if (value) {
       diagramInstance.loadDiagram(JSON.stringify(value));
     }
     //remove after practising
@@ -79,6 +79,7 @@ class DiagramTool extends BaseComponent<TProps, TState> {
     switch (args.item.text) {
       case "New": {
         diagramInstance.clear();
+        // this.props.resetBinding?.();
         break;
       }
       case "Load": {
@@ -221,8 +222,8 @@ class DiagramTool extends BaseComponent<TProps, TState> {
             clicked={this.onClickMenuItem}
             items={this.state.menuItem.items}
           />
-          <hr className="m-0 custom-hr" />
-          <Submenu
+          {/* <hr className="m-0 custom-hr" /> */}
+          {/* <Submenu
             height={this.state.height}
             path={this.path}
             setDiagramWidth={this.setDiagramWidth}
@@ -231,7 +232,7 @@ class DiagramTool extends BaseComponent<TProps, TState> {
             setDiagrambg={this.setDiagrambg}
             uploadHandler={this.uploadHandler}
             width={this.state.width}
-          />
+          /> */}
           <div className="display-none">
             <UploaderComponent
               type="file"
@@ -260,12 +261,13 @@ class DiagramTool extends BaseComponent<TProps, TState> {
                 toggleAnimation={this.state.toggleAnimation}
                 onMouse={this.onMouse}
                 dataBinder={this.props.dataBinder!}
+                dataBinding={this.props.dataBinding}
               />
             </div>
           </div>
         </div>
         <div className="status-bar">
-          <p className="m-l-10">x:{this.state.x} y:{this.state.y}</p>
+          <p className="m-l-10" style={{}}>X:{this.state.x}  Y:{this.state.y}</p>
         </div>
       </div>
     );
@@ -364,6 +366,8 @@ type TProps = {
   closeModal?: Function;
   updateWidget?: Function;
   value?: any;
+  dataBinding?: any;
   dataBinder?: Function;
+  resetBinding?: Function;
 };
 export { DiagramTool as default };

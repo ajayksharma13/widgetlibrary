@@ -1,7 +1,11 @@
 @import "../../../libs/variables.scss";
 @import "../../../libs/color.scss";
 .ui.dimmer {
-    background-color: #fff;
+    background-color: transparent;
+}
+
+.ui.modal {
+    box-shadow: none !important;
 }
 
 .mimic-widget {
@@ -32,7 +36,7 @@
     }
     .no-work-div {
         color: #6d6d6d;
-        background: url(./diagrambg.svg);
+        // background: url(./diagrambg.svg);
         background-repeat: no-repeat;
         background-size: cover;
         display: flex;

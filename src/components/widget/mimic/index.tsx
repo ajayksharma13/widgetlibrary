@@ -6,10 +6,10 @@ import MimicProperty from "./property";
 import "./style.scss";
 import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
 // import DiagramTool from "../../diagram-tool";
-// import DiagramTool from "../../diagram-tool";
 const DiagramTool = React.lazy(() => import("../../diagram-tool"));
 import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
 import { Button } from "semantic-ui-react";
+import { eDesignerMode } from "../../../utils";
 let widgetDiagramInstance: DiagramComponent;
 
 /**
@@ -30,35 +30,55 @@ const timer = (ms: any) => new Promise(res => setTimeout(res, ms));
 class MimicComponent extends BaseComponent<TProps, TState> {
     static defaultProps: TProps = {
         model: new MimicModel(),
+        mode: eDesignerMode.RUNNING,
     }
 
     /**
-  * default state
-  */
+     * default state
+     */
     state: TState = {
         isModalOpen: false,
         hasWork: previousWork.No,
     };
+
+
     componentDidMount() {
-        const { model } = this.props;
-        if (Object.keys(model.value).length > 0) {
-            this.setState({ hasWork: previousWork.Yes });
+        const { model, mode } = this.props;
+        // if (Object.keys(model.value).length > 0) {
+        //   this.setState({ hasWork: previousWork.Yes });
+        // }
+        if (model.value) {
+            this.diagramLoader();
+        }
+        if (
+            model.value &&
+            model.dataBinding.length &&
+            [eDesignerMode.CONFIGURE_PLAY, eDesignerMode.RUNNING].includes(mode)
+        ) {
+            this.configureScript();
         }
     }
+
+
 
     configureScript = async () => {
         const { model: { dataBinding } } = this.props;
         const diagramElement = document.getElementById("widget-diagram");
+        const ele = document.getElementById(dataBinding[0].nodeId! + "_content_groupElement");
+        console.log(ele);
+
         let element: any[] = [];
         //injecting respective data id 
         dataBinding.map((item) => {
-            const { jsonData: { controlledType, mutableElementId } } = item as any;
+            const { nodeId, jsonData: { controlledType, mutableElementId } } = item as any;
             if (controlledType) {
-                diagramElement?.querySelectorAll("#" + mutableElementId)[0]?.setAttribute("data-id", mutableElementId);
+                const ele = document.getElementById(nodeId + "_content_groupElement");
+
+                ele?.querySelectorAll("#" + mutableElementId)[0]?.setAttribute("data-id", nodeId);
                 element.push(
                     {
                         attribute: item.attribute,
-                        data: document.querySelectorAll(`[data-id*="${mutableElementId}"]`)[0],
+                        data: document.querySelectorAll(`[data-id*="${nodeId}"]`)[0],
                     });
             }
             else {
@@ -81,10 +101,10 @@ class MimicComponent extends BaseComponent<TProps, TState> {
     }
 
     dataBinder = (obj: any) => {
-        // const unique = this.props.model.dataBinding.filter((data) => (obj?.nodeId === data.nodeId)).length;
-        // if (unique == 0) {
-        this.props.model.appendBindingElement(obj);
-        // }
+        const unique = this.props.model.dataBinding.filter((data) => (obj?.nodeId === data.nodeId)).length;
+        if (unique == 0) {
+            this.props.model.appendBindingElement(obj);
+        }
     }
 
     /**
@@ -126,13 +146,9 @@ class MimicComponent extends BaseComponent<TProps, TState> {
      * condinally render elemenet
      */
     renderContent = () => {
-        // this.configureScript();
         let { viewbox: { height, width }, model } = this.props;
         let temp = parseInt(height) - 30;
-        const { hasWork } = this.state;
-        console.log(hasWork);
-
-        if (hasWork == previousWork.No) {
+        if (model.value == null) {
             return (
                 <div className="no-work-div">
                     <p onClick={() => this.setState({ isModalOpen: true })}>Click to create a diagram</p>
@@ -147,6 +163,7 @@ class MimicComponent extends BaseComponent<TProps, TState> {
                     width={`${width}px`}
                     height={`${temp}px`}
                     snapSettings={{ constraints: SnapConstraints.None }}
+                // created={() => this.props.model.dataBinding.length && this.configureScript()}
                 >
                     <Inject services={[DataBinding, BpmnDiagrams]} />
                 </DiagramComponent>
@@ -156,6 +173,7 @@ class MimicComponent extends BaseComponent<TProps, TState> {
 
 
     render() {
+        const { model } = this.props;
         const { hasWork } = this.state;
         return <div className="mimic-widget widget" >
             <div className="widget__box">
@@ -164,19 +182,21 @@ class MimicComponent extends BaseComponent<TProps, TState> {
                     </div>
                 </div>
                 <div className="widget__content">
-                    {(hasWork != previousWork.No) &&
+                    {(model.value != null) &&
                         <>
-
                             <Button circular
                                 onClick={() => this.setState({ isModalOpen: true })}
                                 className="diagram-edit-icon "
                                 title="Edit"
                                 icon='edit' />
                             <Button circular
-                                onClick={() => this.setState({ isModalOpen: true })}
+                                // find something else
+                                onClick={() => {
+                                    window.open("/diagram", '_blank');
+                                }}
                                 className="diagram-fullscreen-icon"
                                 title="Fullscreen"
-                                icon='window maximize outline' />
+                                icon='window maximize outline' ></Button>
                         </>
                     }
                     <Modal
@@ -188,6 +208,7 @@ class MimicComponent extends BaseComponent<TProps, TState> {
                             closeModal={this.closeModal}
                             updateWidget={this.diagramUpdate}
                             dataBinder={this.dataBinder}
+                            resetBinding={this.props.model.resetBindingElement}
                             {...this.props.model}
                         />
                     </Modal>
@@ -206,6 +227,7 @@ class MimicComponent extends BaseComponent<TProps, TState> {
 type TProps = {
     model: MimicModel;
     viewbox?: any;
+    mode: eDesignerMode;
 };
 
 type TState = {

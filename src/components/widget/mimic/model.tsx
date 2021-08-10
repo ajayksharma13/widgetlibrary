@@ -4,7 +4,7 @@ import ModelBase from "../model.base";
  * Mimic tool model cum logic class
  */
 class MimicModel extends ModelBase {
-    value: any = {};
+    value: any = null;
     title: string = "Diagram";
     dataBinding: BindingTypes[] = [];
 
@@ -22,6 +22,10 @@ class MimicModel extends ModelBase {
     }
     public appendBindingElement(data: any): void {
         this.dataBinding.push(data);
+        console.log(this.dataBinding);
+    }
+    public resetBindingElement(): void {
+        this.dataBinding = [];
         console.log(this.dataBinding);
     }
 }

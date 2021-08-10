@@ -124,7 +124,7 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
     let element = Svgs.svgShapes.filter((item: any) => (item.id == svgId + "-"))[0];
 
     let obj = {
-      nodeid: id,
+      nodeId: id,
       paramterId: this.state.selectedParameter,
       attribute: this.state.selectedAttribute,
       defaultValue: 0,
@@ -134,9 +134,19 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
   }
 
   renderParameter = () => {
+    const { selectedItem, dataBinding } = this.props;
     const id = this.props.selectedItem.id.split("-")[0];
-    return (<div>
-      <p className="m-b-20">Selected Element:- {id}</p>
+    // const uid = selectedItem.id.splice(selectedItem.id.length - 6, 5);
+    // console.log(id, uid); BasicShape
+    dataBinding.map((item: any) => {
+      if (item.nodeId == selectedItem.id) {
+        this.setState({
+          selectedAttribute: item.attribute,
+          selectedParameter: item.paramterId,
+        });
+      }
+    })
+    return (<div className="m-10">
       {
         (id != "diagram") &&
         <div><p>Select Parameter</p>
@@ -151,15 +161,13 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
     );
 
   }
-
-
-  render() {
-    // console.log(this.props.selectedItem);
-    // this.props.selectedItem && this.props.temp(this.props.selectedItem);
-    return (
-      <div className="element-editor">
-        <h3>Properties</h3>
-        <div className="flex-row">
+  renderItem = () => {
+    const nodeType = this.props.selectedItem?.properties?.shape?.type;
+    // Native
+    const { selectedItem } = this.props;
+    if (selectedItem.id != "diagram") {
+      return (<div>
+        {(nodeType != "Native") && <div className="flex-row">
           <div className="flex-column">
             <p>Fill-Color</p>
             <div>
@@ -168,16 +176,14 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
           </div>
           <div className="flex-column">
             <p>Stroke-Color</p>
-
             <div>
               <ColorPickerComponent id="color-picker-2" cssClass="colour-picker" value={this.getStrokeColor()} noColor={true} change={(e: any) => { this.props.strokeChange(e.currentValue.rgba); }} />
             </div>
           </div>
-        </div>
+        </div>}
         <div className="flex-row">
           <div className="flex-column">
             <p>Text-Color</p>
-
             <div>
               <ColorPickerComponent id="color-picker-3" cssClass="colour-picker" value={this.getTextColor()} noColor={true} change={(e: any) => { this.props.textColorChange(e.currentValue.rgba); }} />
             </div>
@@ -206,12 +212,65 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
           </div>
         </div> */}
         <div className="flex-row" >
+
           {this.props.selectedItem &&
             <>
               {this.renderParameter()}
             </>
           }
         </div>
+
+      </div>)
+    }
+    else {
+
+      return (
+        <div>
+          <div className="display-none">
+            <UploaderComponent id="backgroundUploader"
+            //  asyncSettings={this.props.path} success={this.props.onUploadSuccess as any} 
+            />
+          </div>
+          <div className="flex-row">
+            <span style={{ margin: "10px 10px 10px 7px" }} >Background</span>
+            <span className="e-icons e-import" title="Click to upload diagram background"
+            //  onClick={this.props.uploadHandler}
+            ></span>
+
+          </div>
+          <div className="flex-row">
+            <div className="flex-column">
+              <span className="m-r-5">Width:</span>
+              <TextBoxComponent placeholder="" floatLabelType="Never" width="100%"
+                // value={this.props.width}
+                value={"800"}
+              // onChange={(e: any) => { this.props.setDiagramWidth(e.target.value); 
+              // }}
+              />
+            </div>
+            <div className="flex-column" >
+
+              <span className="m-r-5">Height:</span>
+              <TextBoxComponent placeholder="" floatLabelType="Never" width="100%"
+                // value={this.props.height}
+                value={"500"}
+              // onChange={(e: any) => { this.props.setDiagramHeight(e.target.value); }}
+              />
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+  }
+
+  render() {
+    // this.props.selectedItem && this.props.temp(this.props.selectedItem);
+    return (
+      <div className="element-editor">
+        <h4>Properties</h4>
+        <p className="" style={{ margin: "10px 10px 20px 10px" }}>Selected Element:- {this.props.selectedItem?.id}</p>
+        {this.props.selectedItem && this.renderItem()}
       </div>
     );
   }
@@ -233,4 +292,5 @@ type TProps = {
   changeAngle: Function;
   temp: Function;
   dataBinder: Function;
+  dataBinding: any;
 };
