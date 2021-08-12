@@ -20,7 +20,7 @@ import {
 } from "semantic-ui-react";
 import { UserContext } from "../../context";
 import withRouterHOC from "../../hoc/with-router";
-import { TClientRoute, TDropdownOption, TUser } from "../../types";
+import { TClientRoute, TDropdownOption, TForm, TUser } from "../../types";
 import Utils, { LOGO_URL_2x } from "../../utils";
 import { BaseComponent } from "../base";
 import "./style.scss";
@@ -472,18 +472,6 @@ type TState = {
     header?: string;
     content?: string;
   };
-};
-
-/**
- * default state
- */
-type TForm = {
-  userName: string;
-  cityId: any;
-  pincode: string;
-  place: string;
-  gender: string;
-  isAgree: boolean;
 };
 
 const SampleForm = compose<TClientRoute<TProps>, TProps>(withRouterHOC)(

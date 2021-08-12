@@ -177,3 +177,15 @@ export type TParameterInfo = {
   id: number;
   name?: string;
 };
+
+/**
+ * default state
+ */
+export type TForm = {
+  userName: string;
+  cityId: any;
+  pincode: string;
+  place: string;
+  gender: string;
+  isAgree: boolean;
+};

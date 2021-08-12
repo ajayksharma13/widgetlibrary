@@ -1,7 +1,7 @@
 {
-  "name": "flexesuite",
+  "name": "anexee",
   "version": "1.0.0",
-  "description": "flexesuiteweb",
+  "description": "anexee",
   "main": "index.js",
   "scripts": {
     "test": "set NODE_ENV=test && jest --watch",
