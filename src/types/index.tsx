@@ -151,9 +151,11 @@ export type TUser = {
 /**
  * Role Information
  */
-export type TUserRole = {
+export type TRole = {
   id: number;
   name: string;
+  description?: string;
+  isactive: boolean;
   preference?: Array<TPreference>;
 };
 

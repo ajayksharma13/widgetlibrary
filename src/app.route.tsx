@@ -73,7 +73,7 @@ const routes: Array<RouteProps & any> = [
     // isPrivateRoute: true,
     component: React.lazy(() =>
       import(
-        /* webpackPrefetch:true,webpackChunkName:'wpc.business' */ "./components/sample"
+        /* webpackPrefetch:true,webpackChunkName:'wpc.sample' */ "./components/sample"
       )
     ),
     nestedRoutes: [
@@ -82,7 +82,7 @@ const routes: Array<RouteProps & any> = [
         exact: true,
         component: React.lazy(() =>
           import(
-            /* webpackPrefetch:true,webpackChunkName:'wpc.business.list' */ "./components/sample/list"
+            /* webpackPrefetch:true,webpackChunkName:'wpc.sample.list' */ "./components/sample/list"
           )
         ),
       },
@@ -90,7 +90,7 @@ const routes: Array<RouteProps & any> = [
         path: "/form",
         component: React.lazy(() =>
           import(
-            /* webpackPrefetch:true,webpackChunkName:'wpc.business.form' */ "./components/sample/form"
+            /* webpackPrefetch:true,webpackChunkName:'wpc.sample.form' */ "./components/sample/form"
           )
         ),
       },
