@@ -101,10 +101,10 @@ class MimicComponent extends BaseComponent<TProps, TState> {
     }
 
     dataBinder = (obj: any) => {
-        const unique = this.props.model.dataBinding.filter((data) => (obj?.nodeId === data.nodeId)).length;
-        if (unique == 0) {
-            this.props.model.appendBindingElement(obj);
-        }
+        // const unique = this.props.model.dataBinding.filter((data) => (obj?.nodeId === data.nodeId)).length;
+        // if (unique == 0) {
+        this.props.model.appendBindingElement(obj);
+        // }
     }
 
     /**
