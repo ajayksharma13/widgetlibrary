@@ -23,6 +23,11 @@ import Utils, { eResultCode } from "../../utils";
 import { debounce } from "lodash";
 import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
 import { ButtonLink } from "../general";
+import {
+  CountryDocument,
+  CountryQuery,
+  CountryQueryVariables,
+} from "../../generated/graphql";
 
 const cities = [
   {
@@ -65,13 +70,12 @@ class SampleListComponent extends BaseComponent<TClientRoute<TProps>, TState> {
   private async fetchCountries(values: any) {
     await Utils.asyncState(this, { showLoader: true });
     const { client } = this.props;
-    const requestVariables = {
-      brandFilter: {
-        ...values,
-      },
-    };
-    const { data: gqlData } = await client.query({
-      query: GQLSample.fetchAllCountries(),
+    const requestVariables = {};
+    const { data: gqlData } = await client.query<
+      CountryQuery,
+      CountryQueryVariables
+    >({
+      query: CountryDocument,
       variables: requestVariables,
     });
     const { countries } = gqlData;
