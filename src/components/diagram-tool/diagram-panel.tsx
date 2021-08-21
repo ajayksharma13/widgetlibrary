@@ -31,7 +31,9 @@ import {
   SelectorModel,
   LayoutAnimation,
   UserHandleEventsArgs,
+  DiagramConstraints,
 } from "@syncfusion/ej2-react-diagrams";
+import NodeComponent from '../../general/html-node-component';
 
 import ElementEditor from "./element-editor";
 import { UploaderComponent } from "@syncfusion/ej2-react-inputs";
@@ -117,6 +119,9 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
   state: TState = {
     showDialog: false,
     selectedItem: null,
+    width: "835",
+    height: "500",
+    diagramBg: "https://www.solidbackgrounds.com/images/1280x720/1280x720-white-solid-color-background.jpg",
   };
 
   public changeX(args: string) {
@@ -148,7 +153,7 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
   }
 
   public changeAngle(args: string) {
-    if (diagramInstance.selectedItems.nodes!.length > 0) {
+    if (diagramInstance.selectedItems.nodes!.length > 0 && args != "") {
       //Get the selected node from diagram’s selected items collection.
       let node: NodeModel = diagramInstance.selectedItems.nodes?.[0]!;
       node.rotateAngle = parseInt(args);
@@ -214,6 +219,19 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
     diagramInstance.dataBind();
   }
 
+  setDiagramWidth = (width: string) => {
+    this.setState({ width });
+  }
+  setDiagramHeight = (height: string) => {
+    this.setState({ height });
+  }
+  setDiagrambg = (url: string, width: string, height: string) => {
+    this.setState({
+      diagramBg: url,
+      width: width,
+      height: height,
+    });
+  }
   setBg = async (reader: FileReader) => {
     sleep(100).then((r) => {
       const img = new Image();
@@ -225,10 +243,10 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
         //@ts-ignore
         let imgHeight = e.target.height;
         if (Number(imgWidth) > 700 && Number(imgHeight) > 500) {
-          this.props.setDiagrambg(reader.result as string, imgWidth, imgHeight);
+          this.setDiagrambg(reader.result as string, imgWidth, imgHeight);
         } else {
           console.log(imgWidth, imgHeight);
-          this.setState({ showDialog: true });
+          // this.setState({ showDialog: true });
         }
       }
     });
@@ -248,6 +266,13 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
     // removeUrl: "https://ej2.syncfusion.com/services/api/uploadbox/Remove",
     saveUrl: "https://ej2.syncfusion.com/services/api/uploadbox/Save",
   };
+
+  uploadHandler = () => {
+    document.getElementById("backgroundUploader")?.click();
+    //  todo:implement with react ref
+    // const node = this.uploaderRef.current;
+    // console.log(node);
+  }
 
   public getCommandManagerSettings(): CommandManagerModel {
     let commandManager: CommandManagerModel = {
@@ -298,7 +323,7 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
   }
 
   render() {
-
+    const { viewMode } = this.props;
     return (
       <div className="diagram-panel">
         <DialogComponent
@@ -317,11 +342,11 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
           Image Dimensions should be atleast 700 by 500 px!
         </DialogComponent>
         <div
-          className="col-lg-10"
+          className={viewMode ? "col-lg-10" : "col-lg-12"}
           style={{
             display: "flex",
             flexDirection: "column",
-            height: "83.4vh",
+            height: viewMode ? "77.3vh" : "88vh",
           }}
           onMouseMove={this._onMouseMove}
         >
@@ -329,9 +354,10 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
             {this.props.toggleAnimation ? ANIMATION_CSS_ON : ANIMATION_CSS_OFF}
           </style>
           <DiagramComponent
+            // constraints={DiagramConstraints.Default & ~DiagramConstraints.PageEditable}
             getCustomCursor={"pointer"}
-            id="diagram"
-
+            id="Diagram"
+            drop={(event: any) => { this.setState({ selectedItem: event.element }) }}
             ref={(diagram) => {
               diagramInstance = diagram as DiagramComponent;
               this.props.getDiagramInstance(diagramInstance);
@@ -344,13 +370,14 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
             scrollSettings={{ canAutoScroll: true, currentZoom: 1 }}
             pageSettings={{
               background: {
-                source: this.props.diagramBg,
+                source: this.state.diagramBg,
               },
-              width: this.props.diagramBg.length
-                ? parseInt(this.props.width)
+              fitOptions: { canFit: true },
+              width: this.state.diagramBg.length
+                ? parseInt(this.state.width)
                 : 0,
-              height: this.props.diagramBg.length
-                ? parseInt(this.props.height)
+              height: this.state.diagramBg.length
+                ? parseInt(this.state.height)
                 : 0,
             }}
             snapSettings={snapSettings}
@@ -387,7 +414,7 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
             />
           </DiagramComponent>
         </div>
-        <div
+        {viewMode ? (<div
           className="col-lg-3 property-panel-content"
           id="appearance">
           <ElementEditor
@@ -402,8 +429,16 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
             temp={this.temp}
             dataBinder={this.props.dataBinder}
             dataBinding={this.props.dataBinding}
+            height={this.state.height}
+            path={this.path}
+            setDiagramWidth={this.setDiagramWidth}
+            onUploadSuccess={this.onUploadSuccess}
+            setDiagramHeight={this.setDiagramHeight}
+            setDiagrambg={this.setDiagrambg}
+            uploadHandler={this.uploadHandler}
+            width={this.state.width}
           />
-        </div>
+        </div>) : <></>}
       </div>
     );
   }
@@ -411,19 +446,21 @@ export default class DiagramPanel extends BaseComponent<TProps, TState> {
 
 type TState = {
   showDialog: boolean;
-  selectedItem: SelectorModel | null;
+  selectedItem: {
+    dataBinder?: object;
+  } & SelectorModel | null;
+  width: string;
+  height: string;
+  diagramBg: string;
 };
 
 type TProps = {
   getDiagramInstance: Function;
   toggleAnimation: boolean;
-  width: string;
-  height: string;
-  diagramBg: string;
-  setDiagrambg: Function;
   onMouse: any;
   dataBinder: Function;
   dataBinding: any;
+  viewMode: number;
 };
 
 function getPorts(obj: NodeModel): PointPortModel[] {

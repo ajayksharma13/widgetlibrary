@@ -3,8 +3,10 @@ import {
   ConnectorModel,
   AnnotationConstraints,
   NativeModel,
+  HtmlModel
 } from "@syncfusion/ej2-react-diagrams";
 import Pipe from "./pipe.json";
+import NodeComponent from '../../general/html-node-component';
 import Valves from "./pipe-valves.json";
 export var flowShapes: NodeModel[] = [
   {
@@ -271,6 +273,22 @@ export var basicShapes: NodeModel[] = [
       { content: "", constraints: AnnotationConstraints.Interaction },
     ],
   },
+  {
+    id: "Text",
+    shape: {
+      type: 'Text',
+      content: 'Text'
+    },
+    style: {
+      strokeColor: 'none',
+      fill: 'none',
+      color: 'black',
+      textAlign: 'Center'
+    },
+    annotations: [
+      { content: "", constraints: AnnotationConstraints.Interaction },
+    ],
+  },
 ];
 export var svgShapes: NodeModel[] = Pipe.svgShapes.map((item) => ({
   id: item.id,
@@ -280,7 +298,7 @@ export var svgShapes: NodeModel[] = Pipe.svgShapes.map((item) => ({
     { content: "", constraints: AnnotationConstraints.Interaction },
   ],
   shape: {
-    type: "Native",
+    type: item.type,
     content: item.content
   } as NativeModel,
 }
@@ -320,7 +338,38 @@ export var valvesSvg: NodeModel[] = Valves.Valves.map((item) => (
 
 
 
-
+export var htmlNode: NodeModel[] = [
+  {
+    id: "P-bar",
+    style: {
+      fill: '#6BA5D7',
+      strokeColor: 'white'
+    },
+    annotations: [
+      { content: "", constraints: AnnotationConstraints.Interaction },
+    ],
+    shape: {
+      type: "HTML",
+      content:
+        '<div id="back">  <div id="front">      </div>  <style>    #back{  background:#575752;  height:100%;  width:100%;  border-radius:1em;  display:flex;  align-items:center;}#front{  background:#2c2c;  height:84%;  width:40%;  border-radius:0.8em;  display:flex;  margin-left:.2em;}    <style></div>'
+    },
+  },
+  {
+    id: "Alarm",
+    style: {
+      fill: '#6BA5D7',
+      strokeColor: 'white'
+    },
+    annotations: [
+      { content: "", constraints: AnnotationConstraints.Interaction },
+    ],
+    shape: {
+      type: "HTML",
+      content:
+        '<div class="alarm">   <style>  .alarm{  width:100%;  height:100%;  background:#e62326;  border-radius:50% 50% 10% 10%;   }.on{  animation: alarmOn 0.5s infinite;}@keyframes alarmOn {  to {    background: darkred;  }}  </style>  </div>'
+    },
+  },
+];
 
 
 export var animatedShapes: NodeModel[] = [
@@ -342,6 +391,8 @@ export var animatedShapes: NodeModel[] = [
     annotations: [
       { content: "", constraints: AnnotationConstraints.Interaction },
     ],
+    width: 40,
+    height: 40,
     shape: {
       type: "Native",
       content:
@@ -362,7 +413,7 @@ export var connectorShapes: ConnectorModel[] = [
     ],
     cornerRadius: 5,
     targetDecorator: {
-      shape: "Arrow",
+      shape: "None",
       style: { strokeColor: "#000000", fill: "#000000" },
     },
     style: {
@@ -377,7 +428,7 @@ export var connectorShapes: ConnectorModel[] = [
     sourcePoint: { x: 0, y: 0 },
     targetPoint: { x: 40, y: 40 },
     cornerRadius: 5,
-    style: { strokeWidth: 5, strokeColor: "#A9A9A9", opacity: 0.5 },
+    style: { strokeWidth: 32, strokeColor: "#A9A9A9", opacity: 0.5 },
     targetDecorator: { shape: "None" },
     annotations: [
       { content: "", constraints: AnnotationConstraints.Interaction },

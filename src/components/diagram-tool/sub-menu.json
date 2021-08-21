@@ -1,0 +1,50 @@
+{
+    "items": [{
+            "text": "Undo",
+            "tooltipText": "Undo Changes",
+            "prefixIcon": "e-menu-icon e-undo-icon"
+        },
+
+        {
+            "text": "Redo",
+            "tooltipText": "Redo Changes",
+            "prefixIcon": "e-menu-icon e-redo-icon"
+        },
+
+        {
+            "text": "Remove",
+            "tooltipText": "remove",
+            "prefixIcon": "e-menu-icon e-remove-icon"
+        },
+        {
+            "text": "Bring Front",
+            "tooltipText": "Bring To Front",
+            "prefixIcon": "e-menu-icon e-front-icon"
+        },
+        {
+            "text": "Send Back",
+            "tooltipText": "Bring Back",
+            "prefixIcon": "e-menu-icon e-back-icon"
+        },
+        {
+            "text": "Align Right",
+            "tooltipText": "Bring Back",
+            "prefixIcon": "e-menu-icon e-back-icon"
+        },
+        {
+            "text": "Align Left",
+            "tooltipText": "Bring Back",
+            "prefixIcon": "e-menu-icon e-back-icon"
+        },
+        {
+            "text": "Align Top",
+            "tooltipText": "Bring Back",
+            "prefixIcon": "e-menu-icon e-back-icon"
+        },
+        {
+            "text": "Align Bottom",
+            "tooltipText": "Bring Back",
+            "prefixIcon": "e-menu-icon e-back-icon"
+        }
+    ]
+}

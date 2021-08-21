@@ -8,11 +8,16 @@ import ErrorBoundary from "./errorboundary";
 
 import 'semantic-ui-less/semantic.less';
 import "./app.scss";
+import { ApolloProvider } from "react-apollo";
+import { GQLApollo } from "./utils/apollo-client";
+
+const ApolloClient = GQLApollo.initClient();
 
 /**
  * Props
  */
 type Props = {};
+
 
 /**
  * App component
@@ -30,9 +35,11 @@ class App extends Component<Props> {
             </div>
           }
         >
-          <ThemeProvider value={BasicStyleSheet}>
-            <Router></Router>
-          </ThemeProvider>
+          <ApolloProvider client={ApolloClient}>
+            <ThemeProvider value={BasicStyleSheet}>
+              <Router></Router>
+            </ThemeProvider>
+          </ApolloProvider>
         </Suspense>
       </ErrorBoundary>
     );

@@ -16,6 +16,7 @@ const rgba2hex = function (color: string) {
   const hex = `#${((1 << 24) + (parseInt(rgba[0]) << 16) + (parseInt(rgba[1]) << 8) + parseInt(rgba[2])).toString(16).slice(1)}`;
   return hex;
 }
+let selectedParameter = "";
 
 const sizeData: string[] = [
   "8",
@@ -46,27 +47,24 @@ const attributeData: string[] = [
 export default class ElementEditor extends BaseComponent<TProps, TState> {
   state: TState = {
     selectedParameter: "",
-    selectedAttribute: "",
   };
 
+
+
   getTextColor = (): string => {
-    return this.props.selectedItem
-      ? this.props.selectedItem.propName
-        ? !this.props.selectedItem?.properties.children
-          ? rgba2hex(this.props.selectedItem?.properties.annotations[0].properties.style
-            .properties.color)
-          : this.props.selectedItem?.properties.annotations.length > 0
-            ? rgba2hex(this.props.selectedItem?.properties.annotations[0].properties.style
-              .properties.color) : "#000000"
-        : "#000000" : "#000000";
+    const { selectedItem } = this.props;
+    if (this.props.selectedItem?.properties.annotations[0].properties.style.properties.color != "black") {
+      return rgba2hex(this.props.selectedItem?.properties.annotations[0].properties.style.properties.color);
+    }
+    return "#000000";
   };
 
   getStrokeColor = (): string => {
-    return this.props.selectedItem
-      ? this.props.selectedItem.propName
-        ? rgba2hex(this.props.selectedItem?.properties.style.properties.strokeColor)
-        : "#000000"
-      : "#000000";
+    const { selectedItem } = this.props;
+    if (selectedItem?.properties.style.properties.strokeColor != '#757575') {
+      return rgba2hex(selectedItem?.properties.style.properties.strokeColor);
+    }
+    return "#757575";
   };
 
   getTextSize = (): string => {
@@ -82,11 +80,16 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
   };
 
   getFillColor = (): string => {
-    return this.props.selectedItem
-      ? this.props.selectedItem.propName
-        ? rgba2hex(this.props.selectedItem?.properties.style.properties.fill)
-        : "#ffffff"
-      : "#ffffff";
+    const { selectedItem } = this.props;
+    if (selectedItem?.properties?.style?.properties?.fill != 'white') {
+      return rgba2hex(selectedItem?.properties?.style?.properties?.fill);
+    }
+    return "#ffffff";
+  };
+
+  getAngel = (): string => {
+    const { selectedItem } = this.props;
+    return selectedItem?.properties?.rotateAngle?.toString();
   };
 
   getLocX = (): string => {
@@ -109,65 +112,95 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
       : "0";
   };
 
-  getAngel = (): string => {
-    return this.props.selectedItem
-      ? this.props.selectedItem.propName
-        ? this.props.selectedItem.propName === "nodes"
-          ? this.props.selectedItem.properties.rotateAngle.toString()
-          : this.props.selectedItem.properties.rotateAngle.toString()
-        : "0"
-      : "0";
-  };
+
 
   bind = (id: string) => {
-    const svgId = id.split("-")[0];
-    let element = Svgs.svgShapes.filter((item: any) => (item.id == svgId + "-"))[0];
-
+    const svgId = id.slice(0, -5);
+    let element = Svgs.svgShapes.filter((item: any) => (item.id == svgId))[0];
     let obj = {
       nodeId: id,
       paramterId: this.state.selectedParameter,
-      attribute: this.state.selectedAttribute,
+      type: element.type,
       defaultValue: 0,
       jsonData: element.data,
     }
     this.props.dataBinder(obj);
   }
 
+  renderDiagramProperty = () => {
+    return (
+      <div>
+        <div className="display-none">
+          <UploaderComponent id="backgroundUploader"
+            asyncSettings={this.props.path} success={this.props.onUploadSuccess as any}
+          />
+        </div>
+        <div className="flex-row">
+          <span style={{ margin: "10px 10px 10px 7px" }} >Background</span>
+          <span className="e-icons e-import" title="Click to upload diagram background"
+            onClick={this.props.uploadHandler}
+          ></span>
+        </div>
+        <div className="flex-row">
+          <div className="flex-column">
+            <span className="m-r-5">Width:</span>
+            <TextBoxComponent placeholder="" floatLabelType="Never" width="100%"
+              value={this.props.width}
+              onChange={(e: any) => {
+                this.props.setDiagramWidth(e.target.value);
+              }}
+            />
+          </div>
+          <div className="flex-column" >
+            <span className="m-r-5">Height:</span>
+            <TextBoxComponent placeholder="" floatLabelType="Never" width="100%"
+              value={this.props.height}
+              onChange={(e: any) => { this.props.setDiagramHeight(e.target.value); }}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+
   renderParameter = () => {
     const { selectedItem, dataBinding } = this.props;
     const id = this.props.selectedItem.id.split("-")[0];
-    // const uid = selectedItem.id.splice(selectedItem.id.length - 6, 5);
-    // console.log(id, uid); BasicShape
+    const uid = selectedItem.id.slice(0, -5);
     dataBinding.map((item: any) => {
       if (item.nodeId == selectedItem.id) {
-        this.setState({
-          selectedAttribute: item.attribute,
-          selectedParameter: item.paramterId,
-        });
+
       }
-    })
+      else {
+
+      }
+    });
     return (<div className="m-10">
       {
         (id != "diagram") &&
         <div><p>Select Parameter</p>
-          <DropDownListComponent id="parameter" width="100%" dataSource={parameterData} popupHeight="200px" popupWidth="100px" placeholder="Select Parameter" value={this.state.selectedParameter} change={(e: any) => { this.setState({ selectedParameter: e.value }) }} />
+          <DropDownListComponent id="parameter" width="100%" dataSource={parameterData} popupHeight="200px" popupWidth="100px" placeholder="Select Parameter" value={this.state.selectedParameter}
+            change={(e: any) => {
+              this.setState({ selectedParameter: e.value });
+              this.bind(this.props.selectedItem.id);
+            }} />
           <div className="m-t-20" />
-          <p>Select Attribute</p>
-          <DropDownListComponent id="attribute" width="100%" dataSource={attributeData} popupHeight="200px" popupWidth="100px" placeholder="Select Attribute" value={this.state.selectedAttribute} change={(e: any) => { this.setState({ selectedAttribute: e.value }) }} />
-          <button className="m-t-10" onClick={() => this.bind(this.props.selectedItem.id)}>Bind</button>
+          {/* <button className="m-t-10" onClick={() => this.bind(this.props.selectedItem.id)}>Bind</button> */}
         </div>
       }
     </div>
     );
 
   }
+
   renderItem = () => {
     const nodeType = this.props.selectedItem?.properties?.shape?.type;
     // Native
     const { selectedItem } = this.props;
-    if (selectedItem.id != "diagram") {
+    if (selectedItem.id != "Diagram") {
       return (<div>
-        {(nodeType != "Native") && <div className="flex-row">
+        {(nodeType == "Flow" || nodeType == "Basic") && <div className="flex-row">
           <div className="flex-column">
             <p>Fill-Color</p>
             <div>
@@ -190,27 +223,46 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
           </div>
           <div className="flex-column">
             <p style={{ paddingBottom: "1px" }}>Text-Size</p>
-
             <div>
               <DropDownListComponent id="ddlelement" width="60%" dataSource={sizeData} popupHeight="200px" popupWidth="100px" placeholder="Select Font Size" value={this.getTextSize()} change={(e: any) => { this.props.textSizeChange(e.value); }} />
             </div>
           </div>
         </div>
-        {/* <div className="flex-row">
-                  <div className="flex-column">
-                    <TextBoxComponent placeholder="Set X Coordinate" floatLabelType="Auto" width="120px" value={this.getLocX()} onChange={(e: any) => { this.props.changeX(e.value); }} />
-                  </div>
-                  <div className="flex-column">
-                    <TextBoxComponent placeholder="Set Y Coordinate" floatLabelType="Auto" width="120px" value={this.getLocY()} onChange={(e: any) => { this.props.changeY(e.value); }} />
-                  </div>
-                </div> */}
-
-        {/* <div className="flex-row" >
-
+        <div className="flex-row">
           <div className="flex-column">
-            <TextBoxComponent placeholder="Rotation Angel" floatLabelType="Auto" width="120px" value={this.getAngel()} onChange={(e: any) => { this.props.changeAngle(e.value); }} />
+            <TextBoxComponent placeholder="Set X Coordinate" floatLabelType="Auto" width="60%" value={this.getLocX()} onChange={(e: any) => { this.props.changeX(e.value); }} />
           </div>
-        </div> */}
+          <div className="flex-column">
+            <TextBoxComponent placeholder="Set Y Coordinate" floatLabelType="Auto" width="60%" value={this.getLocY()} onChange={(e: any) => { this.props.changeY(e.value); }} />
+          </div>
+        </div>
+        <div className="flex-row" >
+          <div className="flex-column">
+            <TextBoxComponent id="angle-input" placeholder="Rotate angle" floatLabelType="Auto" width="80%" value={this.getAngel()} onChange={(e: any) => { this.props.changeAngle(e.value); }} />
+          </div>
+          <div className="flex-column">
+            <div className="flex-row" style={{ marginLeft: "-0.7em" }}>
+              <span
+                title="Rotate 90 degree clockwise"
+                onClick={() => {
+                  let angle = parseInt(this.getAngel()) + 90;
+                  this.props.changeAngle(angle.toString());
+                  //@ts-ignore
+                  document.getElementById("angle-input").value = this.getAngel();
+                }}
+                className="e-icons e-redo-icon rotation"></span>
+              <span
+                title="Rotate 90 degree anti-clockwise"
+                onClick={() => {
+                  let angle = parseInt(this.getAngel()) - 90;
+                  this.props.changeAngle(angle.toString());
+                  //@ts-ignore
+                  document.getElementById("angle-input").value = this.getAngel();
+                }}
+                className="e-icons e-undo-icon rotation"></span>
+            </div>
+          </div>
+        </div>
         <div className="flex-row" >
 
           {this.props.selectedItem &&
@@ -223,54 +275,21 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
       </div>)
     }
     else {
+      return this.renderDiagramProperty();
 
-      return (
-        <div>
-          <div className="display-none">
-            <UploaderComponent id="backgroundUploader"
-            //  asyncSettings={this.props.path} success={this.props.onUploadSuccess as any} 
-            />
-          </div>
-          <div className="flex-row">
-            <span style={{ margin: "10px 10px 10px 7px" }} >Background</span>
-            <span className="e-icons e-import" title="Click to upload diagram background"
-            //  onClick={this.props.uploadHandler}
-            ></span>
-
-          </div>
-          <div className="flex-row">
-            <div className="flex-column">
-              <span className="m-r-5">Width:</span>
-              <TextBoxComponent placeholder="" floatLabelType="Never" width="100%"
-                // value={this.props.width}
-                value={"800"}
-              // onChange={(e: any) => { this.props.setDiagramWidth(e.target.value); 
-              // }}
-              />
-            </div>
-            <div className="flex-column" >
-
-              <span className="m-r-5">Height:</span>
-              <TextBoxComponent placeholder="" floatLabelType="Never" width="100%"
-                // value={this.props.height}
-                value={"500"}
-              // onChange={(e: any) => { this.props.setDiagramHeight(e.target.value); }}
-              />
-            </div>
-          </div>
-        </div>
-      )
     }
 
   }
 
   render() {
     // this.props.selectedItem && this.props.temp(this.props.selectedItem);
+    let { selectedItem } = this.props;
+    let id = (selectedItem?.id != "Diagram") ? selectedItem?.id?.slice(0, -5) : selectedItem?.id;
+
     return (
       <div className="element-editor">
-        <h4>Properties</h4>
-        <p className="" style={{ margin: "10px 10px 20px 10px" }}>Selected Element:- {this.props.selectedItem?.id}</p>
-        {this.props.selectedItem && this.renderItem()}
+        <p className="editor-heading" >{selectedItem ? id : "Diagram"}</p>
+        {selectedItem ? this.renderItem() : this.renderDiagramProperty()}
       </div>
     );
   }
@@ -278,7 +297,6 @@ export default class ElementEditor extends BaseComponent<TProps, TState> {
 
 type TState = {
   selectedParameter: string;
-  selectedAttribute: string;
 };
 
 type TProps = {
@@ -293,4 +311,12 @@ type TProps = {
   temp: Function;
   dataBinder: Function;
   dataBinding: any;
+  path: object;
+  onUploadSuccess: Function;
+  uploadHandler: () => void;
+  setDiagrambg: Function;
+  setDiagramHeight: Function;
+  setDiagramWidth: Function;
+  height: string;
+  width: string;
 };

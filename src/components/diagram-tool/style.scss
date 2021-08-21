@@ -39,6 +39,18 @@
     content: "\e5a6";
 }
 
+.e-remove-icon::before {
+    content: "\e84e";
+}
+
+.e-front-icon::before {
+    content: "\e5a1";
+}
+
+.e-back-icon::before {
+    content: "\e5a4";
+}
+
 .e-import:before {
     content: "\e900";
     color: $primaryColor !important;
@@ -50,6 +62,14 @@
     content: "\e710";
     font-size: 1.5em;
     color: $primaryColor;
+}
+
+.e-diagram-resize-handle {
+    fill: #29bfc2;
+}
+
+.e-diagram-endpoint-handle {
+    fill: #29bfc2;
 }
 
 .e-close:before {
@@ -246,13 +266,14 @@ e-diagram .e-ruler {
 // Element Editor styling
 .element-editor {
     margin: 0.3em 5px;
-    h4 {
+    .editor-heading {
         font-size: 1em;
         color: #0fc574;
         margin-left: 0.7em;
         margin-top: 0.3em;
     }
     p {
+        color: #9a9a9a;
         font-size: 0.85em;
     }
     .flex-row {
@@ -280,6 +301,14 @@ e-diagram .e-ruler {
             border-left: 1px solid #a0a0a0;
             color: $primaryColor;
         }
+    }
+    .rotation {
+        padding: 0.4em;
+        cursor: pointer;
+        background: #0fc574;
+        border-radius: 1em;
+        margin: 0.3em;
+        color: #fff;
     }
     .e-input-group:not(.e-float-icon-left),
     .e-input-group.e-control-wrapper:not(.e-float-icon-left) {
@@ -371,7 +400,7 @@ e-diagram .e-ruler {
 }
 
 #palette-space {
-    height: 83.4vh;
+    height: 77.3vh;
     border-right: 1px solid $primaryColor;
     border-top: 1px solid $primaryColor;
     overflow-y: auto;

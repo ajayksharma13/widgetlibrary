@@ -17,8 +17,9 @@ import {
   animatedShapes,
   pipesSvg,
   valvesSvg,
+  htmlNode,
 } from "./palette-items";
-
+import NodeComponent from '../../general/html-node-component';
 import { UploaderComponent } from "@syncfusion/ej2-react-inputs";
 import "./style.scss";
 import { ExpandMode } from "@syncfusion/ej2-react-navigations";
@@ -48,6 +49,7 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
     basicshapes: basicShapes,
     connectorshapes: connectorShapes,
     animatedSvgs: animatedShapes,
+    htmlshape: htmlNode,
     pipes: pipesSvg,
     valves: valvesSvg,
   };
@@ -156,9 +158,16 @@ export class SymbolPalette extends BaseComponent<TProps, TState> {
                   id: "ParameterizedShapes",
                   expanded: true,
                   symbols: this.state.svgshapes,
-                  title: "Parametrized Shapes",
+                  title: "Animation Shapes",
                   iconCss: "e-diagram-icons1 e-diagram-connector",
                 },
+                // {
+                //   id: "htmlNode",
+                //   expanded: true,
+                //   symbols: this.state.htmlshape,
+                //   title: "HTML Node",
+                //   iconCss: "e-diagram-icons1 e-diagram-connector",
+                // },
                 {
                   id: "connectors",
                   expanded: true,
@@ -231,6 +240,7 @@ type TState = {
   svgshapes: NodeModel[];
   flowshapes: NodeModel[];
   basicshapes: NodeModel[];
+  htmlshape: NodeModel[];
   connectorshapes: ConnectorModel[];
   animatedSvgs: any[];
   pipes: any[];

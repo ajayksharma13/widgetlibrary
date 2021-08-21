@@ -9,71 +9,73 @@
 }
 
 .mimic-widget {
-    &__box {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: stretch;
-        div[class^="widget__"] {
-            text-align: center;
-            border-bottom: 1px solid $borderColor;
-            &:last-child {
-                border-bottom: none;
+    .widget {
+        &__box {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: stretch;
+            div[class^="widget__"] {
+                text-align: center;
+                border-bottom: 1px solid $borderColor;
+                &:last-child {
+                    border-bottom: none;
+                }
             }
         }
-    }
-    &__header {
-        order: 1;
-        flex-basis: 80px;
-    }
-    &__content {
-        order: 2;
-        flex: 1;
-    }
-    &__footer {
-        order: 3;
-        flex-basis: 120px;
-    }
-    .no-work-div {
-        color: #6d6d6d;
-        // background: url(./diagrambg.svg);
-        background-repeat: no-repeat;
-        background-size: cover;
-        display: flex;
-        justify-content: center;
-        font-size: 1.3em;
-        position: absolute;
-        width: 100%;
-        height: 86%;
-        align-items: center;
-        p {
-            cursor: pointer;
+        &__header {
+            order: 1;
+            flex-basis: 80px;
         }
-    }
-    .dimmed.dimmable>.ui.animating.dimmer,
-    .dimmed.dimmable>.ui.visible.dimmer,
-    .ui.active.dimmer {
-        background-color: #fff !important;
-    }
-    .diagram-edit-icon {
-        background-color: #0fc574 !important;
-        color: white !important;
-        font-size: 1em;
-        position: absolute;
-        right: 0.3em;
-        bottom: 0.5em;
-        z-index: 19;
-        cursor: pointer;
-    }
-    .diagram-fullscreen-icon {
-        background-color: #0fc574 !important;
-        color: white !important;
-        font-size: 1em;
-        position: absolute;
-        right: 0.3em;
-        bottom: 4em;
-        z-index: 19;
-        cursor: pointer;
+        &__content {
+            order: 2;
+            flex: 1;
+            .no-work-div {
+                color: $primaryColor;
+                // background: url(./diagrambg.svg);
+                background-repeat: no-repeat;
+                background-size: cover;
+                display: flex;
+                justify-content: center;
+                font-size: 0.8em;
+                position: absolute;
+                width: 100%;
+                height: 86%;
+                align-items: center;
+                p {
+                    cursor: pointer;
+                }
+            }
+            .diagram-edit-icon {
+                background-color: $primaryColor !important;
+                color: white !important;
+                font-size: 0.75em;
+                position: absolute;
+                right: 10px;
+                bottom: 0.5em;
+                z-index: 19;
+                cursor: pointer;
+            }
+            .diagram-fullscreen-icon {
+                background-color: $primaryColor !important;
+                color: white !important;
+                font-size: 0.75em;
+                position: absolute;
+                right: 10px;
+                bottom: 3.5em;
+                z-index: 19;
+                cursor: pointer;
+            }
+        }
+        &__footer {
+            order: 3;
+            flex-basis: 120px;
+        }
+        .dimmed.dimmable>.ui.animating.dimmer,
+        .dimmed.dimmable>.ui.visible.dimmer,
+        .ui.active.dimmer {
+            background-color: #fff !important;
+        }
     }
 }
 

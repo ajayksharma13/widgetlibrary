@@ -173,7 +173,6 @@ class StartUp extends BaseComponent<TProps, TState> {
                   // {...this.flipCardRender}
                   //data={this.flipcardData}
                   model={mimicModel}
-                  viewbox={{ height, width }}
                 />
               )}
             </WidgetPanel>

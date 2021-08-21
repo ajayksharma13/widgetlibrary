@@ -24,18 +24,28 @@ import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider';
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
 import Submenu from './submenu-bar';
 import { MimicModel } from '../widget/mimic';
+import { TClientRoute, TRouteProps } from '../../types';
+import { compose } from 'recompose';
+import withToastHOC from '../../hoc/with-toast';
+import withRouterHOC from '../../hoc/with-router';
+import { withApollo } from 'react-apollo';
 const sleep = (milliseconds: number) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 };
 
 let node: NodeModel;
 let diagramInstance: DiagramComponent;
-
+enum diagramMode {
+  FULLSCREEN,
+  CONFIGURE
+};
 
 /**
  * Diagram tool component
  */
-class DiagramTool extends BaseComponent<TProps, TState> {
+class DiagramToolComponent extends BaseComponent<TClientRoute<TProps>, TState> {
+
+
 
   /**
    * default props
@@ -48,19 +58,23 @@ class DiagramTool extends BaseComponent<TProps, TState> {
   state: Readonly<TState> = {
     toggleAnimation: false,
     menuItem: Items,
-    width: "835",
-    height: "500",
-    diagramBg: "https://www.solidbackgrounds.com/images/1280x720/1280x720-white-solid-color-background.jpg",
     x: 0,
     y: 0,
+    viewMode: diagramMode.CONFIGURE,
   };
   componentDidMount() {
-    const { value } = this.props;
+    const { value, location, title } = this.props;
     if (value) {
       diagramInstance.loadDiagram(JSON.stringify(value));
     }
-    //remove after practising
-    diagramInstance.dataBindingModule
+    else if (location.pathname == "/diagram") {
+      let diagramObj = localStorage.getItem("diagramData")!;
+      diagramInstance.loadDiagram(diagramObj);
+      //load diagram with state
+      this.setState({
+        viewMode: diagramMode.FULLSCREEN,
+      })
+    }
   }
 
   /**
@@ -143,60 +157,6 @@ class DiagramTool extends BaseComponent<TProps, TState> {
       }
     }
   }
-  setDiagramWidth = (width: string) => {
-    this.setState({ width });
-  }
-  setDiagramHeight = (height: string) => {
-    this.setState({ height });
-  }
-  setDiagrambg = (url: string, width: string, height: string) => {
-    this.setState({
-      diagramBg: url,
-      width: width,
-      height: height,
-    });
-  }
-  setBg = async (reader: FileReader) => {
-    sleep(100).then((r) => {
-      const img = new Image();
-      img.src = reader.result as string;
-      //Fires immediately after the browser loads the object.
-      img.onload = (e) => {
-        //@ts-ignore
-        let imgWidth = e.target.width;
-        //@ts-ignore
-        let imgHeight = e.target.height;
-        if (Number(imgWidth) > 700 && Number(imgHeight) > 500) {
-          this.setDiagrambg(reader.result as string, imgWidth, imgHeight);
-        } else {
-          console.log(imgWidth, imgHeight);
-          // this.setState({ showDialog: true });
-        }
-      }
-    });
-  };
-
-  onUploadSuccess = (args: { [key: string]: Object }) => {
-    let file1: { [key: string]: Object } = args.file as {
-      [key: string]: Object;
-    };
-    let file: Blob = file1.rawFile as Blob;
-    let reader: FileReader = new FileReader();
-    reader.readAsDataURL(file);
-    this.setBg(reader);
-  };
-
-  public path: object = {
-    // removeUrl: "https://ej2.syncfusion.com/services/api/uploadbox/Remove",
-    saveUrl: "https://ej2.syncfusion.com/services/api/uploadbox/Save",
-  };
-
-  uploadHandler = () => {
-    document.getElementById("backgroundUploader")?.click();
-    //  todo:implement with react ref
-    // const node = this.uploaderRef.current;
-    // console.log(node);
-  }
 
   onMouse = (codX: any, codY: any) => {
     this.setState({ x: codX, y: codY });
@@ -207,32 +167,27 @@ class DiagramTool extends BaseComponent<TProps, TState> {
   *render function
   */
   render() {
+    const { viewMode } = this.state;
     return (
       <div className="control-pane">
         <div className="control-section">
           <div className="title-bar">
-            <p>Anexee Diagram</p>
-            <span title="Close" onClick={() => this.props.closeModal?.()} className="e-icons e-close"></span>
+            <p>{viewMode ? this.props.title : localStorage.getItem("title")}</p>
+            {viewMode ? <span title="Close" onClick={() => this.props.closeModal?.()} className="e-icons e-close"></span> : <></>}
           </div>
-          <ToolbarComponent
-            height="3vh"
-            id="toolbar_diagram"
-            style={{ width: "100%" }}
-            //@ts-ignore
-            clicked={this.onClickMenuItem}
-            items={this.state.menuItem.items}
-          />
+          {
+            viewMode ? <ToolbarComponent
+              height="3vh"
+              id="toolbar_diagram"
+              style={{ width: "100%" }}
+              //@ts-ignore
+              clicked={this.onClickMenuItem}
+              items={this.state.menuItem.items}
+            /> : <></>}
           {/* <hr className="m-0 custom-hr" /> */}
-          {/* <Submenu
-            height={this.state.height}
-            path={this.path}
-            setDiagramWidth={this.setDiagramWidth}
-            onUploadSuccess={this.onUploadSuccess}
-            setDiagramHeight={this.setDiagramHeight}
-            setDiagrambg={this.setDiagrambg}
-            uploadHandler={this.uploadHandler}
-            width={this.state.width}
-          /> */}
+          {viewMode ? <Submenu
+            diagramInstance={diagramInstance}
+          /> : <></>}
           <div className="display-none">
             <UploaderComponent
               type="file"
@@ -252,23 +207,20 @@ class DiagramTool extends BaseComponent<TProps, TState> {
               className="content-wrapper"
               style={{ display: "flex", flexDirection: "row" }}
             >
-              <SymbolPalette />
+              {viewMode ? <SymbolPalette /> : <></>}
               <DiagramPanel getDiagramInstance={this.getDiagramInstance}
-                height={this.state.height}
-                width={this.state.width}
-                diagramBg={this.state.diagramBg}
-                setDiagrambg={this.setDiagrambg}
                 toggleAnimation={this.state.toggleAnimation}
                 onMouse={this.onMouse}
                 dataBinder={this.props.dataBinder!}
                 dataBinding={this.props.dataBinding}
+                viewMode={viewMode}
               />
             </div>
           </div>
         </div>
-        <div className="status-bar">
+        {viewMode ? <div className="status-bar">
           <p className="m-l-10" style={{}}>X:{this.state.x}  Y:{this.state.y}</p>
-        </div>
+        </div> : <></>}
       </div>
     );
   }
@@ -352,11 +304,9 @@ function SetShape(obj: string): void {
 type TState = {
   toggleAnimation: boolean;
   menuItem: any;
-  width: string;
-  height: string;
-  diagramBg: string;
   x: number;
   y: number;
+  viewMode: number;
 };
 
 /**
@@ -366,8 +316,17 @@ type TProps = {
   closeModal?: Function;
   updateWidget?: Function;
   value?: any;
+  title?: string;
   dataBinding?: any;
   dataBinder?: Function;
   resetBinding?: Function;
 };
-export { DiagramTool as default };
+const DiagramTool = compose<TClientRoute<TProps>, TProps>(
+  withToastHOC,
+  withRouterHOC,
+  withApollo,
+)(DiagramToolComponent);
+
+
+export { DiagramTool as default }
+

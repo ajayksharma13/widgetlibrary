@@ -1,4 +1,5 @@
 import ModelBase from "../model.base";
+import { configurationRunningScript } from "./configration-running-script";
 
 /**
  * Mimic tool model cum logic class
@@ -9,12 +10,18 @@ class MimicModel extends ModelBase {
     dataBinding: BindingTypes[] = [];
 
     /**
-     * create instance of flipcard
+     * create instance of mimic
      * @param {object} data
      */
     static instance(data: MimicModel = new MimicModel()) {
         let instance = Object.assign(new MimicModel(), data);
         return instance;
+    }
+
+    public diagramRunner(): void {
+        if (this.dataBinding.length) {
+            configurationRunningScript.animationRunner(this.dataBinding);
+        }
     }
 
     public updatediagramObject(data: any): void {
@@ -33,11 +40,16 @@ class MimicModel extends ModelBase {
 type BindingTypes = {
     nodeId?: string;
     parameterId?: string;
-    attribute?: string;
     defaultValue?: number;
+    type?: string;
     jsonData: {
+        attribute?: string;
         controlledType?: number;//:todo enum 1>valueType  2>contorlledType
         mutableElementId?: string;
+        scriptObj?: {
+            customScript: boolean;
+            scriptName?: string;
+        }
     };
 };
 
