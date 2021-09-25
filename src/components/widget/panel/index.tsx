@@ -34,6 +34,7 @@ class WidgetPanel extends BaseComponent<TProps> {
         },
       })
     );
+
   };
 
   private onCloseProperty = () => {

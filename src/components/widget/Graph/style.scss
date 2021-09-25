@@ -1,0 +1,103 @@
+@import '../../../libs/variables.scss';
+@import '../../../libs/color.scss';
+
+.Graph {
+    .widget {
+        &__box {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            
+
+            div[class^='widget__'] {
+                text-align: center;
+                border-bottom: 1px solid $borderColor;
+
+            }
+        }
+
+        &__header {
+            order: 1;
+            flex-basis: 28px;
+            >div {
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #76D7C4;
+                color: black;
+                    
+            }
+        }                           
+
+        &__content {
+            order: 2;
+            flex: 1;
+            
+            
+            >div {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 2em;
+               
+
+            }
+        }
+    }
+}
+
+
+    #charts{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        resize: none;
+	    top:0;
+	    bottom: 0;
+	    left: 0;
+	    right: 0;
+        object-fit: contain;
+        resize:none;
+        object-position: center !important;
+        border-radius: 10px;
+        opacity:0.9;
+        
+    }
+#wid{
+    position:relative;
+    
+}
+
+.graph__content{
+    display: flex;
+    flex-direction: column;
+    padding:10px;
+    position: absolute;
+    margin: auto;
+    top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+    
+}
+/*
+.graph__header{
+    font-size:15px;
+    display: flex;
+    color: rgb(36, 133, 123);
+    align-items:left;
+    margin-top:-5px;
+}
+
+#gradient-chart stop {
+    stop-color: #BDEDE9;
+}
+#gradient-chart stop[offset="0"] {
+    stop-opacity: 0.75;
+}
+#gradient-chart stop[offset="1"] {
+    stop-opacity: 0;
+}*/
+
+

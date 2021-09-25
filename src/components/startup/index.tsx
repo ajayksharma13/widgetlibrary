@@ -11,7 +11,7 @@ import {
   List,
   Segment,
 } from "semantic-ui-react";
-import Flipcard, { FlipcardModel, FlipcardProperty } from "../widget/flipcard";
+import Graph, { GraphModel, GraphProperty } from "../widget/Graph";
 import "./style.scss";
 import WidgetPanel from "../widget/panel";
 
@@ -39,7 +39,7 @@ class StartUp extends BaseComponent<TProps, TState> {
   /**
    * @description init method of component
    */
-  private async onInit() {}
+  private async onInit() { }
 
   /**
    * render
@@ -140,7 +140,7 @@ class StartUp extends BaseComponent<TProps, TState> {
   render() {
     const { width = "500", height = "300" } = this.state;
 
-    const flipcardModel = FlipcardModel.instance();
+    const graphModel = GraphModel.instance();
 
     return (
       <Grid columns="2">
@@ -150,7 +150,7 @@ class StartUp extends BaseComponent<TProps, TState> {
             <Input
               label="Width"
               value={width}
-              onChange={(e) => this.setState({ width: e.target.value })}
+              onChange={(e) => { this.setState({ width: e.target.value }) }}
             ></Input>
             <Input
               label="Height"
@@ -160,19 +160,21 @@ class StartUp extends BaseComponent<TProps, TState> {
           </Segment>
           <Segment
             className="p-0"
+            id='segment'
             style={{
               width: `${width}px`,
               height: `${height}px`,
               margin: "20px",
             }}
+
           >
-            <WidgetPanel Property={FlipcardProperty} model={flipcardModel}>
+            <WidgetPanel Property={GraphProperty} model={graphModel}>
               {() => (
-                <Flipcard
+                <Graph
                   {...this.flipCardRender}
                   //data={this.flipcardData}
-                  model={flipcardModel}
-                ></Flipcard>
+                  model={graphModel}
+                ></Graph>
               )}
             </WidgetPanel>
           </Segment>
