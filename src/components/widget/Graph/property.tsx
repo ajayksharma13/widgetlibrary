@@ -23,23 +23,6 @@ class GraphProperty extends BaseComponent<TProps, TState> {
     onUpdatePanel: () => { },
   };
 
-  /*public period = [
-    {
-      'id': '1',
-      'name': 'Today',
-      'data': [{ x: '1:00', y: '33' }, { x: '2:00', y: '54' }]
-    },
-    {
-      'id': '2',
-      'name': 'Daywise',
-      'data': [{ x: '23', y: "55" }, { x: '25', y: '57' }]
-    },
-    {
-      'id': '3',
-      'name': 'Weekly',
-      'data': [{ x: 'Mon', y: '45' }, { x: 'Tue', y: '56' }, { x: 'Wed', y: '34' }]
-    }
-  ]*/
 
   componentDidMount() {
 
@@ -73,42 +56,16 @@ class GraphProperty extends BaseComponent<TProps, TState> {
                   text: "Bar Graph",
                   value: "Column",
                 },
-
-              ]}
-              name=""
-            />
-
-            <Form.Select
-              fluid
-              placeholder="Period Type"
-              onChange={(e, { value }) => {
-                model.changePeriodType(value)
-                onUpdatePanel()
-              }}
-              value={model.periodType}
-              options={[
                 {
-                  text: 'Today',
-                  value: 'Today',
+                  text: 'Area Graph(3)',
+                  value: 'Area multiple',
                 },
                 {
-                  text: 'Daywise',
-                  value: 'Daywise',
-                },
-                {
-                  text: 'Weekly',
-                  value: 'Weekly',
-                },
-                {
-                  text: 'Monthly',
-                  value: 'Monthly',
-                },
-                {
-                  text: 'Yearly',
-                  value: 'Yearly',
+                  text: 'Area Graph',
+                  value: 'SplineArea',
                 }
               ]}
-
+              name=""
             />
 
 
@@ -123,12 +80,25 @@ class GraphProperty extends BaseComponent<TProps, TState> {
               value={model.parameter}
               options={[
                 { text: "Temperature", value: 'Temperature' }, { text: "Voltage", value: "Voltage", },
-                { text: 'DC Voltage', value: 'DC Voltage ' }, { text: 'Volt', value: 'Volt', },
+                { text: 'DC Voltage', value: 'DC Voltage' }, { text: 'Volt', value: 'Volt', },
                 { text: "Energy Meter", value: 'Energy Meter' }, { text: 'Over Consumption', value: 'Over Consumption', },
                 { text: 'Volt L1', value: 'Volt L1' }, { text: 'Volt L2', value: 'Volt L2' },
                 { text: 'Volt L3', value: 'Volt L3' }, { text: 'Total Consumption', value: 'Total Consumption' }]}
             />
 
+            <Form.Select multiple
+              selection
+              fluid
+              placeholder="Features"
+              onChange={(e, { value }) => {
+                model.changeGraphFeatures(value);
+                onUpdatePanel();
+              }}
+              value={model.feature}
+              options={[
+                { text: "Average", value: 'Average' }, { text: "Minimum", value: "Minimum", },
+                { text: 'Maximum', value: 'Maximum' },]}
+            />
 
             <Form.Input
               fluid
@@ -143,6 +113,8 @@ class GraphProperty extends BaseComponent<TProps, TState> {
               name=""
             />
           </Form>
+
+
         </div>
       </div>
     );

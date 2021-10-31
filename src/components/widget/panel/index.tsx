@@ -58,7 +58,7 @@ class WidgetPanel extends BaseComponent<TProps> {
         </div>
         {title && (
           <div className="panel__header">
-            <div className="title">{title}</div>
+            <div className="title">{model.footerTitle}</div>
             <div className="property">
               <Popup
                 trigger={

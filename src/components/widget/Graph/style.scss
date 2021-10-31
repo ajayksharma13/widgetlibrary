@@ -1,34 +1,33 @@
 @import '../../../libs/variables.scss';
 @import '../../../libs/color.scss';
 
+
+    
+
 .Graph {
     .widget {
         &__box {
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: stretch;
             
-
             div[class^='widget__'] {
                 text-align: center;
-                border-bottom: 1px solid $borderColor;
+               
 
+                &:last-child {
+                    border-bottom: none;
+                }
             }
         }
 
         &__header {
             order: 1;
-            flex-basis: 28px;
-            >div {
-                height: 100%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                background-color: #76D7C4;
-                color: black;
-                    
-            }
-        }                           
+            border-bottom: 1px solid $borderColor;
+
+            
+        }
 
         &__content {
             order: 2;
@@ -39,65 +38,157 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                height: 100%;
                 font-size: 2em;
-               
-
+                
             }
+        }
+
+        &__footer {
+            order: 3;
+            
         }
     }
 }
-
-
-    #charts{
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        resize: none;
-	    top:0;
-	    bottom: 0;
-	    left: 0;
-	    right: 0;
-        object-fit: contain;
-        resize:none;
-        object-position: center !important;
-        border-radius: 10px;
-        opacity:0.9;
-        
-    }
-#wid{
-    position:relative;
+.features{
+    display: flex;
     
 }
+#charts{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center !important;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
 
 .graph__content{
+display: flex;
+flex-direction: column;
+padding:10px;
+padding-bottom:2px;
+
+}
+
+.features{
     display: flex;
-    flex-direction: column;
-    padding:10px;
-    position: absolute;
-    margin: auto;
-    top:0;
-	bottom: 0;
-	left: 0;
-	right: 0;
+    justify-content: space-evenly;
+    padding-bottom: 5px;
     
 }
-/*
-.graph__header{
+
+.featurelist{
+    margin:5px;
+
+    #text{
+    color:gray;
     font-size:15px;
-    display: flex;
-    color: rgb(36, 133, 123);
-    align-items:left;
-    margin-top:-5px;
+    margin-bottom: 1px;
+    }
+    #value{
+    color:rgb(104, 194, 52);
+    font-size:22px; 
+    }
 }
+.featurelist2{
+    margin:5px;
+    margin-top: 10px;
+    #text{
+        color:gray;
+        font-size:13px;
+        margin-bottom: 1px;
+        white-space: nowrap;
+        width: 35px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        }
+        #value{
+        color:rgb(104, 194, 52);
+        font-size:14px; 
+        }
+}
+/*
+table {
+border-collapse: collapse;
+width: 100%;
+padding-top:15px;
+padding-bottom: 5px;
+}
+ 
+th, td {
+text-align: center;
+padding: 2px;
+}
+th{
+  color:gray;
+  font-size:12px;
+  padding-bottom:2px;
+}
+td{
+    color:rgb(104, 194, 52);
+    font-size:15px;  
+}
+
+*/
+
 
 #gradient-chart stop {
-    stop-color: #BDEDE9;
+stop-color:#78c9e2 ;
 }
 #gradient-chart stop[offset="0"] {
-    stop-opacity: 0.75;
+
+stop-opacity: 0.75;
 }
 #gradient-chart stop[offset="1"] {
-    stop-opacity: 0;
-}*/
+stop-opacity: 0.2;
+}
 
+//color of first
+#gradient-chart-0 stop {
+    stop-color: #ae35b9;
+    }
+#gradient-chart-0 stop[offset="0"] {
+    
+    stop-opacity: 1;
+}
+#gradient-chart-0 stop[offset="1"] {
+    stop-opacity: 0.1;
+}
+//color of second
+#gradient-chart-1 stop {
+    stop-color: #eb7474;
+    }
+#gradient-chart-1 stop[offset="0"] {
+    
+    stop-opacity: 1;
+}
+#gradient-chart-1 stop[offset="1"] {
+    stop-opacity: 0.1;
+}
+//color of third
+#gradient-chart-2 stop {
+    stop-color: #eff173;
+    }
+#gradient-chart-2 stop[offset="0"] {
+    
+    stop-opacity: 1;
+}
+#gradient-chart-2 stop[offset="1"] {
+    stop-opacity: 0.1;
+}
 
+.area3-chart{
+    display: flex;
+}
+.area3{
+    display: flex;
+    flex-direction: column;
+}
+.chartArea{
+    object-fit: contain;
+    margin-top:-40px;
+    width: 165px;
+    height: 180px;
+}
