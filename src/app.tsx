@@ -6,7 +6,7 @@ import { ThemeProvider } from "./context";
 import BasicStyleSheet from "./data/stylesheet/basic.json";
 import ErrorBoundary from "./errorboundary";
 
-import 'semantic-ui-less/semantic.less';
+import "semantic-ui-less/semantic.less";
 import "./app.scss";
 
 /**

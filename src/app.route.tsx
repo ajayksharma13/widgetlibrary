@@ -12,16 +12,10 @@ const BlankLayout = React.lazy(() =>
   )
 );
 
-const DashboardLayout = React.lazy(() =>
-  import(
-    /* webpackPrefetch:true,webpackChunkName:'wpc.dashboard.layout' */ "./components/layout/dashboard"
-  )
-);
-
 const routes: Array<RouteProps & any> = [
   {
-    id: "unstock",
-    pageName: "UnStock",
+    id: "widget",
+    pageName: "Widget Template",
     layout: BlankLayout,
     exact: true,
     path: "/",

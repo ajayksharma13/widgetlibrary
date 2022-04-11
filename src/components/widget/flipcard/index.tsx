@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Grid, Header, Table } from "semantic-ui-react";
 import { BaseComponent } from "../../base";
 import FlipcardModel from "./model";
 import FlipcardProperty from "./property";
@@ -17,27 +16,6 @@ class FlipcardComponent extends BaseComponent<TProps> {
   };
 
   static defaultProps: TProps = {
-    // header: {
-    //   title: "NA",
-    // },
-    // footer: {
-    //   title: "NA",
-    // },
-    // refreshTime: 0,
-    // data: {},
-    // params: [],
-    // footerDataProps: {
-    //   left: {
-    //     title: "NA",
-    //   },
-    //   middle: {
-    //     title: "NA",
-    //   },
-    //   right: {
-    //     title: "NA",
-    //   },
-    // },
-
     model: new FlipcardModel(),
   };
 
@@ -73,45 +51,10 @@ class FlipcardComponent extends BaseComponent<TProps> {
   }
 
   render() {
-    // const { header, footer, footerDataProps, params, data } = this.props;
-    // const { currentParamIndex } = this.state;
-    // const { id, name = "NA", unit = "" } =
-    //   params?.[this.state.currentParamIndex] ?? {};
-    // const { cur = "NA", max = "NA", min = "NA", avg = "NA" } = data?.[id] ?? {};
     const { model } = this.props;
 
     return (
       <div className="flipcard-card widget">
-        {/* <div className="widget__box">
-          <div className="widget__header">
-            <div>{header.title}</div>
-            <div className="sub-header">
-              <span>
-                {name} <small>{unit}</small>
-              </span>
-            </div>
-          </div>
-          <div className="widget__content">
-            <div>{cur}</div>
-          </div>
-          <div className="widget__footer">
-            <div className="footer-title">{footer.title}</div>
-            <div className="footer-section">
-              <table>
-                <tr>
-                  <th>{footerDataProps.left.title}</th>
-                  <th>{footerDataProps.middle.title}</th>
-                  <th>{footerDataProps.right.title}</th>
-                </tr>
-                <tr>
-                  <td>{avg}</td>
-                  <td>{max}</td>
-                  <td>{min}</td>
-                </tr>
-              </table>
-            </div>
-          </div>
-        </div> */}
         <div className="widget__box">
           <div className="widget__header">
             <div>NA</div>
